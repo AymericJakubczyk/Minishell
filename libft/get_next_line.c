@@ -90,31 +90,3 @@ static ssize_t	loop_read(int fd, char *buf, char **to_return)
 	buf[0] = 0;
 	return (0);
 }
-
-#include <fcntl.h>
-#include <stdio.h>
-/*
-int	main(int argc, char **argv)
-{
-	int	fd, fd2, fd3;
-	(void) argc;
-	char *txt;
-	//char *str;
-	int i;
-
-	i = 0;
-	printf("%d \n",argc);
-	if(argc == 2)
-		txt = argv[1];
-	else
-		txt = "test.txt";
-	fd = open(txt, O_RDONLY);
-	fd2 = open("tedfjkbdvjheb", O_RDONLY);
-	fd3 = open("test2.txt", O_RDONLY);
-	printf("BUFFER_SIZE : %d\n\n", BUFFER_SIZE);
-	printf("%s==================================\n", get_next_line(fd));
-	printf("%s==================================\n", get_next_line(fd));
-	//printf("%s==================================\n", get_next_line(fd2));
-	printf("%s==================================\n", get_next_line(fd3));
-}
-*/
