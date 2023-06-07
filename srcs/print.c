@@ -1,40 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_utils2.c                                 :+:      :+:    :+:   */
+/*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/02 11:06:00 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/07 12:40:33 by cprojean         ###   ########.fr       */
+/*   Created: 2023/06/07 10:59:13 by cprojean          #+#    #+#             */
+/*   Updated: 2023/06/07 12:48:32 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "../minishell.h"
 
-void	ft_putchar(char c, ssize_t *count)
+void	print_entry(t_entry *entry)
 {
-	if (*count == -1)
-		return ;
-	if (write(2, &c, 1) == -1)
-		*count = -1;
-	else
-		*count = *count + 1;
-}
-
-void	ft_putstr(char *str, ssize_t *count)
-{
-	size_t	i;
+	int	i;
 
 	i = 0;
-	if (!str)
+	ft_printf("print entry : \n");
+	while (entry[i].c != 0)
 	{
-		ft_putstr("(null)", count);
-		return ;
+		ft_printf("%c : %i\n", entry[i].c, entry[i].type);
+		i++;
 	}
-	while (str[i])
+}
+
+void	print_parse(t_parse *parse)
+{
+	int	i;
+
+	i = 0;
+	ft_printf("print parse : \n");
+	while (parse[i].str)
 	{
-		ft_putchar(str[i], count);
+		ft_printf("%s : %i\n", parse[i].str, parse[i].type);
 		i++;
 	}
 }

@@ -6,18 +6,15 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 18:24:28 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/07 10:47:15 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/07 12:51:44 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_entry(t_entry *entry)
-void	print_parse(t_parse *parse)
-void	free_all_parse(t_parse *parse)
-void	init_entry(t_entry *entry, char *str)
-void	which_type(t_entry *entry, char c)
-
+void	free_all_parse(t_parse *parse);
+void	init_entry(t_entry *entry, char *str);
+void	which_type(t_entry *entry, char c);
 
 void	parse_and_exec(char *str)
 {
@@ -30,12 +27,12 @@ void	parse_and_exec(char *str)
 	init_entry(entry, str);
 	print_entry(entry);
 	ft_printf("nbr mots : %d\n", size_of_parse(entry));
-	//check_syntax(entry);
+	check_syntax(entry);
 	parse = malloc(sizeof(t_parse) * (size_of_parse(entry) + 1));
 	if (!parse)
 	{
 		free(entry);
-		exit(1);	
+		exit(1);
 	}
 	colapse_all_string(entry, parse, size_of_parse(entry));
 	print_parse(parse);
@@ -44,32 +41,6 @@ void	parse_and_exec(char *str)
 	//exec();
 	free(entry);
 	free_all_parse(parse);
-}
-
-void	print_entry(t_entry *entry)
-{
-	int	i;
-
-	i = 0;
-	ft_printf("print entry : \n");
-	while (entry[i].c != 0)
-	{
-		ft_printf("%c : %i\n", entry[i].c, entry[i].type);
-		i++;
-	}
-}
-
-void	print_parse(t_parse *parse)
-{
-	int	i;
-
-	i = 0;
-	ft_printf("print parse : \n");
-	while (parse[i].str)
-	{
-		ft_printf("%s : %i\n", parse[i].str, parse[i].type);
-		i++;
-	}
 }
 
 void free_all_parse(t_parse *parse)
