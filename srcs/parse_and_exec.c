@@ -3,14 +3,48 @@
 /*                                                        :::      ::::::::   */
 /*   parse_and_exec.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
+/*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 18:24:28 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/07 07:46:50 by ajakubcz         ###   ########.fr       */
+/*   Updated: 2023/06/07 10:47:15 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	print_entry(t_entry *entry)
+void	print_parse(t_parse *parse)
+void	free_all_parse(t_parse *parse)
+void	init_entry(t_entry *entry, char *str)
+void	which_type(t_entry *entry, char c)
+
+
+void	parse_and_exec(char *str)
+{
+	t_entry	*entry;
+	t_parse	*parse;
+
+	entry = ft_calloc(sizeof(t_entry), ft_strlen(str) + 1);
+	if (!entry)
+		exit(1);
+	init_entry(entry, str);
+	print_entry(entry);
+	ft_printf("nbr mots : %d\n", size_of_parse(entry));
+	//check_syntax(entry);
+	parse = malloc(sizeof(t_parse) * (size_of_parse(entry) + 1));
+	if (!parse)
+	{
+		free(entry);
+		exit(1);	
+	}
+	colapse_all_string(entry, parse, size_of_parse(entry));
+	print_parse(parse);
+	//check_quote();
+	//expand();
+	//exec();
+	free(entry);
+	free_all_parse(parse);
+}
 
 void	print_entry(t_entry *entry)
 {
@@ -49,36 +83,10 @@ void free_all_parse(t_parse *parse)
 		i++;
 	}
 	free(parse);
-	exit(1); //mettre valeur d'exit en parametre selon les cas ???
+	// exit(1);
+	//mettre valeur d'exit en parametre selon les cas ???
 }
 
-void	parse_and_exec(char *str)
-{
-	t_entry	*entry;
-	t_parse	*parse;
-
-	//entry = malloc(sizeof(t_entry) * (ft_strlen(str) + 1));
-	entry = ft_calloc(sizeof(t_entry), ft_strlen(str) + 1);
-	if (!entry)
-		exit(1);
-	init_entry(entry, str);
-	print_entry(entry);
-	ft_printf("nbr mots : %d\n", size_of_parse(entry));
-	//check_syntax(entry);
-	parse = malloc(sizeof(t_parse) * (size_of_parse(entry) + 1));
-	if (!parse)
-	{
-		free(entry);
-		exit(1);	
-	}
-	colapse_all_string(entry, parse, size_of_parse(entry));
-	print_parse(parse);
-	//check_quote();
-	//expand();
-	//exec();
-	free(entry);
-	free_all_parse(parse);
-}
 
 void init_entry(t_entry *entry, char *str)
 {

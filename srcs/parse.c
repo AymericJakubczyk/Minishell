@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
+/*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 23:55:37 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/07 07:59:37 by ajakubcz         ###   ########.fr       */
+/*   Updated: 2023/06/07 10:25:07 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,9 +90,9 @@ void	colapse_all_string(t_entry *entry, t_parse *parse, int size_of_parse)
 			parse[j].type = entry[i].type;
 			//i++;
 		}
-		if (!str)
-			free_all_parse(parse);
-		i += ft_strlen(parse[j].str)
+		// if (!str)
+		// 	free_all_parse(parse);
+		i += ft_strlen(parse[j].str);
 		j++;
 	}
 	parse[j].str = NULL;
