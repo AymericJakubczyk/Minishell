@@ -6,7 +6,7 @@
 /*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:11:04 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/06 15:47:54 by ajakubcz         ###   ########.fr       */
+/*   Updated: 2023/06/06 18:42:12 by ajakubcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ int	main(int ac, char **av, char **env)
 	{
 		free(cmd);
 		ft_free(prompt, NULL);
-		prompt = ft_get_prompt(env);
+		prompt = ft_get_prompt();
 		cmd = readline(prompt);
 		add_history(cmd);
 		printf("cmd : %s\n", cmd);
-		//exec_cmd(cmd);
+		parse_and_exec(cmd);
 	}
 	ft_free(prompt, NULL);
 	rl_clear_history();

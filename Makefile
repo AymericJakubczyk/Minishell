@@ -6,14 +6,14 @@
 #    By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/01 14:11:17 by ajakubcz          #+#    #+#              #
-#    Updated: 2023/06/06 15:43:26 by ajakubcz         ###   ########.fr        #
+#    Updated: 2023/06/07 00:16:31 by ajakubcz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 LIBFT = libft/libft.a
 DIR_SRCS = srcs/
-SRCS = main.c get_prompt.c utils.c
+SRCS = main.c get_prompt.c utils.c parse_and_exec.c parse.c
 HEADER = minishell.h
 
 OBJS = $(SRCS:.c=.o)
