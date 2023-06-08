@@ -6,7 +6,7 @@
 /*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:02:11 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/07 06:13:16 by ajakubcz         ###   ########.fr       */
+/*   Updated: 2023/06/08 14:23:42 by ajakubcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 enum e_types {
 	CHAR,
-	SPACES,
+	WHITESPACE,
 	CHEV_IN,
 	CHEV_OUT,
 	PIPE,
@@ -31,10 +31,17 @@ enum e_types {
 	STRING,
 };
 
+enum e_context {
+	NO_QUOTE,
+	SI_QUOTE,
+	DO_QUOTE
+};
+
 typedef struct s_entry
 {
 	char	c;
 	int		type;
+	int		context;
 }	t_entry;
 
 typedef struct s_parse

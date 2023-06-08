@@ -3,27 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   parse_and_exec.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
+/*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 18:24:28 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/07 10:47:15 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/08 17:51:17 by ajakubcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_entry(t_entry *entry)
-void	print_parse(t_parse *parse)
-void	free_all_parse(t_parse *parse)
-void	init_entry(t_entry *entry, char *str)
-void	which_type(t_entry *entry, char c)
-
+void	print_entry(t_entry *entry);
+void	print_parse(t_parse *parse);
+void	free_all_parse(t_parse *parse);
+void	init_entry(t_entry *entry, char *str);
+void	which_type(t_entry *entry, char c);
 
 void	parse_and_exec(char *str)
 {
 	t_entry	*entry;
 	t_parse	*parse;
 
+	check_syntax_quote(str);
 	entry = ft_calloc(sizeof(t_entry), ft_strlen(str) + 1);
 	if (!entry)
 		exit(1);
@@ -35,11 +35,10 @@ void	parse_and_exec(char *str)
 	if (!parse)
 	{
 		free(entry);
-		exit(1);	
+		exit(1);
 	}
-	colapse_all_string(entry, parse, size_of_parse(entry));
+	colapse_all(entry, parse);
 	print_parse(parse);
-	//check_quote();
 	//expand();
 	//exec();
 	free(entry);
@@ -52,9 +51,9 @@ void	print_entry(t_entry *entry)
 
 	i = 0;
 	ft_printf("print entry : \n");
-	while (entry[i].c != 0)
+	while (entry[i].c != '\0')
 	{
-		ft_printf("%c : %i\n", entry[i].c, entry[i].type);
+		ft_printf("%c | type : %i | context : %i\n", entry[i].c, entry[i].type, entry[i].context);
 		i++;
 	}
 }
@@ -67,12 +66,12 @@ void	print_parse(t_parse *parse)
 	ft_printf("print parse : \n");
 	while (parse[i].str)
 	{
-		ft_printf("%s : %i\n", parse[i].str, parse[i].type);
+		ft_printf("%s\n", parse[i].str);
 		i++;
 	}
 }
 
-void free_all_parse(t_parse *parse)
+void	free_all_parse(t_parse *parse)
 {
 	int	i;
 
@@ -85,37 +84,4 @@ void free_all_parse(t_parse *parse)
 	free(parse);
 	// exit(1);
 	//mettre valeur d'exit en parametre selon les cas ???
-}
-
-
-void init_entry(t_entry *entry, char *str)
-{
-	int i;
-	
-	i = 0;
-	while (str[i])
-	{
-		entry[i].c = str[i];
-		which_type(&entry[i], str[i]);
-		i++;
-	}
-	entry[i].c = 0;
-}
-
-void	which_type(t_entry *entry, char c)
-{
-	if (c == ' ')
-		entry->type = SPACES;
-	else if (c == '<')
-		entry->type = CHEV_IN;
-	else if (c == '>')
-		entry->type = CHEV_OUT;
-	else if (c == '|')
-		entry->type = PIPE;
-	else if (c == '\'')
-		entry->type = S_QUOTE;
-	else if (c == '\"')
-		entry->type = D_QUOTE;
-	else
-		entry->type = CHAR;
 }
