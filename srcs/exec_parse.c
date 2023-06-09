@@ -6,13 +6,8 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:54 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/07 15:23:20 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/09 13:20:52 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
-
-int	what_is_it(t_parse command)
-{
-	
-}
+#include "../inc/minishell.h"

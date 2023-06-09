@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:02:11 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/09 10:43:04 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/09 14:36:22 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 # include <stdlib.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include "libft.h"
-# include "ft_printf.h"
+# include "../libft/libft.h"
+# include "../libft/ft_printf.h"
 # include "error.h"
 
 enum e_types {
@@ -36,6 +36,18 @@ enum e_context {
 	NO_QUOTE,
 	SI_QUOTE,
 	DO_QUOTE
+};
+
+enum e_species {
+	INFILE,
+	OUTFILE,
+	PIPEE,
+	REDIRECT_IN,
+	HEREDOC,
+	REDIRECT_OUT,
+	APPEND,
+	COMMAND,
+	CMD_ARG
 };
 
 typedef struct s_entry

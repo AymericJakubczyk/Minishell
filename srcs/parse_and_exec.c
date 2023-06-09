@@ -6,11 +6,11 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 18:24:28 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/09 10:57:11 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/09 15:17:44 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../inc/minishell.h"
 
 void	print_entry(t_entry *entry);
 void	print_parse(t_parse *parse);
@@ -28,9 +28,6 @@ void	parse_and_exec(char *str)
 	if (!entry)
 		exit(1);
 	init_entry(entry, str);
-	// print_entry(entry);
-	// ft_printf("nbr mots : %d\n", size_of_parse(entry));
-	//check_syntax(entry);
 	parse = malloc(sizeof(t_parse) * (size_of_parse(entry) + 1));
 	if (!parse)
 	{
@@ -41,6 +38,7 @@ void	parse_and_exec(char *str)
 	free(entry);
 	print_parse(parse);
 	check_parse(parse);
+	// type_parse(parse);
 	//expand();
 	//exec();
 	free_all_parse(parse);

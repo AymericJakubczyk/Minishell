@@ -6,11 +6,14 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 23:55:37 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/08 18:25:35 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/09 14:01:37 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../inc/minishell.h"
+
+void	which_context(t_entry *entry, char quote);
+void	which_type(t_entry *entry, char c);
 
 void	check_syntax_quote(char *str)
 {
