@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
+/*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:02:11 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/08 14:23:42 by ajakubcz         ###   ########.fr       */
+/*   Updated: 2023/06/09 10:43:04 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <readline/history.h>
 # include "libft.h"
 # include "ft_printf.h"
+# include "error.h"
 
 enum e_types {
 	CHAR,

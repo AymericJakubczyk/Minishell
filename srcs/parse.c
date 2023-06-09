@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
+/*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 23:55:37 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/08 17:48:22 by ajakubcz         ###   ########.fr       */
+/*   Updated: 2023/06/08 18:25:35 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ void	check_syntax_quote(char *str)
 		ft_printf("syntax error!\n");
 		exit(2);
 	}
-	else
-		ft_printf("good quote\n");
+	// else
+		// ft_printf("good quote\n");
 }
 
 int	go_to_end_block(t_entry *entry)

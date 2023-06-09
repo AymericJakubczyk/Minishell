@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+         #
+#    By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/01 14:11:17 by ajakubcz          #+#    #+#              #
-#    Updated: 2023/06/07 00:16:31 by ajakubcz         ###   ########.fr        #
+#    Updated: 2023/06/09 10:39:30 by cprojean         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 LIBFT = libft/libft.a
 DIR_SRCS = srcs/
-SRCS = main.c get_prompt.c utils.c parse_and_exec.c parse.c
+SRCS = main.c get_prompt.c utils.c parse_and_exec.c parse.c parse_errors.c ft_error.c
 HEADER = minishell.h
 
 OBJS = $(SRCS:.c=.o)

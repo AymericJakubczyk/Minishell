@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_and_exec.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
+/*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 18:24:28 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/08 17:51:17 by ajakubcz         ###   ########.fr       */
+/*   Updated: 2023/06/09 10:57:11 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	parse_and_exec(char *str)
 	if (!entry)
 		exit(1);
 	init_entry(entry, str);
-	print_entry(entry);
-	ft_printf("nbr mots : %d\n", size_of_parse(entry));
+	// print_entry(entry);
+	// ft_printf("nbr mots : %d\n", size_of_parse(entry));
 	//check_syntax(entry);
 	parse = malloc(sizeof(t_parse) * (size_of_parse(entry) + 1));
 	if (!parse)
@@ -38,10 +38,11 @@ void	parse_and_exec(char *str)
 		exit(1);
 	}
 	colapse_all(entry, parse);
+	free(entry);
 	print_parse(parse);
+	check_parse(parse);
 	//expand();
 	//exec();
-	free(entry);
 	free_all_parse(parse);
 }
 
