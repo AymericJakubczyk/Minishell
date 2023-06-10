@@ -6,7 +6,11 @@
 /*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:02:11 by ajakubcz          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/06/10 16:30:16 by ajakubcz         ###   ########.fr       */
+=======
+/*   Updated: 2023/06/10 13:23:00 by cprojean         ###   ########.fr       */
+>>>>>>> 8948bee446840bc61ea99942eb4be3fb85e9e90f
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +52,8 @@ enum e_species {
 	REDIRECT_OUT,
 	APPEND,
 	COMMAND,
-	CMD_ARG
+	CMD_ARG,
+	EXPEND
 };
 
 typedef struct s_entry
