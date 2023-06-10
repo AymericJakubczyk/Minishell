@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:02:11 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/09 14:36:22 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/10 13:23:00 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ enum e_species {
 	REDIRECT_OUT,
 	APPEND,
 	COMMAND,
-	CMD_ARG
+	CMD_ARG,
+	EXPEND
 };
 
 typedef struct s_entry

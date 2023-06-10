@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 18:24:28 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/09 15:17:44 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/10 13:26:12 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,4 @@ void	free_all_parse(t_parse *parse)
 		i++;
 	}
 	free(parse);
-	// exit(1);
-	//mettre valeur d'exit en parametre selon les cas ???
 }
