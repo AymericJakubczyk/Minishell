@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_errors.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
+/*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 18:27:05 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/10 18:19:54 by ajakubcz         ###   ########.fr       */
+/*   Updated: 2023/06/10 19:05:38 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	check_redirect_out(t_parse *input, int runner, char redir);
 int	check_redirect_in(t_parse *input, int runner, char redir);
 int	check_pipe(t_parse *input, int runner);
 
-void	check_parse(t_parse *input)
+int	check_parse(t_parse *input)
 {
 	int	runner;
 
@@ -25,22 +25,13 @@ void	check_parse(t_parse *input)
 	{
 		if (input[runner].str[0] == '<')
 			if (check_redirect_in(input, runner, '<') == -1)
-			{
-				free_all_parse(input);
-				exit(2);
-			}
+				return (-1);
 		if (input[runner].str[0] == '>')
 			if (check_redirect_out(input, runner, '>') == -1)
-			{
-				free_all_parse(input);
-				exit(2);
-			}
+				return (-1);
 		if (input[runner].str[0] == '|')
 			if (check_pipe(input, runner) == -1)
-			{
-				free_all_parse(input);
-				exit(2);
-			}
+				return (-1);
 		runner++;
 	}
 }
@@ -60,7 +51,7 @@ int	check_redirect_in(t_parse *input, int runner, char redir)
 {
 	if (input[runner + 1].str && input[runner + 1].str[0] == redir)
 	{
-		if (input[runner + 2].str && input[runner + 2].str[0] == redir)
+		if (input[runner + 1].str[1] && input[runner + 1].str[1] == redir)
 			return (ft_error(ERROR_4, NULL), -1);
 		else
 			return (ft_error(ERROR_5, NULL), -1);
@@ -74,7 +65,7 @@ int	check_redirect_out(t_parse *input, int runner, char redir)
 {
 	if (input[runner + 1].str && input[runner + 1].str[0] == redir)
 	{
-		if (input[runner + 2].str && input[runner + 2].str[0] == redir)
+		if (input[runner + 1].str[1] && input[runner + 1].str[1] == redir)
 			return (ft_error(ERROR_2, NULL), -1);
 		else
 			return (ft_error(ERROR_3, NULL), -1);
