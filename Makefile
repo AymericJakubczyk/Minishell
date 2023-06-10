@@ -6,39 +6,65 @@
 #    By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/01 14:11:17 by ajakubcz          #+#    #+#              #
-#    Updated: 2023/06/07 11:14:24 by cprojean         ###   ########.fr        #
+#    Updated: 2023/06/10 13:38:02 by cprojean         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
-LIBFT = libft/libft.a
-DIR_SRCS = srcs/
-SRCS = main.c get_prompt.c utils.c parse_and_exec.c parse.c print.c check_entry.c
-HEADER = minishell.h
 
-OBJS = $(SRCS:.c=.o)
+CFLAGS = -Wall -Wextra -g3 #Werror
 
-CC = gcc
-CFLAGS = -Wall -Wextra
+LIB = libft/libft.a
 
-all : libft_rule $(NAME)
+RM = $(RM) -f
 
-%.o: $(DIR_SRCS)%.c $(HEADER) $(LIBFT) Makefile
-	$(CC) $(CFLAGS) -I ./ -I libft -c $< -o $@
+HEADERS = $(DIR_INCLUDES)minishell.h $(DIR_INCLUDES)error.h
 
-$(NAME): $(OBJS)
-	$(CC) $(OBJS) $(LIBFT) -o $(NAME) -lreadline
+MKDIR = mkdir -p
 
-libft_rule :
-	make -C libft
+RM = rm -rf
 
-clean : 
-		rm -rf $(OBJS)
-		make clean -C libft
+DIR_OBJ = ./.obj/
 
-fclean : clean
-		rm -rf $(NAME) $(LIBFT)
+DIR_SRCS = ./srcs/
 
-re : fclean all
+DIR_INCLUDES = ./inc/
 
-.PHONY : all clean fclean re libft_rule
+SRCS =			$(DIR_SRCS)main.c \
+				$(DIR_SRCS)parse_and_exec.c \
+				$(DIR_SRCS)parse_errors.c \
+				$(DIR_SRCS)get_prompt.c \
+				$(DIR_SRCS)ft_error.c \
+				$(DIR_SRCS)exec_parse.c \
+				$(DIR_SRCS)parse.c \
+				$(DIR_SRCS)utils.c \
+
+
+OBJS = $(SRCS:$(DIR_SRCS)%.c=$(DIR_OBJ)%.o)
+
+all :			makelib $(NAME)
+
+$(DIR_OBJ):
+				mkdir $@
+
+$(DIR_OBJ)%.o: $(DIR_SRCS)%.c $(LIB) $(HEADERS) | $(DIR_OBJ)
+				$(CC) $(CFLAGS) -c $< -o $@
+
+$(NAME) :		$(LIB) $(OBJS)
+				$(CC) $(OBJS) -o $(NAME) -L./libft -lft -lreadline
+
+makelib:
+				$(MAKE) -C libft
+
+clean :
+				$(MAKE) clean -C libft
+				$(RM) $(OBJS)
+
+fclean :		clean
+				$(MAKE) fclean -C libft
+				@$(RM) $(DIR_OBJ)
+				$(RM) $(NAME)
+
+re :			fclean all
+
+rebonus :		fclean bonus

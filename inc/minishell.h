@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
+/*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:02:11 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/07 06:13:16 by ajakubcz         ###   ########.fr       */
+/*   Updated: 2023/06/10 13:23:00 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,13 @@
 # include <stdlib.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include "libft.h"
-# include "ft_printf.h"
+# include "../libft/libft.h"
+# include "../libft/ft_printf.h"
+# include "error.h"
 
 enum e_types {
 	CHAR,
-	SPACES,
+	WHITESPACE,
 	CHEV_IN,
 	CHEV_OUT,
 	PIPE,
@@ -31,10 +32,30 @@ enum e_types {
 	STRING,
 };
 
+enum e_context {
+	NO_QUOTE,
+	SI_QUOTE,
+	DO_QUOTE
+};
+
+enum e_species {
+	INFILE,
+	OUTFILE,
+	PIPEE,
+	REDIRECT_IN,
+	HEREDOC,
+	REDIRECT_OUT,
+	APPEND,
+	COMMAND,
+	CMD_ARG,
+	EXPEND
+};
+
 typedef struct s_entry
 {
 	char	c;
 	int		type;
+	int		context;
 }	t_entry;
 
 typedef struct s_parse

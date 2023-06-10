@@ -6,11 +6,55 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 23:55:37 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/07 10:25:07 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/09 14:01:37 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../inc/minishell.h"
+
+void	which_context(t_entry *entry, char quote);
+void	which_type(t_entry *entry, char c);
+
+void	check_syntax_quote(char *str)
+{
+	int		i;
+	char	quote;
+
+	i = 0;
+	quote = 0;
+	while (str[i])
+	{
+		if (str[i] == quote)
+			quote = 0;
+		else if (str[i] == '\'' && quote == 0)
+			quote = '\'';
+		else if (str[i] == '\"' && quote == 0)
+			quote = '\"';
+		i++;
+	}
+	if (quote != 0)
+	{
+		ft_printf("syntax error!\n");
+		exit(2);
+	}
+	// else
+		// ft_printf("good quote\n");
+}
+
+int	go_to_end_block(t_entry *entry)
+{
+	int	i;
+
+	i = 0;
+	while (entry[i].c != '\0' && !(entry[i].type == WHITESPACE && \
+			entry[i].context == NO_QUOTE) && !(entry[i].context == \
+			NO_QUOTE && (entry[i].type == CHEV_IN || entry[i].type == \
+			CHEV_OUT || entry[i].type == PIPE)))
+		i += 1;
+	if (i == 0)
+		return (1);
+	return (i);
+}
 
 int	size_of_parse(t_entry *entry)
 {
@@ -19,21 +63,73 @@ int	size_of_parse(t_entry *entry)
 
 	nbr = 0;
 	i = 0;
-	//ft_printf("PARSE\n");
 	while (entry[i].c != '\0')
 	{
-		//ft_printf("%c : %d CHAR : %d\n", entry[i].c, entry[i].type, CHAR);
-		if (entry[i].type == CHAR)
+		if (entry[i].type == WHITESPACE && entry[i].context == NO_QUOTE)
 		{
-			while (entry[i].type == CHAR && entry[i].c != '\0')
+			while (entry[i].c != '\0' && entry[i].type == WHITESPACE && \
+					entry[i].context == NO_QUOTE)
 				i++;
 		}
 		else
-			i++;
-		nbr++;
+		{
+			nbr++;
+			i += go_to_end_block(&entry[i]);
+		}
 	}
-	//ft_printf("nbr mots : %d\n", nbr);
 	return (nbr);
+}
+
+void	init_entry(t_entry *entry, char *str)
+{
+	int		i;
+	char	quote;
+
+	i = 0;
+	quote = 0;
+	while (str[i])
+	{
+		entry[i].c = str[i];
+		which_type(&entry[i], str[i]);
+		which_context(&entry[i], quote);
+		if (quote == 0 && (str[i] == '\'' || str[i] == '\"'))
+			quote = str[i];
+		else if (str[i] == quote)
+		{
+			quote = 0;
+			which_context(&entry[i], quote);
+		}
+		i++;
+	}
+	entry[i].c = '\0';
+}
+
+void	which_context(t_entry *entry, char quote)
+{
+	if (quote == 0)
+		entry->context = NO_QUOTE;
+	if (quote == '\'')
+		entry->context = SI_QUOTE;
+	if (quote == '\"')
+		entry->context = DO_QUOTE;
+}
+
+void	which_type(t_entry *entry, char c)
+{
+	if (c == ' ' || c == '\t')
+		entry->type = WHITESPACE;
+	else if (c == '<')
+		entry->type = CHEV_IN;
+	else if (c == '>')
+		entry->type = CHEV_OUT;
+	else if (c == '|')
+		entry->type = PIPE;
+	else if (c == '\'')
+		entry->type = S_QUOTE;
+	else if (c == '\"')
+		entry->type = D_QUOTE;
+	else
+		entry->type = CHAR;
 }
 
 char	*char_to_str(char c)
@@ -48,54 +144,42 @@ char	*char_to_str(char c)
 	return (str);
 }
 
-char	*colapse_letter(t_entry *entry, int i)
+char	*get_str(t_entry *entry, int *i, int j)
 {
 	char	*str;
+	int		runner;
 
+	runner = 0;
 	str = ft_strdup("");
-	//ft_printf("before mot : \n");
-	while (entry[i].type == CHAR && entry[i].c != '\0')
+	while (runner < j)
 	{
-		//ft_printf("%s", &entry[i].c);
-		str = ft_strjoin2(str, char_to_str(entry[i].c));
-		i++;
+		str = ft_strjoin2(str, char_to_str(entry[*i].c));
+		*i += 1;
+		runner++;
 	}
-	//ft_printf("\nmot %s\n", str);
 	return (str);
 }
 
-
-
-
-void	colapse_all_string(t_entry *entry, t_parse *parse, int size_of_parse)
+void	colapse_all(t_entry *entry, t_parse *parse)
 {
-	int		i;
-	int		j;
-	char	*str;
+	int	i;
+	int	nbr;
 
+	nbr = 0;
 	i = 0;
-	j = 0;
 	while (entry[i].c != '\0')
 	{
-		if (entry[i].type == CHAR)
+		if (entry[i].type == WHITESPACE && entry[i].context == NO_QUOTE)
 		{
-			str = colapse_letter(entry, i);
-			parse[j].str = str;
-			parse[j].type = STRING;
-			//i += ft_strlen(str);
+			while (entry[i].c != '\0' && entry[i].type == WHITESPACE && \
+					entry[i].context == NO_QUOTE)
+				i++;
 		}
 		else
 		{
-			parse[j].str = char_to_str(entry[i].c);
-			parse[j].type = entry[i].type;
-			//i++;
+			parse[nbr].str = get_str(entry, &i, go_to_end_block(&entry[i]));
+			nbr++;
 		}
-		// if (!str)
-		// 	free_all_parse(parse);
-		i += ft_strlen(parse[j].str);
-		j++;
 	}
-	parse[j].str = NULL;
+	parse[nbr].str = NULL;
 }
-
-// expand();

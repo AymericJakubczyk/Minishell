@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
+/*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:11:04 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/06 18:42:12 by ajakubcz         ###   ########.fr       */
+/*   Updated: 2023/06/10 13:26:43 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../inc/minishell.h"
 
 int	ft_strcmp(char *s1, char*s2)
 {
@@ -42,10 +42,11 @@ int	main(int ac, char **av, char **env)
 		prompt = ft_get_prompt();
 		cmd = readline(prompt);
 		add_history(cmd);
-		printf("cmd : %s\n", cmd);
+		// printf("cmd : %s\n", cmd);
 		parse_and_exec(cmd);
 	}
 	ft_free(prompt, NULL);
 	rl_clear_history();
 	free(cmd);
+	exit (1);
 }
