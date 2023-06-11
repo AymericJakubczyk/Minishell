@@ -6,11 +6,11 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 16:38:13 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/11 18:30:18 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/11 18:45:41 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "/minishell.h"
+#include "minishell.h"
 
 static int	check_redirect_args(t_parse *input, int runner);
 static int	check_pipe_args(t_parse *input, int runner);

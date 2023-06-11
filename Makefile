@@ -6,7 +6,7 @@
 #    By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/01 14:11:17 by ajakubcz          #+#    #+#              #
-#    Updated: 2023/06/11 18:42:20 by cprojean         ###   ########.fr        #
+#    Updated: 2023/06/11 18:48:49 by cprojean         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,14 +36,12 @@ SRCS =			$(DIR_SRCS)main.c \
 				$(DIR_SRCS)next_parse_errors.c \
 				$(DIR_SRCS)get_prompt.c \
 				$(DIR_SRCS)ft_error.c \
-				$(DIR_SRCS)exec_parse.c \
 				$(DIR_SRCS)check_syntax.c \
 				$(DIR_SRCS)first_parse.c \
 				$(DIR_SRCS)second_parse.c \
 				$(DIR_SRCS)parse_utils.c \
 				$(DIR_SRCS)utils.c \
 				$(DIR_SRCS)print.c \
-				$(DIR_SRCS)parse_entry.c \
 
 OBJS = $(SRCS:$(DIR_SRCS)%.c=$(DIR_OBJ)%.o)
 

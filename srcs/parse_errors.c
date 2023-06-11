@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 18:27:05 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/11 18:43:10 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/11 18:49:21 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,26 +74,4 @@ static int	check_redirect_out(t_parse *input, int runner)
 	else
 		return (0);
 	return (0);
-}
-
-void	check_syntax_quote(char *str)
-{
-	int		i;
-	char	quote;
-
-	i = 0;
-	quote = 0;
-	while (str[i])
-	{
-		if (str[i] == quote)
-			quote = 0;
-		else if (str[i] == '\'' && quote == 0)
-			quote = '\'';
-		else if (str[i] == '\"' && quote == 0)
-			quote = '\"';
-		i++;
-	}
-	if (quote != 0)
-		ft_printf("syntax error!\n");
-
 }

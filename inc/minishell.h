@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:02:11 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/11 18:41:21 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/11 18:50:48 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,5 @@ int		size_of_parse(t_entry *entry);
 void	set_type_utils(int type1, int type2, int *i, t_parse *parse);
 void	set_type_utils2(int type, int *cmd, int *i, t_parse *parse);
 void	free_all_parse(t_parse *parse);
-
 
 #endif
