@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:16:31 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/08 15:49:48 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/11 17:17:02 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@
 # define ERROR_16 "not a valid identifier\n"
 # define ERROR_17 "invalid option\n"
 # define ERROR_18 "numeric argument required\n"
+# define ERROR_19 "parse error near '\\n'\n"
+# define ERROR_20 "parse error near '|'\n"
 
 void	ft_error(const char *error, char *problem);
 #endif

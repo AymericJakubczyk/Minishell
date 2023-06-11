@@ -6,7 +6,7 @@
 #    By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/01 14:11:17 by ajakubcz          #+#    #+#              #
-#    Updated: 2023/06/11 15:32:25 by cprojean         ###   ########.fr        #
+#    Updated: 2023/06/11 16:46:41 by cprojean         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,14 +33,14 @@ DIR_INCLUDES = ./inc/
 SRCS =			$(DIR_SRCS)main.c \
 				$(DIR_SRCS)parse_and_exec.c \
 				$(DIR_SRCS)parse_errors.c \
+				$(DIR_SRCS)next_parse_errors.c \
 				$(DIR_SRCS)get_prompt.c \
 				$(DIR_SRCS)ft_error.c \
 				$(DIR_SRCS)exec_parse.c \
 				$(DIR_SRCS)parse.c \
 				$(DIR_SRCS)utils.c \
 				$(DIR_SRCS)print.c \
-
-
+				$(DIR_SRCS)parse_entry.c \
 
 OBJS = $(SRCS:$(DIR_SRCS)%.c=$(DIR_OBJ)%.o)
 
