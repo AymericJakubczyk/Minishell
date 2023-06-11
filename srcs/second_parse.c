@@ -6,11 +6,14 @@
 /*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 23:55:37 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/11 18:00:57 by ajakubcz         ###   ########.fr       */
+/*   Updated: 2023/06/11 18:29:38 by ajakubcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "minishell.h"
+
+static char	*get_str(t_entry *entry, int *i, int j);
+static void	set_type(t_parse *parse);
 
 void	colapse_all(t_entry *entry, t_parse *parse)
 {
@@ -39,7 +42,7 @@ void	colapse_all(t_entry *entry, t_parse *parse)
 	set_type(parse);
 }
 
-char	*get_str(t_entry *entry, int *i, int j)
+static char	*get_str(t_entry *entry, int *i, int j)
 {
 	char	*str;
 	int		runner;
@@ -86,7 +89,7 @@ int	go_to_end_block(t_entry *entry)
 	return (i);
 }
 
-void	set_type(t_parse *parse)
+static void	set_type(t_parse *parse)
 {
 	int	i;
 	int	cmd;

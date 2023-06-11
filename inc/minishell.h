@@ -6,7 +6,7 @@
 /*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:02:11 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/11 16:23:42 by ajakubcz         ###   ########.fr       */
+/*   Updated: 2023/06/11 18:33:53 by ajakubcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,34 @@ typedef struct s_parse
 void	ft_free(char *s1, char *s2);
 char	*ft_strjoin2(char *s1, char *s2);
 
+//print.c
+
+
 //get_prompt.c
 char	*ft_get_prompt(void);
 
-//parsing
+//parse_and_exec.c
 void	parse_and_exec(char *str);
-void	print_parse(t_parse *parse);
+
+//check_syntax.c
+void	check_syntax_quote(char *str);
+
+//first_parse.c
+void	init_entry(t_entry *entry, char *str);
+
+//second_parse.c
+void	colapse_all(t_entry *entry, t_parse *parse);
+int		go_to_end_block(t_entry *entry);
+
+//parse_errors.c
+int	check_parse(t_parse *input);
+
+//parse_utils.c
+char	*char_to_str(char c);
+int		size_of_parse(t_entry *entry);
+void	set_type_utils(int type1, int type2, int *i, t_parse *parse);
+void	set_type_utils2(int type, int *cmd, int *i, t_parse *parse);
+void	free_all_parse(t_parse *parse);
+
 
 #endif

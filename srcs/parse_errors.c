@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_errors.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
+/*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 18:27:05 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/11 14:45:36 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/11 18:19:45 by ajakubcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "minishell.h"
 
 static int	check_redirect_out(t_parse *input, int runner, char redir);
 static int	check_redirect_in(t_parse *input, int runner, char redir);

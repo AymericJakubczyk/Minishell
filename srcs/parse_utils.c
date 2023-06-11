@@ -6,7 +6,7 @@
 /*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 17:02:11 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/11 17:47:02 by ajakubcz         ###   ########.fr       */
+/*   Updated: 2023/06/11 18:24:21 by ajakubcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,17 @@ void	set_type_utils2(int type, int *cmd, int *i, t_parse *parse)
 	else
 		*cmd = 0;
 	*i += 1;
+}
+
+void	free_all_parse(t_parse *parse)
+{
+	int	i;
+
+	i = 0;
+	while (parse[i].str)
+	{
+		free(parse[i].str);
+		i++;
+	}
+	free(parse);
 }

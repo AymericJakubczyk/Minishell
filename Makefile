@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+         #
+#    By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/01 14:11:17 by ajakubcz          #+#    #+#              #
-#    Updated: 2023/06/11 15:32:25 by cprojean         ###   ########.fr        #
+#    Updated: 2023/06/11 18:16:13 by ajakubcz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,10 @@ SRCS =			$(DIR_SRCS)main.c \
 				$(DIR_SRCS)get_prompt.c \
 				$(DIR_SRCS)ft_error.c \
 				$(DIR_SRCS)exec_parse.c \
-				$(DIR_SRCS)parse.c \
+				$(DIR_SRCS)check_syntax.c \
+				$(DIR_SRCS)first_parse.c \
+				$(DIR_SRCS)second_parse.c \
+				$(DIR_SRCS)parse_utils.c \
 				$(DIR_SRCS)utils.c \
 				$(DIR_SRCS)print.c \
 
@@ -50,7 +53,7 @@ $(DIR_OBJ):
 				mkdir $@
 
 $(DIR_OBJ)%.o: $(DIR_SRCS)%.c $(LIB) $(HEADERS) | $(DIR_OBJ)
-				$(CC) $(CFLAGS) -c $< -o $@
+				$(CC) $(CFLAGS) -I inc -c $< -o $@
 
 $(NAME) :		$(LIB) $(OBJS)
 				$(CC) $(OBJS) -o $(NAME) -L./libft -lft -lreadline

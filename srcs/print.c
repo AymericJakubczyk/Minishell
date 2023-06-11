@@ -6,11 +6,11 @@
 /*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 10:59:13 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/11 17:47:17 by ajakubcz         ###   ########.fr       */
+/*   Updated: 2023/06/11 18:17:31 by ajakubcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "minishell.h"
 
 void	print_entry(t_entry *entry)
 {

@@ -6,11 +6,14 @@
 /*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 16:49:00 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/11 17:14:53 by ajakubcz         ###   ########.fr       */
+/*   Updated: 2023/06/11 18:27:17 by ajakubcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	which_type(t_entry *entry, char c);
+static void	which_context(t_entry *entry, char quote);
 
 void	init_entry(t_entry *entry, char *str)
 {
@@ -36,17 +39,7 @@ void	init_entry(t_entry *entry, char *str)
 	entry[i].c = '\0';
 }
 
-void	which_context(t_entry *entry, char quote)
-{
-	if (quote == 0)
-		entry->context = NO_QUOTE;
-	if (quote == '\'')
-		entry->context = SI_QUOTE;
-	if (quote == '\"')
-		entry->context = DO_QUOTE;
-}
-
-void	which_type(t_entry *entry, char c)
+static void	which_type(t_entry *entry, char c)
 {
 	if (c == ' ' || c == '\t')
 		entry->type = WHITESPACE;
@@ -62,4 +55,14 @@ void	which_type(t_entry *entry, char c)
 		entry->type = D_QUOTE;
 	else
 		entry->type = CHAR;
+}
+
+static void	which_context(t_entry *entry, char quote)
+{
+	if (quote == 0)
+		entry->context = NO_QUOTE;
+	if (quote == '\'')
+		entry->context = SI_QUOTE;
+	if (quote == '\"')
+		entry->context = DO_QUOTE;
 }
