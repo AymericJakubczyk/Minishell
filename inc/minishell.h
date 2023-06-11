@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:02:11 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/11 15:51:49 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/11 18:41:21 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,17 @@ enum e_context {
 };
 
 enum e_species {
-	INFILE,
-	OUTFILE,
-	PIPEE,
-	REDIRECT_IN,
-	HEREDOC,
-	LIMITER,
-	REDIRECT_OUT,
-	APPEND,
-	COMMAND,
-	CMD_ARG,
-	EXPEND
+	INFILE,			//0
+	OUTFILE,		//1
+	PIPEE,			//2
+	REDIRECT_IN,	//3
+	HEREDOC,		//4
+	LIMITER,		//5
+	REDIRECT_OUT,	//6
+	APPEND,			//7
+	COMMAND,		//8
+	CMD_ARG,		//9
+	EXPEND			//10
 };
 
 typedef struct s_entry
@@ -69,13 +69,34 @@ typedef struct s_parse
 void	ft_free(char *s1, char *s2);
 char	*ft_strjoin2(char *s1, char *s2);
 
+//print.c
+
+
 //get_prompt.c
 char	*ft_get_prompt(void);
 
-//parsing
+//parse_and_exec.c
 void	parse_and_exec(char *str);
-void	print_parse(t_parse *parse);
+
+//check_syntax.c
 void	check_syntax_quote(char *str);
+
+//first_parse.c
+void	init_entry(t_entry *entry, char *str);
+
+//second_parse.c
+void	colapse_all(t_entry *entry, t_parse *parse);
+int		go_to_end_block(t_entry *entry);
+
+//parse_errors.c
+int	check_parse(t_parse *input);
+
+//parse_utils.c
+char	*char_to_str(char c);
+int		size_of_parse(t_entry *entry);
+void	set_type_utils(int type1, int type2, int *i, t_parse *parse);
+void	set_type_utils2(int type, int *cmd, int *i, t_parse *parse);
+void	free_all_parse(t_parse *parse);
 
 
 #endif

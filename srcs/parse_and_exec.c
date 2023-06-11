@@ -6,16 +6,11 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 18:24:28 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/11 15:44:22 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/11 18:42:47 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
-
-void	print_entry(t_entry *entry);
-void	free_all_parse(t_parse *parse);
-void	init_entry(t_entry *entry, char *str);
-void	which_type(t_entry *entry, char c);
+#include "minishell.h"
 
 void	parse_and_exec(char *str)
 {
@@ -37,21 +32,7 @@ void	parse_and_exec(char *str)
 	free(entry);
 	print_parse(parse);
 	check_parse(parse);
-	// type_parse(parse);
 	//expand();
 	//exec();
 	free_all_parse(parse);
-}
-
-void	free_all_parse(t_parse *parse)
-{
-	int	i;
-
-	i = 0;
-	while (parse[i].str)
-	{
-		free(parse[i].str);
-		i++;
-	}
-	free(parse);
 }

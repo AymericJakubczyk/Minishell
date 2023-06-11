@@ -1,40 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print.c                                            :+:      :+:    :+:   */
+/*   check_syntax.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/07 10:59:13 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/11 18:17:31 by ajakubcz         ###   ########.fr       */
+/*   Created: 2023/06/11 17:00:23 by ajakubcz          #+#    #+#             */
+/*   Updated: 2023/06/11 18:16:33 by ajakubcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_entry(t_entry *entry)
+void	check_syntax_quote(char *str)
 {
-	int	i;
+	int		i;
+	char	quote;
 
 	i = 0;
-	ft_printf("print entry : \n");
-	while (entry[i].c != 0)
+	quote = 0;
+	while (str[i])
 	{
-		ft_printf("%c | type : %i | context : %i\n", entry[i].c, \
-			entry[i].type, entry[i].context);
+		if (str[i] == quote)
+			quote = 0;
+		else if (str[i] == '\'' && quote == 0)
+			quote = '\'';
+		else if (str[i] == '\"' && quote == 0)
+			quote = '\"';
 		i++;
 	}
-}
-
-void	print_parse(t_parse *parse)
-{
-	int	i;
-
-	i = 0;
-	ft_printf("print parse : \n");
-	while (parse[i].str)
+	if (quote != 0)
 	{
-		ft_printf("%s : %d\n", parse[i].str, parse[i].type);
-		i++;
+		ft_printf("syntax error!\n");
+		//exit(2);
 	}
+	// else
+		// ft_printf("good quote\n");
 }
