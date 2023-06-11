@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:02:11 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/11 18:50:48 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/11 18:56:00 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,9 @@ int		go_to_end_block(t_entry *entry);
 
 //parse_errors.c
 int	check_parse(t_parse *input);
+
+//next_parse_errors.c
+int	next_parse_check(t_parse *input);
 
 //parse_utils.c
 char	*char_to_str(char c);

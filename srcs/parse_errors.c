@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 18:27:05 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/11 18:49:21 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/11 18:54:07 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	check_parse(t_parse *input)
 				return (-1);
 		runner++;
 	}
-	next_parse_check(input);
+	return (next_parse_check(input));
 }
 
 static int	check_pipe(t_parse *input, int runner)
@@ -46,6 +46,7 @@ static int	check_pipe(t_parse *input, int runner)
 		else
 			return (ft_error(ERROR_7, NULL), -1);
 	}
+	return (0);
 }
 
 static int	check_redirect_in(t_parse *input, int runner)
@@ -57,8 +58,6 @@ static int	check_redirect_in(t_parse *input, int runner)
 		else
 			return (ft_error(ERROR_5, NULL), -1);
 	}
-	else
-		return (0);
 	return (0);
 }
 
@@ -71,7 +70,5 @@ static int	check_redirect_out(t_parse *input, int runner)
 		else
 			return (ft_error(ERROR_3, NULL), -1);
 	}
-	else
-		return (0);
 	return (0);
 }
