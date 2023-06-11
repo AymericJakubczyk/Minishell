@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:02:11 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/11 14:44:47 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/11 15:28:37 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,6 @@ char	*ft_get_prompt(void);
 
 //parsing
 void	parse_and_exec(char *str);
-
+void	print_parse(t_parse *parse);
 
 #endif

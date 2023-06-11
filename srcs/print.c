@@ -6,11 +6,11 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 10:59:13 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/11 14:47:08 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/11 15:33:20 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../inc/minishell.h"
 
 void	print_entry(t_entry *entry)
 {
@@ -33,7 +33,7 @@ void	print_parse(t_parse *parse)
 	ft_printf("print parse : \n");
 	while (parse[i].str)
 	{
-		ft_printf("%s : %i\n", parse[i].str, parse[i].type);
+		ft_printf("%s \n", parse[i].str);
 		i++;
 	}
 }

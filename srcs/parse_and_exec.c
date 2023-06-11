@@ -6,14 +6,13 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 18:24:28 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/11 14:46:44 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/11 15:30:58 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
 void	print_entry(t_entry *entry);
-void	print_parse(t_parse *parse);
 void	free_all_parse(t_parse *parse);
 void	init_entry(t_entry *entry, char *str);
 void	which_type(t_entry *entry, char c);
