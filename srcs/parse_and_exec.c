@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_and_exec.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
+/*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 18:24:28 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/11 15:30:58 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/11 17:46:20 by ajakubcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,10 @@ void	parse_and_exec(char *str)
 	free(entry);
 	print_parse(parse);
 	check_parse(parse);
-	// type_parse(parse);
 	//expand();
 	//exec();
 	free_all_parse(parse);
 }
-
 
 void	free_all_parse(t_parse *parse)
 {

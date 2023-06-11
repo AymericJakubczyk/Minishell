@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
+/*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:02:11 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/11 15:28:37 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/11 16:23:42 by ajakubcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,17 @@ enum e_context {
 };
 
 enum e_species {
-	INFILE,
-	OUTFILE,
-	PIPEE,
-	REDIRECT_IN,
-	HEREDOC,
-	LIMITER,
-	REDIRECT_OUT,
-	APPEND,
-	COMMAND,
-	CMD_ARG,
-	EXPEND
+	INFILE,			//0
+	OUTFILE,		//1
+	PIPEE,			//2
+	REDIRECT_IN,	//3
+	HEREDOC,		//4
+	LIMITER,		//5
+	REDIRECT_OUT,	//6
+	APPEND,			//7
+	COMMAND,		//8
+	CMD_ARG,		//9
+	EXPEND			//10
 };
 
 typedef struct s_entry
