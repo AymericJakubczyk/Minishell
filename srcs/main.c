@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:11:04 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/10 13:26:43 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/11 14:44:20 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	main(int ac, char **av, char **env)
 
 	(void) ac;
 	(void) av;
+	(void) env;
 	prompt = NULL;
 	cmd = ft_strdup("");
 	while (ft_strcmp(cmd, "exit") != 0)

@@ -6,15 +6,15 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 18:27:05 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/10 19:05:38 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/11 14:45:36 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int	check_redirect_out(t_parse *input, int runner, char redir);
-int	check_redirect_in(t_parse *input, int runner, char redir);
-int	check_pipe(t_parse *input, int runner);
+static int	check_redirect_out(t_parse *input, int runner, char redir);
+static int	check_redirect_in(t_parse *input, int runner, char redir);
+static int	check_pipe(t_parse *input, int runner);
 
 int	check_parse(t_parse *input)
 {
@@ -36,7 +36,7 @@ int	check_parse(t_parse *input)
 	}
 }
 
-int	check_pipe(t_parse *input, int runner)
+static int	check_pipe(t_parse *input, int runner)
 {
 	if (input[runner + 1].str && input[runner + 1].str[0] == '|')
 	{
@@ -47,7 +47,7 @@ int	check_pipe(t_parse *input, int runner)
 	}
 }
 
-int	check_redirect_in(t_parse *input, int runner, char redir)
+static int	check_redirect_in(t_parse *input, int runner, char redir)
 {
 	if (input[runner + 1].str && input[runner + 1].str[0] == redir)
 	{
@@ -61,7 +61,7 @@ int	check_redirect_in(t_parse *input, int runner, char redir)
 	return (0);
 }
 
-int	check_redirect_out(t_parse *input, int runner, char redir)
+static int	check_redirect_out(t_parse *input, int runner, char redir)
 {
 	if (input[runner + 1].str && input[runner + 1].str[0] == redir)
 	{

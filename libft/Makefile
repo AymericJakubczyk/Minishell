@@ -6,10 +6,11 @@
 #    By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 14:37:15 by ajakubcz          #+#    #+#              #
-#    Updated: 2023/06/09 16:45:33 by ajakubcz         ###   ########.fr        #
+#    Updated: 2023/06/11 14:39:04 by cprojean         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+.SILENT :
 
 NAME =		libft.a
 
@@ -59,5 +60,3 @@ fclean : clean
 re : fclean all
 
 .PHONY : all clean fclean re bonus
-
-.SILENT : all

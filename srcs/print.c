@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 10:59:13 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/07 12:48:32 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/11 14:47:08 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	print_entry(t_entry *entry)
 	ft_printf("print entry : \n");
 	while (entry[i].c != 0)
 	{
-		ft_printf("%c : %i\n", entry[i].c, entry[i].type);
+		ft_printf("%c | type : %i | context : %i\n", entry[i].c, entry[i].type, entry[i].context);
 		i++;
 	}
 }

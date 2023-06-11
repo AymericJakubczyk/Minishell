@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 18:24:28 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/10 13:39:14 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/11 14:46:44 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,31 +44,6 @@ void	parse_and_exec(char *str)
 	free_all_parse(parse);
 }
 
-void	print_entry(t_entry *entry)
-{
-	int	i;
-
-	i = 0;
-	ft_printf("print entry : \n");
-	while (entry[i].c != '\0')
-	{
-		ft_printf("%c | type : %i | context : %i\n", entry[i].c, entry[i].type, entry[i].context);
-		i++;
-	}
-}
-
-void	print_parse(t_parse *parse)
-{
-	int	i;
-
-	i = 0;
-	ft_printf("print parse : \n");
-	while (parse[i].str)
-	{
-		ft_printf("%s\n", parse[i].str);
-		i++;
-	}
-}
 
 void	free_all_parse(t_parse *parse)
 {
