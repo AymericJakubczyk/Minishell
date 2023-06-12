@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+         #
+#    By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/01 14:11:17 by ajakubcz          #+#    #+#              #
-#    Updated: 2023/06/11 18:48:49 by cprojean         ###   ########.fr        #
+#    Updated: 2023/06/12 13:50:09 by ajakubcz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ SRCS =			$(DIR_SRCS)main.c \
 				$(DIR_SRCS)first_parse.c \
 				$(DIR_SRCS)second_parse.c \
 				$(DIR_SRCS)parse_utils.c \
+				$(DIR_SRCS)expand.c \
 				$(DIR_SRCS)utils.c \
 				$(DIR_SRCS)print.c \
 
