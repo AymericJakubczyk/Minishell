@@ -6,7 +6,7 @@
 /*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 23:55:37 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/11 18:29:38 by ajakubcz         ###   ########.fr       */
+/*   Updated: 2023/06/12 11:31:54 by ajakubcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	colapse_all(t_entry *entry, t_parse *parse)
 		}
 	}
 	parse[nbr].str = NULL;
+	if (check_parse(parse) == -1)
+		return ;
 	set_type(parse);
 }
 
