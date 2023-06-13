@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_prompt.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
+/*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 17:22:21 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/11 18:19:37 by ajakubcz         ###   ########.fr       */
+/*   Updated: 2023/06/13 14:07:14 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ char	*ft_get_prompt(void)
 	char	*user;
 	char	*path;
 
-	user = getenv("USER");
 	path = ft_get_path();
+	user = getenv("USER");
 	prompt = ft_strjoin2(ft_strdup(user), ft_strdup(":"));
 	prompt = ft_strjoin2(prompt, path);
 	prompt = ft_strjoin2(prompt, ft_strdup("$ "));
@@ -35,7 +35,7 @@ static char	*ft_get_path(void)
 	char	*path;
 	char	*home;
 
-	path = getenv("PWD");
+	path = ft_pwd();
 	home = getenv("HOME");
 	if (is_in_path(home, path))
 		path = replace_in_path(home, path);

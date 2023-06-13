@@ -6,7 +6,7 @@
 #    By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 14:37:15 by ajakubcz          #+#    #+#              #
-#    Updated: 2023/06/11 14:39:04 by cprojean         ###   ########.fr        #
+#    Updated: 2023/06/13 13:09:18 by cprojean         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ OBJSGNL = 		$(GNL:.c=.o)
 OBJSFT_PRINTF = $(FT_PRINTF:.c=.o)
 
 CC = gcc
-CFLAGS = -Werror -Wextra -Wall
+CFLAGS = -Werror -Wextra -Wall -g3
 RM = rm -rf
 HEADERS = libft.h get_next_line.h ft_printf.h
 

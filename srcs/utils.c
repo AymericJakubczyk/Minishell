@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
+/*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 15:41:21 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/11 18:19:51 by ajakubcz         ###   ########.fr       */
+/*   Updated: 2023/06/12 17:49:00 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,33 @@ char	*ft_strjoin2(char *s1, char *s2)
 	}
 	mem[j] = '\0';
 	return (ft_free(s1, s2), mem);
+}
+
+char	*ft_strjoin3(char *s1, char *s2)
+{
+	char	*mem;
+	int		i;
+	int		j;
+
+	if (!s1 || !s2)
+		return (free(s1), NULL);
+	mem = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	if (mem == 0)
+		return (free(s1), NULL);
+	i = 0;
+	while (s1[i])
+	{
+		mem[i] = s1[i];
+		i++;
+	}
+	j = i;
+	i = 0;
+	while (s2[i])
+	{
+		mem[j] = s2[i];
+		j++;
+		i++;
+	}
+	mem[j] = '\0';
+	return (free(s1), mem);
 }

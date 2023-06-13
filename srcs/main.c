@@ -6,25 +6,26 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:11:04 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/11 18:41:49 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/13 14:12:15 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static int	ft_strcmp(char *s1, char*s2);
+static int	ft_exit(char *array);
 
 int	main(int ac, char **av, char **env)
 {
 	char	*cmd;
 	char	*prompt;
+	char	*eenv;
 
 	(void) ac;
 	(void) av;
-	(void) env;
 	prompt = NULL;
 	cmd = ft_strdup("");
-	while (ft_strcmp(cmd, "exit") != 0)
+	while (ft_exit(cmd) == 0)
 	{
 		free(cmd);
 		ft_free(prompt, NULL);
@@ -52,4 +53,49 @@ static int	ft_strcmp(char *s1, char*s2)
 	if (s1[i] == '\n')
 		return (s2[i]);
 	return (s1[i] - s2[i]);
+}
+
+static int	ft_exit(char *array)
+{
+	int		runner;
+	int		count;
+	char	*string;
+
+	count = 0;
+	runner = 0;
+	if (ft_strlen(array) < 3)
+		return (0);
+	string = malloc(sizeof(char) * (no_whitespaces(array)) + 1);
+	if (!string)
+		return (-1);
+	while (array[runner++])
+	{
+		if (array[runner] != ' ' && array[runner] != '\t')
+		{
+			string[count] = array[runner];
+			count++;
+		}
+	}
+	string[count] = '\0';
+	if (ft_strcmp(string, "exit") == 0)
+		return (free(string), -1);
+	if ((ft_strncmp(string, "exit", 4) == 0) && (ft_strcmp(string, "exit") != 0))
+		return (free(string), ft_error(ERROR_21, "exit"), -1);
+	return (0);
+}
+
+int	no_whitespaces(char	*array)
+{
+	int	runner;
+	int	count;
+
+	count = 0;
+	runner = 0;
+	while (array[runner])
+	{
+		if (array[runner] != ' ' && array[runner] != '\t')
+			count++;
+		runner++;
+	}
+	return (count);
 }

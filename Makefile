@@ -6,7 +6,7 @@
 #    By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/01 14:11:17 by ajakubcz          #+#    #+#              #
-#    Updated: 2023/06/11 18:48:49 by cprojean         ###   ########.fr        #
+#    Updated: 2023/06/12 18:12:58 by cprojean         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,7 @@ SRCS =			$(DIR_SRCS)main.c \
 				$(DIR_SRCS)parse_utils.c \
 				$(DIR_SRCS)utils.c \
 				$(DIR_SRCS)print.c \
+				$(DIR_SRCS)builtins.c \
 
 OBJS = $(SRCS:$(DIR_SRCS)%.c=$(DIR_OBJ)%.o)
 

@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:02:11 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/11 18:56:00 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/12 18:13:54 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,9 @@ typedef struct s_parse
 //utils.c
 void	ft_free(char *s1, char *s2);
 char	*ft_strjoin2(char *s1, char *s2);
+char	*ft_strjoin3(char *s1, char *s2);
 
 //print.c
-
 
 //get_prompt.c
 char	*ft_get_prompt(void);
@@ -100,5 +100,8 @@ int		size_of_parse(t_entry *entry);
 void	set_type_utils(int type1, int type2, int *i, t_parse *parse);
 void	set_type_utils2(int type, int *cmd, int *i, t_parse *parse);
 void	free_all_parse(t_parse *parse);
+
+//builtins.c
+char	*ft_pwd();
 
 #endif
