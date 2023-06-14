@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:48 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/13 14:03:05 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/14 13:18:33 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void	ft_env(char **env)
 		ft_printf("%s\n", env[runner]);
 		runner++;
 	}
-	return (0);
 }
 
 char	*ft_pwd()

@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:02:11 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/12 18:13:54 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/14 13:13:49 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,5 +103,9 @@ void	free_all_parse(t_parse *parse);
 
 //builtins.c
 char	*ft_pwd();
+
+//export.c
+char	*ft_getenv(t_list **my_env, char *get_me);
+
 
 #endif

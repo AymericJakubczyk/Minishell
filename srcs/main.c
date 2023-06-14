@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:11:04 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/13 14:12:15 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/14 13:38:37 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,14 @@ int	main(int ac, char **av, char **env)
 {
 	char	*cmd;
 	char	*prompt;
-	char	*eenv;
+	t_list	*my_env;
 
+	my_env = NULL;
 	(void) ac;
 	(void) av;
+	ft_dup_env(env, &my_env);
+	ft_export(&my_env, "test=salut");
+	printf("%s\n", ft_getenv(&my_env, "test"));
 	prompt = NULL;
 	cmd = ft_strdup("");
 	while (ft_exit(cmd) == 0)
@@ -63,8 +67,8 @@ static int	ft_exit(char *array)
 
 	count = 0;
 	runner = 0;
-	if (ft_strlen(array) < 3)
-		return (0);
+	if (ft_strcmp(array, "exit") == 0)
+		return (-1);
 	string = malloc(sizeof(char) * (no_whitespaces(array)) + 1);
 	if (!string)
 		return (-1);

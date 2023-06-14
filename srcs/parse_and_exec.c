@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 18:24:28 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/14 09:54:28 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/14 09:56:36 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ void	parse_and_exec(char *str)
 	free(entry);
 	//print_parse(parse);
 	conver_parse_to_list(parse, &list);
-	print_list(list);
-	expand(list);
-	print_list(list);
+	// print_list(list);
+	// expand(list);
+	// print_list(list);
 	//exec();
 	free_all_parse(parse);
 }
