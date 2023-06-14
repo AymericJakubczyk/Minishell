@@ -6,7 +6,7 @@
 #    By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/01 14:11:17 by ajakubcz          #+#    #+#              #
-#    Updated: 2023/06/12 18:12:58 by cprojean         ###   ########.fr        #
+#    Updated: 2023/06/14 09:54:06 by cprojean         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ SRCS =			$(DIR_SRCS)main.c \
 				$(DIR_SRCS)first_parse.c \
 				$(DIR_SRCS)second_parse.c \
 				$(DIR_SRCS)parse_utils.c \
+				$(DIR_SRCS)expand.c \
 				$(DIR_SRCS)utils.c \
 				$(DIR_SRCS)print.c \
 				$(DIR_SRCS)builtins.c \
