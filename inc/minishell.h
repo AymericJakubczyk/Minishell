@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:02:11 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/14 13:13:49 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/20 16:33:34 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ typedef struct s_parse
 void	ft_free(char *s1, char *s2);
 char	*ft_strjoin2(char *s1, char *s2);
 char	*ft_strjoin3(char *s1, char *s2);
+int		ft_strcmp(char *s1, char*s2);
+
 
 //print.c
 
@@ -106,6 +108,9 @@ char	*ft_pwd();
 
 //export.c
 char	*ft_getenv(t_list **my_env, char *get_me);
+
+//unset.c
+void	ft_unset(t_list **my_env, char *str);
 
 
 #endif

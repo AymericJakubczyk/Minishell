@@ -6,13 +6,13 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:11:04 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/14 13:38:37 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/20 19:37:48 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	ft_strcmp(char *s1, char*s2);
+int	ft_strcmp(char *s1, char*s2);
 static int	ft_exit(char *array);
 
 int	main(int ac, char **av, char **env)
@@ -22,12 +22,11 @@ int	main(int ac, char **av, char **env)
 	t_list	*my_env;
 
 	my_env = NULL;
+	prompt = NULL;
 	(void) ac;
 	(void) av;
 	ft_dup_env(env, &my_env);
-	ft_export(&my_env, "test=salut");
-	printf("%s\n", ft_getenv(&my_env, "test"));
-	prompt = NULL;
+	ft_unset(&my_env, "la-");
 	cmd = ft_strdup("");
 	while (ft_exit(cmd) == 0)
 	{
@@ -45,7 +44,7 @@ int	main(int ac, char **av, char **env)
 }
 
 //A refaire car inutile pour le exit car cmd "exit " n'est pas pris en compte
-static int	ft_strcmp(char *s1, char*s2)
+int	ft_strcmp(char *s1, char*s2)
 {
 	int	i;
 
