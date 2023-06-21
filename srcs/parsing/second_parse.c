@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   second_parse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
+/*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 23:55:37 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/21 17:07:06 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/21 21:59:11 by ajakubcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static char	*get_str(t_entry *entry, int *i, int j);
 static void	set_type(t_parse *parse);
 
-void	colapse_all(t_entry *entry, t_parse *parse)
+int	colapse_all(t_entry *entry, t_parse *parse)
 {
 	int	i;
 	int	nbr;
@@ -33,15 +33,15 @@ void	colapse_all(t_entry *entry, t_parse *parse)
 		else
 		{
 			parse[nbr].str = get_str(entry, &i, go_to_end_block(&entry[i]));
-			// if (!parse[nbr].str)
-			// 	free_all
+			if (!parse[nbr].str)
+				return (free(entry), free_all_parse(parse), -1);
 			nbr++;
 		}
 	}
 	parse[nbr].str = NULL;
 	if (check_parse(parse) == -1)
-		return ;
-	set_type(parse);
+		return (0);
+	return (set_type(parse), 1);
 }
 
 static char	*get_str(t_entry *entry, int *i, int j)

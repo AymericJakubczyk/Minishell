@@ -6,7 +6,7 @@
 /*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 15:13:46 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/20 10:00:18 by ajakubcz         ###   ########.fr       */
+/*   Updated: 2023/06/21 23:08:59 by ajakubcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	expand(t_entry *entry, t_entry **new_entry)
 	fill_new_entry(entry, *new_entry);
 }
 
+
+//refaire car maintenant j'interprete pas les variables dans les infile/outfile/limiter
 int	get_new_size(t_entry *entry)
 {
 	int	i;
@@ -64,6 +66,7 @@ void	fill_new_entry(t_entry *entry, t_entry *new_entry)
 {
 	int	i;
 	int	j;
+	int size;
 
 	j = 0;
 	i = 0;
@@ -72,6 +75,27 @@ void	fill_new_entry(t_entry *entry, t_entry *new_entry)
 		//ft_printf("char %d : %c context : %d\n", i, entry[i].c, entry[i].context);
 		if (entry[i].c == '$' && entry[i].context != SI_QUOTE)
 			fill_value_env(new_entry, entry[i].context, getenv(get_name_env(entry, &i)), &j);
+		else if ((entry[i].type == CHEV_IN || entry[i].type == CHEV_OUT) && entry[i].context == 0)
+		{
+			ft_printf("after chev\n");
+			new_entry[j].c = entry[i].c;
+			new_entry[j].type = entry[i].type;
+			new_entry[j].context = entry[i].context;
+			i++;
+			j++;
+			while (entry[i].c && entry[i].type == WHITESPACE)
+				i++;
+			size = go_to_end_block(&entry[i]);
+			while (entry[i].c && size > 0)
+			{
+				new_entry[j].c = entry[i].c;
+				new_entry[j].type = entry[i].type;
+				new_entry[j].context = entry[i].context;
+				size--;
+				i++;
+				j++;
+			}
+		}
 		else
 		{
 			if (entry[i].context == 0 && (entry[i].type == S_QUOTE || entry[i].type == D_QUOTE))

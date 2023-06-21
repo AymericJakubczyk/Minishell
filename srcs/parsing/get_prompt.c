@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_prompt.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
+/*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 17:22:21 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/21 16:52:10 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/21 22:48:31 by ajakubcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ static char	*ft_get_path(void)
 	char	*path;
 	char	*home;
 
-	path = getenv("PWD");
+	//path = getenv("PWD");
+	path = ft_pwd();
 	home = getenv("HOME");
 	if (is_in_path(home, path))
 		path = replace_in_path(home, path);
@@ -64,5 +65,6 @@ static char	*replace_in_path(char *home, char *path)
 	while (home[i] && path[i] && home[i] == path[i])
 		i++;
 	new_path = ft_strjoin("~", &path[i]);
+	free(path);
 	return (new_path);
 }
