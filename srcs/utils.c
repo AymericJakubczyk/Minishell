@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 15:41:21 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/21 14:54:07 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/21 15:09:52 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char	*ft_strjoin3(char *s1, char *s2)
 	return (free(s1), mem);
 }
 
-char	*ft_strjoin3(char *s1, char *s2)
+char	*ft_strjoin4(char *s1, char *s2)
 {
 	char	*mem;
 	int		i;

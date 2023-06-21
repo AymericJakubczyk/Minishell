@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:48 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/21 15:01:20 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/21 15:27:30 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	ft_echo(char **array)
 
 void	ft_env(t_list **env)
 {
-	t_list	runner;
+	t_list	*runner;
 
 	runner = *env;
 	while (runner != NULL)
@@ -62,7 +62,7 @@ void	ft_cd(char *directory, t_list **my_env)
 	char	*pwd;
 	
 	oldpwd = ft_strjoin4("OLDPWD=", ft_pwd());
-	ft_export(my_env, oldpwd)
+	ft_export(my_env, oldpwd);
 	if (!directory)
 		chdir("/nfs/homes");
 	chdir(directory);

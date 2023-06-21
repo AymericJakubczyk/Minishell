@@ -6,7 +6,7 @@
 #    By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/01 14:11:17 by ajakubcz          #+#    #+#              #
-#    Updated: 2023/06/20 16:34:25 by cprojean         ###   ########.fr        #
+#    Updated: 2023/06/21 15:28:12 by cprojean         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,9 @@ RM = rm -rf
 
 DIR_OBJ = ./.obj/
 
-DIR_SRCS = ./srcs/
+DIR_SRCS = srcs/
+
+DIR_BUILTINS = srcs/builtins/
 
 DIR_INCLUDES = ./inc/
 
@@ -43,18 +45,20 @@ SRCS =			$(DIR_SRCS)main.c \
 				$(DIR_SRCS)expand.c \
 				$(DIR_SRCS)utils.c \
 				$(DIR_SRCS)print.c \
-				$(DIR_SRCS)builtins.c \
-				$(DIR_SRCS)export.c \
-				$(DIR_SRCS)unset.c \
+				$(DIR_BUILTINS)builtins.c \
+				$(DIR_BUILTINS)export.c \
+				$(DIR_BUILTINS)export_utils.c \
+				$(DIR_BUILTINS)unset.c \
+				$(DIR_BUILTINS)ft_getenv.c \
 
-OBJS = $(SRCS:$(DIR_SRCS)%.c=$(DIR_OBJ)%.o)
+OBJS		= $(patsubst %.c, $(DIR_OBJ)%.o, $(SRCS))
+
 
 all :			makelib $(NAME)
 
-$(DIR_OBJ):
-				mkdir $@
 
-$(DIR_OBJ)%.o: $(DIR_SRCS)%.c $(LIB) $(HEADERS) | $(DIR_OBJ)
+$(DIR_OBJ)%.o: %.c $(LIB) $(HEADERS)
+				@mkdir -p $(shell dirname $@)
 				$(CC) $(CFLAGS) -I inc -c $< -o $@
 
 $(NAME) :		$(LIB) $(OBJS)

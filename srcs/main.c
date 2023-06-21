@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:11:04 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/20 19:37:48 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/21 15:30:15 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	main(int ac, char **av, char **env)
 	(void) ac;
 	(void) av;
 	ft_dup_env(env, &my_env);
-	ft_unset(&my_env, "la-");
+	// ft_unset(&my_env, "la-");
 	cmd = ft_strdup("");
 	while (ft_exit(cmd) == 0)
 	{
