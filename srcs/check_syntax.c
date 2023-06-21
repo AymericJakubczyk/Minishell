@@ -6,13 +6,13 @@
 /*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 17:00:23 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/11 18:16:33 by ajakubcz         ###   ########.fr       */
+/*   Updated: 2023/06/21 14:54:11 by ajakubcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	check_syntax_quote(char *str)
+int	check_syntax_quote(char *str)
 {
 	int		i;
 	char	quote;
@@ -31,9 +31,8 @@ void	check_syntax_quote(char *str)
 	}
 	if (quote != 0)
 	{
-		ft_printf("syntax error!\n");
-		//exit(2);
+		ft_printf("minihell: syntax error, quote %c is not close!\n", quote);
+		return (0);
 	}
-	// else
-		// ft_printf("good quote\n");
+	return (1);
 }

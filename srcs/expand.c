@@ -5,130 +5,105 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/12 11:37:54 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/12 18:35:55 by ajakubcz         ###   ########.fr       */
+/*   Created: 2023/06/17 15:13:46 by ajakubcz          #+#    #+#             */
+/*   Updated: 2023/06/20 10:00:18 by ajakubcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char *verif_if_expand(char *str);
-int get_context(char *str, int j);
-char *do_expand(char *str, int i);
-char *get_name(char *str, int j);
-char *get_str_before_env(char *str, int j);
-char *get_str_after_env(char *str, int j);
+int		get_new_size(t_entry *entry);
+char	*get_name_env(t_entry *entry, int *i);
+void	fill_new_entry(t_entry *entry, t_entry *new_entry);
+void	fill_value_env(t_entry *new_entry, int context, char *value_env, int *j);
 
-void expand(t_list *list)
+void	expand(t_entry *entry, t_entry **new_entry)
 {
-	int i;
-
-	i = 0;
-	while (list)
-	{
-		list->content = verif_if_expand(list->content);
-		list = list->next;
-	}
+	*new_entry = malloc(sizeof(t_entry) * (get_new_size(entry) + 1));
+	//ft_printf("new_size : %d\n", get_new_size(entry));
+	fill_new_entry(entry, *new_entry);
 }
 
-char *verif_if_expand(char *str)
+int	get_new_size(t_entry *entry)
 {
-	int i;
+	int	i;
+	int	size;
 
 	i = 0;
-	//ft_printf("test : %s\n", str);
-	while (str[i])
+	size = 0;
+	while (entry[i].c)
 	{
-		if (str[i] == '$' && get_context(str, i) != 1) //1 == simple quote
+		if (entry[i].c == '$' && entry[i].context != SI_QUOTE)
 		{
-			return (do_expand(str, i));
-			// if (get_context(str, i) == 0) //0 == no quote
-			// 	split_expand(str, t_parse *parse, int i);
+			size += ft_strlen(getenv(get_name_env(entry, &i)));
 		}
-		i++;
+		else
+		{
+			size++;
+			i++;
+		}
 	}
-	return (str);
+	return (size);
 }
 
-int get_context(char *str, int j)
+char	*get_name_env(t_entry *entry, int *i)
 {
-	int i;
-	char quote;
+	char	*env_name;
+
+	env_name = ft_strdup("");
+	*i += 1;
+	while (ft_isalnum(entry[*i].c) || entry[*i].c == '_')
+	{
+		env_name = ft_strjoin2(env_name, char_to_str(entry[*i].c));
+		*i += 1;
+	}
+	return (env_name);
+}
+
+void	fill_new_entry(t_entry *entry, t_entry *new_entry)
+{
+	int	i;
+	int	j;
+
+	j = 0;
+	i = 0;
+	while (entry[i].c)
+	{
+		//ft_printf("char %d : %c context : %d\n", i, entry[i].c, entry[i].context);
+		if (entry[i].c == '$' && entry[i].context != SI_QUOTE)
+			fill_value_env(new_entry, entry[i].context, getenv(get_name_env(entry, &i)), &j);
+		else
+		{
+			if (entry[i].context == 0 && (entry[i].type == S_QUOTE || entry[i].type == D_QUOTE))
+				i++;
+			else
+			{
+				new_entry[j].c = entry[i].c;
+				new_entry[j].type = entry[i].type;
+				new_entry[j].context = entry[i].context;
+				i++;
+				j++;
+			}
+		}
+	}
+	new_entry[j].c = 0;
+}
+
+void	fill_value_env(t_entry *new_entry, int context, char *value_env, int *j)
+{
+	int	i;
 
 	i = 0;
-	quote = 0;
-	while (str[i] && i < j)
+	//ft_printf("value env : %s context : %d\n", value_env, context);
+	while (value_env && value_env[i])
 	{
-		if (quote == 0 && (str[i] == '\'' || str[i] == '\"'))
-			quote = str[i];
-		else if (quote != 0 && str[i] == quote)
-			quote = 0;
+		new_entry[*j].c = value_env[i];
+		if (new_entry[*j].c == ' ' || new_entry[*j].c == '\t')
+			new_entry[*j].type = WHITESPACE;
+		else
+			new_entry[*j].type = EXPAND;
+		new_entry[*j].context = context;
+		*j += 1;
 		i++;
 	}
-	ft_printf("context : %c\n", quote);
-	if (quote == 0)
-		return (0);
-	if (quote == '\'')
-		return (1);
-	if (quote == '\"')
-		return (2);
-}
-
-char *do_expand(char *str, int i)
-{
-	char *name_env;
-	char *str_expand;
-	
-	str_expand = ft_strdup("");
-	name_env = get_name(str, i);
-	ft_printf("env : %s\n", name_env);
-	str_expand = ft_strjoin2(str_expand, get_str_before_env(str, i));
-	if (getenv(name_env))
-		str_expand = ft_strjoin2(str_expand, ft_strdup(getenv(name_env)));
-	str_expand = ft_strjoin2(str_expand, get_str_after_env(str, i + 1 + ft_strlen(name_env)));
-	ft_printf("str expand: %s\n", str_expand);
-	//free(str);
-	return (str_expand);
-}
-
-char *get_name(char *str, int j)
-{
-	char *name;
-	
-	name = ft_strdup("");
-	j++;
-	while (str[j] && (ft_isalnum(str[j]) || str[j] == '_'))
-	{
-		name = ft_strjoin2(name, char_to_str(str[j]));
-		j++;
-	}
-	return (name);
-}
-
-char *get_str_before_env(char *str, int j)
-{
-	char *str_before;
-	int i;
-
-	str_before = ft_strdup("");
-	i = 0;
-	while (str[i] && i < j)
-	{
-		str_before = ft_strjoin2(str_before, char_to_str(str[i]));
-		i++;
-	}
-	return (str_before);
-}
-
-char *get_str_after_env(char *str, int j)
-{
-	char *str_after;
-
-	str_after = ft_strdup("");
-	while (str[j])
-	{
-		str_after = ft_strjoin2(str_after, char_to_str(str[j]));
-		j++;
-	}
-	return (str_after);
 }
