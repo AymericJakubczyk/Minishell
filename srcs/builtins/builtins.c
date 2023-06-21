@@ -6,46 +6,42 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:48 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/20 16:31:27 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/21 15:01:20 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// char	*ft_echo(t_list *lst)
-// {
-// 	t_list	*liste;
-// 	char	*string;
-// 	int		type;
-
-// 	type = 0;
-// 	liste = lst;
-// 	if (ft_strncmp(lst->content, '-n', 2) == 0)
-// 		type = -1;
-// 	string = ft_strdup(lst->content);
-// 	if (lst->next)
-// 		lst = lst->next;
-// 	while (lst->next && (lst->content[0] != '|' || \
-// 	lst->content[0] != '<' || lst->content[0] != '>'))
-// 	{
-// 		string = ft_strjoin3(string, ' ');
-// 		string = ft_strjoin3(string, lst->content);
-// 		lst = lst->next;
-// 	}
-// 	if (type > 0)
-// 		string = ft_strjoin3(string, '\n');
-// 	return (string);
-// }
-
-void	ft_env(char **env)
+void	ft_echo(char **array)
 {
-	int		runner;
+	int	runner;
+	int	type;
 
-	runner = 0;
-	while (env[runner])
+	runner = 1;
+	type = 0;
+	if (ft_strncmp(array[1], '-n', 2) == 0)
 	{
-		ft_printf("%s\n", env[runner]);
+		type = -1;
 		runner++;
+	}
+	while (array[runner])
+	{
+		ft_printf("%s ", array[runner]);
+		runner++;
+	}
+	if (type != -1)
+		ft_printf("\n");
+}
+
+void	ft_env(t_list **env)
+{
+	t_list	runner;
+
+	runner = *env;
+	while (runner != NULL)
+	{
+		ft_printf("%s\n", runner->content);
+		runner = runner->next;
 	}
 }
 
@@ -54,15 +50,22 @@ char	*ft_pwd()
 	char	*path;
 	int		size;
 
-	size = 40;
-	path = malloc(sizeof(char) * (size + 1));
+	size = 2048;
+	path = malloc(sizeof(char) * (size));
 	getcwd(path, size);
 	return (path);
 }
 
-void	ft_cd(char *directory)
+void	ft_cd(char *directory, t_list **my_env)
 {
+	char	*oldpwd;
+	char	*pwd;
+	
+	oldpwd = ft_strjoin4("OLDPWD=", ft_pwd());
+	ft_export(my_env, oldpwd)
 	if (!directory)
 		chdir("/nfs/homes");
 	chdir(directory);
+	pwd = ft_strjoin4("PWD=", ft_pwd());
+	ft_export(my_env, pwd);
 }
