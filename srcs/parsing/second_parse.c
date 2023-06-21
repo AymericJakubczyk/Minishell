@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 23:55:37 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/14 09:49:26 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/21 17:07:06 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,6 @@ static void	set_type(t_parse *parse)
 		{
 			parse[i].type = CMD_ARG;
 			i++;
-		}
+		}	
 	}
 }

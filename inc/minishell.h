@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:02:11 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/20 16:33:34 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/21 16:46:31 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include <stdio.h>
 # include <stdlib.h>
+# include <errno.h>
+# include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/libft.h"
@@ -30,6 +32,7 @@ enum e_types {
 	S_QUOTE,
 	D_QUOTE,
 	STRING,
+	EXPAND
 };
 
 enum e_context {
@@ -49,7 +52,8 @@ enum e_species {
 	APPEND,			//7
 	COMMAND,		//8
 	CMD_ARG,		//9
-	EXPEND			//10
+	AMBIGUOUS		//10
+	//EXPAND		//11
 };
 
 typedef struct s_entry
@@ -81,20 +85,20 @@ char	*ft_get_prompt(void);
 void	parse_and_exec(char *str);
 
 //check_syntax.c
-void	check_syntax_quote(char *str);
+int		check_syntax_quote(char *str);
 
 //first_parse.c
 void	init_entry(t_entry *entry, char *str);
 
 //second_parse.c
-void	colapse_all(t_entry *entry, t_parse *parse);
+int		colapse_all(t_entry *entry, t_parse *parse);
 int		go_to_end_block(t_entry *entry);
 
 //parse_errors.c
-int	check_parse(t_parse *input);
+int		check_parse(t_parse *input);
 
 //next_parse_errors.c
-int	next_parse_check(t_parse *input);
+int		next_parse_check(t_parse *input);
 
 //parse_utils.c
 char	*char_to_str(char c);
