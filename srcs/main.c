@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
+/*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:11:04 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/21 22:39:12 by ajakubcz         ###   ########.fr       */
+/*   Updated: 2023/06/22 11:36:33 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,13 +77,13 @@ static int	ft_exit(char *array)
 	char	*string;
 
 	count = 0;
-	runner = 0;
+	runner = -1;
 	if (ft_strcmp(array, "exit") == 0)
 		return (-1);
 	string = malloc(sizeof(char) * (no_whitespaces(array)) + 1);
 	if (!string)
-		return (-1);
-	while (array[runner++])
+		return (-12);
+	while (array[++runner])
 	{
 		if (array[runner] != ' ' && array[runner] != '\t')
 		{
