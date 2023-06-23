@@ -6,11 +6,13 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:51:36 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/20 19:36:31 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/23 13:10:05 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	is_alnum(char *str);
 
 void	ft_unset(t_list **my_env, char *str)
 {

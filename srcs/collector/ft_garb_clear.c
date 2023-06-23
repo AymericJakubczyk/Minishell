@@ -1,29 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_garb_clear.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/01 14:02:11 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/22 15:53:32 by cprojean         ###   ########.fr       */
+/*   Created: 2023/06/22 13:42:04 by cprojean          #+#    #+#             */
+/*   Updated: 2023/06/22 13:46:31 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "minishell.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <errno.h>
-# include <signal.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include "../libft/libft.h"
-# include "../libft/ft_printf.h"
-# include "error.h"
-# include "collector.h"
-# include "builtins.h"
-# include "parsing.h"
+void	ft_garb_clear(t_garb **garb)
+{
+	t_garb	*previous;
+	t_garb	*trash;
 
-#endif
+	if (garb == 0 || *garb == 0)
+		return ;
+	previous = *garb;
+	trash = *garb;
+	while (trash)
+	{
+		previous = trash;
+		trash = trash -> next;
+		free(previous->malloc);
+		free(previous);
+	}
+	garb = NULL;
+}

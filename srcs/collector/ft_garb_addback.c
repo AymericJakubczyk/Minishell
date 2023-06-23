@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_garb_addback.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/01 14:02:11 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/22 15:53:32 by cprojean         ###   ########.fr       */
+/*   Created: 2023/06/22 13:39:02 by cprojean          #+#    #+#             */
+/*   Updated: 2023/06/23 13:27:34 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "minishell.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <errno.h>
-# include <signal.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include "../libft/libft.h"
-# include "../libft/ft_printf.h"
-# include "error.h"
-# include "collector.h"
-# include "builtins.h"
-# include "parsing.h"
+void	ft_garb_addback(t_garb **garb, t_garb *trash)
+{
+	t_garb	*last;
 
-#endif
+	if (garb == 0)
+		return ;
+	last = ft_garb_last(*garb);
+	if (last == 0)
+		*garb = trash;
+	else
+		last -> next = trash;
+}

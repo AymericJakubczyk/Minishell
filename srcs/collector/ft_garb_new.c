@@ -1,29 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_garb_new.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/01 14:02:11 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/22 15:53:32 by cprojean         ###   ########.fr       */
+/*   Created: 2023/06/22 13:46:46 by cprojean          #+#    #+#             */
+/*   Updated: 2023/06/22 13:49:09 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "minishell.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <errno.h>
-# include <signal.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include "../libft/libft.h"
-# include "../libft/ft_printf.h"
-# include "error.h"
-# include "collector.h"
-# include "builtins.h"
-# include "parsing.h"
+t_garb	*ft_garb_new(void *addr)
+{
+	t_garb	*trash;
 
-#endif
+	trash = malloc(sizeof(t_garb));
+	if (trash == 0)
+		return (0);
+	trash->malloc = addr;
+	trash->next = 0;
+	return (trash);
+}

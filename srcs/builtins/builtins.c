@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:48 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/21 15:27:30 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/23 13:08:05 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_echo(char **array)
 
 	runner = 1;
 	type = 0;
-	if (ft_strncmp(array[1], '-n', 2) == 0)
+	if (ft_strncmp(array[1], "-n", 2) == 0)
 	{
 		type = -1;
 		runner++;

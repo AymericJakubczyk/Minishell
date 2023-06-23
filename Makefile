@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+         #
+#    By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/01 14:11:17 by ajakubcz          #+#    #+#              #
-#    Updated: 2023/06/21 23:13:21 by ajakubcz         ###   ########.fr        #
+#    Updated: 2023/06/23 13:32:05 by cprojean         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,11 @@ LIB = libft/libft.a
 
 RM = $(RM) -f
 
-HEADERS = $(DIR_INCLUDES)minishell.h $(DIR_INCLUDES)error.h
+HEADERS =	$(DIR_INCLUDES)minishell.h \
+			$(DIR_INCLUDES)error.h \
+			$(DIR_INCLUDES)collector.h \
+			$(DIR_INCLUDES)builtins.h \
+			$(DIR_INCLUDES)parsing.h \
 
 MKDIR = mkdir -p
 
@@ -31,6 +35,8 @@ DIR_SRCS = srcs/
 DIR_PARSING = $(DIR_SRCS)parsing/
 
 DIR_BUILTINS = $(DIR_SRCS)builtins/
+
+DIR_COLLECTOR = $(DIR_SRCS)collector/
 
 DIR_INCLUDES = ./inc/
 
@@ -51,9 +57,15 @@ SRCS =			$(DIR_SRCS)main.c \
 				$(DIR_BUILTINS)export.c \
 				$(DIR_BUILTINS)export_utils.c \
 				$(DIR_BUILTINS)unset.c \
+				$(DIR_BUILTINS)ft_exit.c \
 				$(DIR_BUILTINS)ft_getenv.c \
+				$(DIR_COLLECTOR)ft_garb_addback.c \
+				$(DIR_COLLECTOR)ft_garb_clear.c \
+				$(DIR_COLLECTOR)ft_garb_last.c \
+				$(DIR_COLLECTOR)ft_garb_new.c \
 
 OBJS		= $(patsubst %.c, $(DIR_OBJ)%.o, $(SRCS))
+
 
 all :			makelib $(NAME)
 

@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 15:41:21 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/21 15:09:52 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/22 16:00:09 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,10 @@ char	*ft_strjoin4(char *s1, char *s2)
 	int		j;
 
 	if (!s1 || !s2)
-		return (free(s1), NULL);
+		return (free(s2), NULL);
 	mem = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (mem == 0)
-		return (free(s1), NULL);
+		return (free(s2), NULL);
 	i = 0;
 	while (s1[i])
 	{
@@ -105,4 +105,18 @@ char	*ft_strjoin4(char *s1, char *s2)
 	}
 	mem[j] = '\0';
 	return (free(s2), mem);
+}
+
+int	ft_strcmp(char *s1, char*s2)
+{
+	int	i;
+
+	i = 0;
+	while (s1[i] && s1[i] != '\n' && s2[i] && s1[i] == s2[i])
+	{
+		i++;
+	}
+	if (s1[i] == '\n')
+		return (s2[i]);
+	return (s1[i] - s2[i]);
 }

@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   collector.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/01 14:02:11 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/22 15:53:32 by cprojean         ###   ########.fr       */
+/*   Created: 2023/06/22 15:36:50 by cprojean          #+#    #+#             */
+/*   Updated: 2023/06/23 13:27:12 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef COLLECTOR_H
+# define COLLECTOR_H
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <errno.h>
-# include <signal.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include "../libft/libft.h"
-# include "../libft/ft_printf.h"
-# include "error.h"
-# include "collector.h"
-# include "builtins.h"
-# include "parsing.h"
+typedef struct s_garb
+{
+	void	*malloc;
+	struct s_garb	*next;
+}	t_garb;
+
+void	ft_garb_addback(t_garb **garb, t_garb *trash);
+t_garb	*ft_garb_last(t_garb *garb);
+void	ft_garb_clear(t_garb **garb);
+t_garb	*ft_garb_new(void *addr);
 
 #endif

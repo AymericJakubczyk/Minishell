@@ -1,29 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_garb_last.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/01 14:02:11 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/22 15:53:32 by cprojean         ###   ########.fr       */
+/*   Created: 2023/06/22 15:13:57 by cprojean          #+#    #+#             */
+/*   Updated: 2023/06/23 13:30:00 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "minishell.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <errno.h>
-# include <signal.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include "../libft/libft.h"
-# include "../libft/ft_printf.h"
-# include "error.h"
-# include "collector.h"
-# include "builtins.h"
-# include "parsing.h"
-
-#endif
+t_garb	*ft_garb_last(t_garb *garb)
+{
+	if (garb == 0)
+		return (garb);
+	while (garb -> next != 0)
+	{
+		garb = garb -> next;
+	}
+	return (garb);
+}
