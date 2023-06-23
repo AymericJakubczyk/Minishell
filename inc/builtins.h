@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 15:40:43 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/23 12:57:50 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/23 16:36:08 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 //Builtins.c
 char		*ft_pwd();
-void		ft_echo(char **array);
+void		ft_echo(char *str);
 void		ft_env(t_list **env);
 void		ft_cd(char *directory, t_list **my_env);
 int			ft_exit(char *array);

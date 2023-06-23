@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 15:52:05 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/23 13:03:07 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/23 16:42:19 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int		ft_strcmp(char *s1, char*s2);
 char	*ft_get_prompt(void);
 
 //parse_and_exec.c
-void	parse_and_exec(char *str);
+void	parse_and_exec(char *str, t_list **my_env);
 
 //check_syntax.c
 int		check_syntax_quote(char *str);

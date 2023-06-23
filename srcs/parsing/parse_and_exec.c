@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 18:24:28 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/22 11:10:44 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/23 16:41:18 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	conver_parse_to_list(t_parse *parse, t_list **list);
 void	print_list(t_list *list);
 int		convert_entry_to_parse(t_entry *entry, t_parse **parse);
 
-void	parse_and_exec(char *str)
+void	parse_and_exec(char *str, t_list **my_env)
 {
 	t_entry	*entry;
 	t_entry	*new_entry;
@@ -35,17 +35,13 @@ void	parse_and_exec(char *str)
 	if (!convert_entry_to_parse(entry, &parse))
 		return ;
 	free_all_parse(parse);
-	//print_entry(entry);
 	expand(entry, &new_entry);
-	//print_entry(new_entry);
 	free(entry);
 	if (!convert_entry_to_parse(new_entry, &parse))
 		return ;
 	print_parse(parse);
+	start_exec(parse, my_env);
 	free(new_entry);
-	// conver_parse_to_list(parse, &list);
-	// print_list(list);
-	// exec();
 	free_all_parse(parse);
 }
 

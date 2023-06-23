@@ -6,13 +6,13 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:11:04 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/23 13:06:54 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/23 16:42:07 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_strcmp(char *s1, char*s2);
+int			ft_strcmp(char *s1, char*s2);
 void		handler(int sig);
 void		minishell(char **env);
 
@@ -48,7 +48,7 @@ void minishell(char **env)
 			break;
 		if (ft_strlen(cmd) != 0)
 			add_history(cmd);
-		parse_and_exec(cmd);
+		parse_and_exec(cmd, &my_env);
 	}
 	if (!cmd)
 		ft_printf("\nCTRL-D\n");

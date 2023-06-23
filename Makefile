@@ -6,7 +6,7 @@
 #    By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/01 14:11:17 by ajakubcz          #+#    #+#              #
-#    Updated: 2023/06/23 13:32:05 by cprojean         ###   ########.fr        #
+#    Updated: 2023/06/23 16:35:31 by cprojean         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,8 @@ DIR_BUILTINS = $(DIR_SRCS)builtins/
 
 DIR_COLLECTOR = $(DIR_SRCS)collector/
 
+DIR_EXEC = $(DIR_SRCS)exec/
+
 DIR_INCLUDES = ./inc/
 
 SRCS =			$(DIR_SRCS)main.c \
@@ -63,9 +65,10 @@ SRCS =			$(DIR_SRCS)main.c \
 				$(DIR_COLLECTOR)ft_garb_clear.c \
 				$(DIR_COLLECTOR)ft_garb_last.c \
 				$(DIR_COLLECTOR)ft_garb_new.c \
+				$(DIR_EXEC)start_exec.c \
+				$(DIR_EXEC)exec_utils.c \
 
-OBJS		= $(patsubst %.c, $(DIR_OBJ)%.o, $(SRCS))
-
+OBJS =			$(patsubst %.c, $(DIR_OBJ)%.o, $(SRCS))
 
 all :			makelib $(NAME)
 
