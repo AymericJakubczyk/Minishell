@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:16:31 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/23 18:53:40 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/25 15:28:57 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 # define ERROR_21 "numeric argument required\n"
 # define ERROR_22 ": not a valid identifier\n"
 # define ERROR_23 ": too many arguments\n"
+# define ERROR_42 ": help allocation broke\n"
 # define ERROR_99 "tu crois aller ou comme ca\n"
 
 void	ft_error(const char *error, char *problem);

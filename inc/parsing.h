@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 15:52:05 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/24 17:33:41 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/25 16:53:31 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	*ft_strjoin4(char *s1, char *s2);
 int		ft_strcmp(char *s1, char*s2);
 
 //get_prompt.c
-char	*ft_get_prompt(void);
+char	*ft_get_prompt(t_list	**my_env);
 
 //parse_and_exec.c
 void	parse_and_exec(char *str, t_list **my_env);

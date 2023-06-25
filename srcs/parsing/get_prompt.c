@@ -6,65 +6,76 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 17:22:21 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/22 11:09:56 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/25 18:09:26 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*ft_get_path(void);
+static char	*ft_get_path(t_list **my_env);
 static int	is_in_path(char *home, char *path);
 static char	*replace_in_path(char *home, char *path);
 
-char	*ft_get_prompt(void)
+char	*ft_get_prompt(t_list	**my_env)
 {
 	char	*prompt;
 	char	*user;
 	char	*path;
 
-	user = getenv("USER");
-	path = ft_get_path();
+	user = ft_getenv(my_env, "USER");
+	if (user == NULL)
+		user = "you";
+	path = ft_get_path(my_env);
 	prompt = ft_strjoin2(ft_strdup(user), ft_strdup(":"));
 	prompt = ft_strjoin2(prompt, path);
 	prompt = ft_strjoin2(prompt, ft_strdup("$ "));
 	return (prompt);
 }
 
-static char	*ft_get_path(void)
+static char	*ft_get_path(t_list **my_env)
 {
 	char	*path;
-	char	*home;
+	char	*output;
+	int		runner;
+	int		tmp;
 
-	//path = getenv("PWD");
+	tmp = 0;
 	path = ft_pwd();
-	home = getenv("HOME");
-	if (is_in_path(home, path))
-		path = replace_in_path(home, path);
-	return (path);
-}
-
-static int	is_in_path(char *home, char *path)
-{
-	int	i;
-
-	i = 0;
-	while (home[i] && path[i] && home[i] == path[i])
-		i++;
-	if (home[i] == '\0')
-		return (1);
-	else
-		return (0);
-}
-
-static char	*replace_in_path(char *home, char *path)
-{
-	int		i;
-	char	*new_path;
-
-	i = 0;
-	while (home[i] && path[i] && home[i] == path[i])
-		i++;
-	new_path = ft_strjoin("~", &path[i]);
+	while (path[runner])
+	{
+		if (path[runner] == '/')
+			tmp = runner;
+		runner++;
+	}
+	output = ft_strdup(&path[tmp]);
 	free(path);
-	return (new_path);
+	if (!output)
+		return (NULL);
+	return (output);
 }
+
+// static int	is_in_path(char *home, char *path)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (home[i] && path[i] && home[i] == path[i])
+// 		i++;
+// 	if (home[i] == '\0')
+// 		return (1);
+// 	else
+// 		return (0);
+// }
+
+// static char	*replace_in_path(char *home, char *path)
+// {
+// 	int		i;
+// 	char	*new_path;
+
+// 	i = 0;
+// 	while (home[i] && path[i] && home[i] == path[i])
+// 		i++;
+// 	new_path = ft_strjoin("~", &path[i]);
+// 	free(path);
+// 	return (new_path);
+// }

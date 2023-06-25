@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstnew_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
+/*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 13:29:41 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/12 17:43:10 by ajakubcz         ###   ########.fr       */
+/*   Updated: 2023/06/25 15:23:25 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ t_list	*ft_lstnew(char *content, int type)
 {
 	t_list	*new_lst;
 
+	if (!content)
+		return (0);
 	new_lst = malloc (sizeof(t_list));
 	if (new_lst == 0)
 		return (0);
