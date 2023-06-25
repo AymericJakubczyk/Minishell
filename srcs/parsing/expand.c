@@ -31,6 +31,7 @@ int	get_new_size(t_entry *entry, t_list **my_env)
 	int	i;
 	int	size;
 	int type;
+	char *value_env;
 	
 	i = 0;
 	size = 0;
@@ -51,16 +52,27 @@ int	get_new_size(t_entry *entry, t_list **my_env)
 			}
 			size += go_to_end_block(&entry[i]);
 			i += go_to_end_block(&entry[i]);
-			
 		}
 		else if (entry[i].c == '~' && entry[i].context != SI_QUOTE && check_tild(entry, i))
 		{
-			size += ft_strlen(ft_getenv(my_env, "HOME"));
+			value_env = ft_getenv(my_env, "HOME", 0);
+			size += ft_strlen(value_env);
+			free(value_env);
 			i++;
 		}
 		else if (entry[i].c == '$' && entry[i].context != SI_QUOTE && good_char_env(entry, i))
 		{
-			size += ft_strlen(ft_getenv(my_env, get_name_env(entry, &i)));
+			// if (entry[i + 1].c && entry[i + 1].c == '?')
+			// {
+			// 	size += ft_strlen("42");
+			// 	i += 2;
+			// }
+			// else
+			// {
+				value_env = ft_getenv(my_env, get_name_env(entry, &i), 1);
+				size += ft_strlen(value_env);
+				free(value_env);
+			// }
 		}
 		else
 		{
@@ -98,10 +110,18 @@ void	fill_new_entry(t_entry *entry, t_entry *new_entry, t_list **my_env)
 	{
 		//ft_printf("char %d : %c context : %d\n", i, entry[i].c, entry[i].context);
 		if (entry[i].c == '$' && entry[i].context != SI_QUOTE && good_char_env(entry, i))
-			fill_value_env(new_entry, entry[i].context, ft_getenv(my_env, get_name_env(entry, &i)), &j);
+		{
+			// if (entry[i + 1].c && entry[i + 1].c == '?')
+			// {
+			// 	fill_value_env(new_entry, entry[i].context, ft_strdup("42"), &j);
+			// 	i += 2;
+			// }
+			// else
+				fill_value_env(new_entry, entry[i].context, ft_getenv(my_env, get_name_env(entry, &i), 1), &j);
+		}
 		else if (entry[i].c == '~' && entry[i].context != SI_QUOTE && check_tild(entry, i))
 		{
-			fill_value_env(new_entry, entry[i].context, ft_getenv(my_env, "HOME"), &j);
+			fill_value_env(new_entry, entry[i].context, ft_getenv(my_env, "HOME", 0), &j);
 			i++;
 		}
 		else if ((entry[i].type == CHEV_IN || entry[i].type == CHEV_OUT) && entry[i].context == 0)
@@ -154,7 +174,7 @@ void	fill_new_entry(t_entry *entry, t_entry *new_entry, t_list **my_env)
 
 int good_char_env(t_entry *entry, int i)
 {
-	if (entry[i + 1].c && (ft_isalnum(entry[i + 1].c) || entry[i + 1].c == '_'))
+	if (entry[i + 1].c && (ft_isalnum(entry[i + 1].c) || entry[i + 1].c == '_' || entry[i + 1].c == '?'))
 		return (1);
 	return (0);
 }
@@ -185,4 +205,5 @@ void	fill_value_env(t_entry *new_entry, int context, char *value_env, int *j)
 		*j += 1;
 		i++;
 	}
+	free(value_env);
 }

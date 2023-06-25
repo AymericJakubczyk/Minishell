@@ -12,20 +12,22 @@
 
 #include "minishell.h"
 
-int			ft_strcmp(char *s1, char*s2);
-void		handler(int sig);
-void minishell(t_list **my_env);
+void	handler(int sig);
+void	minishell(t_list **my_env);
 
 int	main(int ac, char **av, char **env)
 {
 	t_list	*my_env;
+
 	(void) ac;
 	(void) av;
+	my_env = NULL;
 	if (!env || !env[0])
 		ft_create_env(&my_env);
 	else
 		ft_dup_env(env, &my_env);
 	minishell(&my_env);
+	ft_lstclear(&my_env, free);
 	rl_clear_history();
 	exit (1);
 }

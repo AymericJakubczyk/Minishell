@@ -40,7 +40,7 @@ void	parse_and_exec(char *str, t_list **my_env)
 	if (!convert_entry_to_parse(new_entry, &parse))
 		return ;
 	free(new_entry);
-	//print_parse(parse);
+	print_parse(parse);
 	start_exec(parse, my_env);
 	free_all_parse(parse);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_prompt.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
+/*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 17:22:21 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/25 18:09:26 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/25 21:06:55 by ajakubcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ char	*ft_get_prompt(t_list	**my_env)
 	char	*user;
 	char	*path;
 
-	user = ft_getenv(my_env, "USER");
+	user = ft_getenv(my_env, "USER", 0);
 	if (user == NULL)
 		user = "you";
 	path = ft_get_path(my_env);
-	prompt = ft_strjoin2(ft_strdup(user), ft_strdup(":"));
+	prompt = ft_strjoin2(user, ft_strdup(":"));
 	prompt = ft_strjoin2(prompt, path);
 	prompt = ft_strjoin2(prompt, ft_strdup("$ "));
 	return (prompt);
@@ -41,6 +41,7 @@ static char	*ft_get_path(t_list **my_env)
 
 	tmp = 0;
 	path = ft_pwd();
+	runner = 0;
 	while (path[runner])
 	{
 		if (path[runner] == '/')
