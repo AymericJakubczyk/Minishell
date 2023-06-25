@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 15:07:28 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/23 12:57:08 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/25 14:07:03 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,17 @@ char	*ft_getenv(t_list **my_env, char *get_me)
 
 	size = 0;
 	runner = *my_env;
-	while (runner != NULL)
+	while (runner != NULL && runner->content)
 	{
-		size = ft_equal_size(runner->content);
-		if (ft_strncmp(runner->content, get_me, size) == 0)
-			return (skip_equal(runner->content));
-		runner = runner->next;
+		if (runner->content)
+		{
+			size = ft_equal_size(runner->content);
+			if (ft_strncmp(runner->content, get_me, size) == 0)
+				return (skip_equal(runner->content));
+			runner = runner->next;
+		}
+		else
+			return (NULL);
 	}
 	return (NULL);
 }

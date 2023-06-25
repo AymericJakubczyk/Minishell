@@ -3,30 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
+/*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 15:13:46 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/21 23:08:59 by ajakubcz         ###   ########.fr       */
+/*   Updated: 2023/06/25 14:14:20 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		get_new_size(t_entry *entry);
+int		get_new_size(t_entry *entry, t_list **my_env);
 char	*get_name_env(t_entry *entry, int *i);
-void	fill_new_entry(t_entry *entry, t_entry *new_entry);
+void	fill_new_entry(t_entry *entry, t_entry *new_entry, t_list **my_env);
 void	fill_value_env(t_entry *new_entry, int context, char *value_env, int *j);
 
-void	expand(t_entry *entry, t_entry **new_entry)
+void	expand(t_entry *entry, t_entry **new_entry, t_list **my_env)
 {
-	*new_entry = malloc(sizeof(t_entry) * (get_new_size(entry) + 1));
+	*new_entry = malloc(sizeof(t_entry) * (get_new_size(entry, my_env) + 1));
 	//ft_printf("new_size : %d\n", get_new_size(entry));
-	fill_new_entry(entry, *new_entry);
+	fill_new_entry(entry, *new_entry, my_env);
 }
 
-
 //refaire car maintenant j'interprete pas les variables dans les infile/outfile/limiter
-int	get_new_size(t_entry *entry)
+int	get_new_size(t_entry *entry, t_list **my_env)
 {
 	int	i;
 	int	size;
@@ -37,7 +36,7 @@ int	get_new_size(t_entry *entry)
 	{
 		if (entry[i].c == '$' && entry[i].context != SI_QUOTE)
 		{
-			size += ft_strlen(getenv(get_name_env(entry, &i)));
+			size += ft_strlen(ft_getenv(my_env, get_name_env(entry, &i)));
 		}
 		else
 		{
@@ -62,7 +61,7 @@ char	*get_name_env(t_entry *entry, int *i)
 	return (env_name);
 }
 
-void	fill_new_entry(t_entry *entry, t_entry *new_entry)
+void	fill_new_entry(t_entry *entry, t_entry *new_entry, t_list **my_env)
 {
 	int	i;
 	int	j;
@@ -74,7 +73,7 @@ void	fill_new_entry(t_entry *entry, t_entry *new_entry)
 	{
 		//ft_printf("char %d : %c context : %d\n", i, entry[i].c, entry[i].context);
 		if (entry[i].c == '$' && entry[i].context != SI_QUOTE)
-			fill_value_env(new_entry, entry[i].context, getenv(get_name_env(entry, &i)), &j);
+			fill_value_env(new_entry, entry[i].context, ft_getenv(my_env, get_name_env(entry, &i)), &j);
 		else if ((entry[i].type == CHEV_IN || entry[i].type == CHEV_OUT) && entry[i].context == 0)
 		{
 			ft_printf("after chev\n");

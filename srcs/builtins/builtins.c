@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:48 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/23 18:59:25 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/24 15:29:02 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,21 @@ void	ft_echo(char *str)
 	int	flag;
 
 	flag = 0;
+	if (!str)
+	{
+		ft_printf("\n");
+		return ;
+	}
 	if (str[0] && str[0] == '-')
 		if (str[1] && str[1] == 'n')
 			flag = 1;
 	str = is_echos_flag(str);
 	if (flag == 1)
+	{
+		if (!str[2])
+			return ;
 		ft_printf("%s", str);
+	}
 	else
 		ft_printf("%s\n", str);
 }

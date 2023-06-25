@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 14:05:40 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/23 18:38:03 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/24 17:35:02 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,12 @@ int	is_builtin(t_parse *parse, t_list **my_env, int runner);
 void	start_exec(t_parse *parse, t_list **my_env)
 {
 	int	runner;
+	int	type;
+	int	pid;
 
 	runner = 0;
+	// type = do_i_fork(parse);
+	// if (type == 1)
 	while (parse[runner].str)
 	{
 		if (parse[runner].type && parse[runner].type == COMMAND)
@@ -29,14 +33,46 @@ void	start_exec(t_parse *parse, t_list **my_env)
 	}
 }
 
+int	do_i_fork(t_parse *parse)
+{
+	int	runner;
+
+	runner = 0;
+	while (parse[runner].str)
+	{
+		if (parse[runner].str[0] && parse[runner].str[0] == '|')
+			return (1);
+		runner++;
+	}
+	return (0);
+}
+
+// int	is_builtin(t_parse *parse)
+// {
+// 	if (ft_strcmp(parse[runner].str, "echo") == 0)
+// 		return (1);
+// 	if (ft_strcmp(parse[runner].str, "export") == 0)
+// 		return (1);
+// 	if (ft_strcmp(parse[runner].str, "unset") == 0)
+// 		return (1);
+// 	if (ft_strcmp(parse[runner].str, "pwd") == 0)
+// 		return (1);
+// 	if (ft_strcmp(parse[runner].str, "env") == 0)
+// 		return (1);
+// 	if (ft_strcmp(parse[runner].str, "cd") == 0)
+// 		return (1);
+// 	return (0);
+// }
+
 int	is_builtin(t_parse *parse, t_list **my_env, int runner)
 {
 	char	*arg;
 
+	arg = NULL;
 	if (ft_strcmp(parse[runner].str, "echo") == 0)
 	{
-		arg = ft_strdup(parse[++runner].str);
-		// ft_printf("%s\n", arg);
+		if (parse[++runner].str)
+			arg = ft_strdup(parse[runner].str);
 		while (parse[++runner].type == CMD_ARG)
 		{
 			arg = ft_strjoin3(arg, " ");
@@ -50,13 +86,19 @@ int	is_builtin(t_parse *parse, t_list **my_env, int runner)
 		ft_export(my_env, parse[++runner].str);
 		return (runner);
 	}
+	runner = next_is_builtin(parse, my_env, runner);
+	return (runner);
+}
+
+int	next_is_builtin(t_parse *parse, t_list **my_env, int runner)
+{
 	if (ft_strcmp(parse[runner].str, "unset") == 0)
 		ft_unset(my_env, parse[++runner].str);
 	if (ft_strcmp(parse[runner].str, "pwd") == 0)
 		ft_printf("%s\n",ft_pwd());
 	if (ft_strcmp(parse[runner].str, "env") == 0)
 	{
-		if (parse[runner + 1].str)
+		if (parse[runner + 1].str && ft_strcmp(parse[runner + 1].str, "|") != 0)
 			return (runner);
 		ft_env(my_env);
 	}
