@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
+/*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:11:04 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/25 18:07:40 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/25 20:46:16 by ajakubcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,16 @@ void minishell(t_list **my_env)
 	char	*cmd;
 	char	*prompt;
 
-	prompt = NULL;
 	cmd = ft_strdup("");
 	while (ft_exit(cmd) == 0)
 	{
 		free(cmd);
-		ft_free(prompt, NULL);
 		prompt = ft_get_prompt(my_env);
 		if (!prompt)
-			exit(0);
+			exit(12);
 		signal(SIGINT, handler);
 		cmd = readline(prompt);
+		ft_free(prompt, NULL);
 		if (!cmd)
 			break;
 		if (ft_strlen(cmd) != 0)
@@ -54,7 +53,6 @@ void minishell(t_list **my_env)
 	}
 	if (!cmd)
 		ft_printf("\nCTRL-D\n");
-	ft_free(prompt, NULL);
 	free(cmd);
 }
 
