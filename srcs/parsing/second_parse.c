@@ -41,7 +41,7 @@ int	colapse_all(t_entry *entry, t_parse *parse)
 	parse[nbr].str = NULL;
 	set_type(parse);
 	if (check_parse(parse) == -1)
-		return (0);
+		return (g_errno = 2, 0);
 	return (1);
 }
 

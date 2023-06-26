@@ -12,6 +12,8 @@
 
 #include "minishell.h"
 
+int g_errno;
+
 void	handler(int sig);
 void	minishell(t_list **my_env);
 

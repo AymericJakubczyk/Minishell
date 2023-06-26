@@ -27,4 +27,6 @@
 # include "parsing.h"
 # include "exec.h"
 
+extern int	g_errno;
+
 #endif

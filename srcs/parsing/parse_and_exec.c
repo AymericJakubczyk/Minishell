@@ -35,10 +35,12 @@ void	parse_and_exec(char *str, t_list **my_env)
 		return ;
 	}
 	init_entry(entry, str);
+	//print_entry(entry);
 	if (!convert_entry_to_parse(entry, &parse))
 		return ;
 	free_all_parse(parse);
 	expand(entry, &new_entry, my_env);
+	//print_entry(new_entry);
 	free(entry);
 	if (!convert_entry_to_parse(new_entry, &parse))
 		return ;

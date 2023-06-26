@@ -31,6 +31,7 @@ int	check_syntax_quote(char *str)
 	}
 	if (quote != 0)
 	{
+		g_errno = 2;
 		ft_printf("minihell: syntax error, quote %c is not close!\n", quote);
 		return (0);
 	}

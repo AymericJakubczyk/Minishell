@@ -14,12 +14,17 @@
 
 int		get_new_size(t_entry *entry, t_list **my_env);
 char	*get_name_env(t_entry *entry, int *i);
-void	fill_new_entry(t_entry *entry, t_entry *new_entry, t_list **my_env);
+int		fill_new_entry(t_entry *entry, t_entry *new_entry, t_list **my_env);
 void	fill_value_env(t_entry *new_entry, int context, char *value_env, int *j);
 int		check_tild(t_entry *entry, int i);
 void	keep_redirection(t_entry *entry, t_entry *new_entry, int *i, int *j);
 void	copy_entry_value(t_entry *entry, t_entry *new_entry, int *i, int *j);
 void	inc_size_after_chev(t_entry *entry, int *i, int *size);
+void	inc_size_of_tild_value(t_list **my_env, int *i, int *size);
+int		fill_with_env_value(t_entry *entry, t_entry *new_entry, t_list **my_env, int *ind);
+void	else_fill_new_entry(t_entry *entry, t_entry *new_entry, int *ind);
+void	fill_with_tild_value(t_entry *entry, t_entry *new_entry, int *ind, t_list **my_env);
+void 	ft_increment(int *i, int *size);
 
 void	expand(t_entry *entry, t_entry **new_entry, t_list **my_env)
 {
@@ -54,15 +59,20 @@ int	get_new_size(t_entry *entry, t_list **my_env)
 			inc_size_of_tild_value(my_env, &i, &size);
 		else if (entry[i].c == '$' && entry[i].context != SI_QUOTE \
 			&& good_char_env(entry, i))
+		{
 			if (inc_size_of_var_value(my_env, entry, &i, &size) == -1)
 				return (-1);
-		else
-		{
-			size++;
-			i++;
 		}
+		else
+			ft_increment(&i, &size);
 	}
 	return (size);
+}
+
+void	ft_increment(int *i, int *size)
+{
+	*i += 1;
+	*size += 1;
 }
 
 void	inc_size_after_chev(t_entry *entry, int *i, int *size)
@@ -99,23 +109,24 @@ int	inc_size_of_var_value(t_list **my_env, t_entry *entry, int *i, int *size)
 	char	*value_env;
 	char	*name_env;
 
-	// if (entry[i + 1].c && entry[i + 1].c == '?')
-	// {
-	// 	size += ft_strlen("42");
-	// 	i += 2;
-	// }
-	// else
-	// {
+	if (entry[*i + 1].c && entry[*i + 1].c == '?')
+	{
+		size += ft_strlen(ft_itoa(g_errno));
+		*i += 2;
+	}
+	else
+	{
 		name_env = get_name_env(entry, i);
 		if (!name_env)
 		{
 			ft_error(ERROR_42, NULL);
+			g_errno = 12;
 			return (-1);
 		}
 		value_env = ft_getenv(my_env, name_env, 1);
 		*size += ft_strlen(value_env);
 		free(value_env);
-	// }
+	}
 	return (0);
 }
 
@@ -133,42 +144,75 @@ char	*get_name_env(t_entry *entry, int *i)
 	return (env_name);
 }
 
-void	fill_new_entry(t_entry *entry, t_entry *new_entry, t_list **my_env)
+int	fill_new_entry(t_entry *entry, t_entry *new_entry, t_list **my_env)
 {
-	int		i;
-	int		j;
+	int		ind[2];
 
-	j = 0;
-	i = 0;
-	while (entry[i].c)
+	ind[0] = 0;
+	ind[1] = 0;
+	while (entry[ind[0]].c)
 	{
-		//ft_printf("char %d : %c context : %d\n", i, entry[i].c, entry[i].context);
-		if (entry[i].c == '$' && entry[i].context != SI_QUOTE && good_char_env(entry, i))
+		if (entry[ind[0]].c == '$' && entry[ind[0]].context != SI_QUOTE \
+			&& good_char_env(entry, ind[0]))
 		{
-			// if (entry[i + 1].c && entry[i + 1].c == '?')
-			// {
-			// 	fill_value_env(new_entry, entry[i].context, ft_strdup("42"), &j);
-			// 	i += 2;
-			// }
-			// else
-				fill_value_env(new_entry, entry[i].context, ft_getenv(my_env, get_name_env(entry, &i), 1), &j);
+			if (fill_with_env_value(entry, new_entry, my_env, ind) == -1)
+				return (-1);
 		}
-		else if (entry[i].c == '~' && entry[i].context != SI_QUOTE && check_tild(entry, i))
-		{
-			fill_value_env(new_entry, entry[i].context, ft_getenv(my_env, "HOME", 0), &j);
-			i++;
-		}
-		else if ((entry[i].type == CHEV_IN || entry[i].type == CHEV_OUT) && entry[i].context == 0)
-			keep_redirection(entry, new_entry, &i, &j);
+		else if (entry[ind[0]].c == '~' && entry[ind[0]].context != SI_QUOTE \
+			&& check_tild(entry, ind[0]))
+			fill_with_tild_value(entry, new_entry, ind, my_env);
+		else if ((entry[ind[0]].type == CHEV_IN || \
+			entry[ind[0]].type == CHEV_OUT) && entry[ind[0]].context == 0)
+			keep_redirection(entry, new_entry, &ind[0], &ind[1]);
 		else
-		{
-			if (entry[i].context == 0 && (entry[i].type == S_QUOTE || entry[i].type == D_QUOTE))
-				i++;
-			else
-				copy_entry_value(entry, new_entry, &i, &j);
-		}
+			else_fill_new_entry(entry, new_entry, ind);
 	}
-	new_entry[j].c = 0;
+	new_entry[ind[1]].c = 0;
+	return (0);
+}
+
+void	fill_with_tild_value(t_entry *entry, t_entry *new_entry, int *ind, t_list **my_env)
+{
+	char *value_env;
+
+	value_env = ft_getenv(my_env, "HOME", 0);
+	fill_value_env(new_entry, entry[ind[0]].context, value_env, &ind[1]);
+	free(value_env);
+	ind[0]++;
+}
+
+void	else_fill_new_entry(t_entry *entry, t_entry *new_entry, int *ind)
+{
+	if (entry[ind[0]].context == 0 && \
+		(entry[ind[0]].type == S_QUOTE || entry[ind[0]].type == D_QUOTE))
+		ind[0]++;
+	else
+		copy_entry_value(entry, new_entry, &ind[0], &ind[1]);
+}
+
+int	fill_with_env_value(t_entry *entry, t_entry *new_entry, t_list **my_env, int *ind)
+{
+	int		context;
+	char	*name_env;
+
+	if (entry[ind[0] + 1].c && entry[ind[0] + 1].c == '?')
+	{
+		fill_value_env(new_entry, entry[ind[0]].context, ft_strdup(ft_itoa(g_errno)), &ind[1]);
+		ind[0] += 2;
+	}
+	else
+	{
+		context = entry[ind[0]].context;
+		name_env = get_name_env(entry, &ind[0]);
+		if (!name_env)
+		{
+			ft_error(ERROR_42, NULL);
+			g_errno = 12;
+			return (-1);
+		}
+		fill_value_env(new_entry, context, ft_getenv(my_env, name_env, 1), &ind[1]);
+	}
+	return (0);
 }
 
 void	keep_redirection(t_entry *entry, t_entry *new_entry, int *i, int *j)
@@ -201,7 +245,8 @@ void	copy_entry_value(t_entry *entry, t_entry *new_entry, int *i, int *j)
 
 int	good_char_env(t_entry *entry, int i)
 {
-	if (entry[i + 1].c && (ft_isalnum(entry[i + 1].c) || entry[i + 1].c == '_' || entry[i + 1].c == '?'))
+	if (entry[i + 1].c && (ft_isalnum(entry[i + 1].c) || \
+		entry[i + 1].c == '_' || entry[i + 1].c == '?'))
 		return (1);
 	return (0);
 }
