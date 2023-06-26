@@ -36,7 +36,7 @@
 # define ERROR_21 "numeric argument required\n"
 # define ERROR_22 ": not a valid identifier\n"
 # define ERROR_23 ": too many arguments\n"
-# define ERROR_42 ": help allocation broke\n"
+# define ERROR_42 "help allocation broke\n"
 # define ERROR_99 "tu crois aller ou comme ca\n"
 
 void	ft_error(const char *error, char *problem);

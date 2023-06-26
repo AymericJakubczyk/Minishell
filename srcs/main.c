@@ -42,8 +42,6 @@ void minishell(t_list **my_env)
 	{
 		free(cmd);
 		prompt = ft_get_prompt(my_env);
-		if (!prompt)
-			exit(12);
 		signal(SIGINT, handler);
 		cmd = readline(prompt);
 		ft_free(prompt, NULL);

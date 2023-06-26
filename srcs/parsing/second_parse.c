@@ -34,7 +34,7 @@ int	colapse_all(t_entry *entry, t_parse *parse)
 		{
 			parse[nbr].str = get_str(entry, &i, go_to_end_block(&entry[i]));
 			if (!parse[nbr].str)
-				return (free(entry), free_all_parse(parse), -1);
+				return (0);
 			nbr++;
 		}
 	}
@@ -60,6 +60,8 @@ static char	*get_str(t_entry *entry, int *i, int j)
 		*i += 1;
 		runner++;
 	}
+	if (!str)
+		ft_error(ERROR_42, NULL);
 	return (str);
 }
 

@@ -30,7 +30,10 @@ void	parse_and_exec(char *str, t_list **my_env)
 		return ;
 	entry = malloc(sizeof(t_entry) * (ft_strlen(str) + 1));
 	if (!entry)
-		exit(1);
+	{
+		ft_error(ERROR_42, NULL);
+		return ;
+	}
 	init_entry(entry, str);
 	if (!convert_entry_to_parse(entry, &parse))
 		return ;
@@ -50,8 +53,9 @@ int	convert_entry_to_parse(t_entry *entry, t_parse **parse)
 	*parse = malloc(sizeof(t_parse) * (size_of_parse(entry) + 1));
 	if (!*parse)
 	{
+		ft_error(ERROR_42,NULL);
 		free(entry);
-		exit(1);
+		return (0);
 	}
 	if (colapse_all(entry, *parse) == 0)
 	{

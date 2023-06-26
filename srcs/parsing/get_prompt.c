@@ -29,6 +29,13 @@ char	*ft_get_prompt(t_list	**my_env)
 	prompt = ft_strjoin2(user, ft_strdup(":"));
 	prompt = ft_strjoin2(prompt, path);
 	prompt = ft_strjoin2(prompt, ft_strdup("$ "));
+	if (!prompt)
+	{
+		ft_lstclear(my_env, free);
+		rl_clear_history();
+		ft_error(ERROR_42, NULL);
+		exit(12);
+	}
 	return (prompt);
 }
 
