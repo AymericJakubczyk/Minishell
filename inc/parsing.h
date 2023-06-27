@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
+/*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 15:52:05 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/25 16:53:31 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/27 12:57:57 by ajakubcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,21 @@ void	free_all_parse(t_parse *parse);
 
 //expand.c
 void	expand(t_entry *entry, t_entry **new_entry, t_list **my_env);
+
+//get_expand_size.c
+int	get_expand_size(t_entry *entry, t_list **my_env);
+
+//fill_expand.c
+int	fill_expand(t_entry *entry, t_entry *new_entry, t_list **my_env);
+
+//expand_utils.c
+char	*get_name_env(t_entry *entry, int *i);
+void	copy_entry_value(t_entry *entry, t_entry *new_entry, int *i, int *j);
+int		good_char_env(t_entry *entry, int i);
+int		check_tild(t_entry *entry, int i);
+void	fill_value_env(t_entry *new_entry, int context, char *value_env, \
+	int *j);
+
 //print.c
 void	print_parse(t_parse *parse);
 
