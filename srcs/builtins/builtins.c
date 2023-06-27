@@ -102,7 +102,7 @@ void	ft_cd(char *directory, t_list **my_env)
 	oldpwd = ft_strjoin4("OLDPWD=", ft_pwd());
 	ft_export(my_env, oldpwd);
 	if (!directory)
-		chdir(ft_getenv(my_env, "HOME"));
+		chdir(ft_getenv(my_env, "HOME", 0));
 	else if (chdir(directory) != 0)
 		ft_error(ERROR_99, NULL);
 	pwd = ft_strjoin4("PWD=", ft_pwd());

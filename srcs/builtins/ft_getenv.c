@@ -15,7 +15,29 @@
 void	ft_lstfree(t_list **my_env);
 void	ft_create_env(t_list **my_env);
 
-char	*ft_getenv(t_list **my_env, char *get_me)
+// char	*ft_getenv(t_list **my_env, char *get_me)
+// {
+// 	t_list	*runner;
+// 	int		size;
+
+// 	size = 0;
+// 	runner = *my_env;
+// 	while (runner != NULL && runner->content)
+// 	{
+// 		if (runner->content)
+// 		{
+// 			size = ft_equal_size(runner->content);
+// 			if (ft_strncmp(runner->content, get_me, size) == 0)
+// 				return (skip_equal(runner->content));
+// 			runner = runner->next;
+// 		}
+// 		else
+// 			return (NULL);
+// 	}
+// 	return (NULL);
+// }
+
+char	*ft_getenv(t_list **my_env, char *get_me, int do_free)
 {
 	t_list	*runner;
 	int		size;
@@ -24,16 +46,17 @@ char	*ft_getenv(t_list **my_env, char *get_me)
 	runner = *my_env;
 	while (runner != NULL && runner->content)
 	{
-		if (runner->content)
+		size = ft_equal_size(runner->content);
+		if (ft_strncmp(runner->content, get_me, size) == 0)
 		{
-			size = ft_equal_size(runner->content);
-			if (ft_strncmp(runner->content, get_me, size) == 0)
-				return (skip_equal(runner->content));
-			runner = runner->next;
+			if (do_free)
+				free(get_me);
+			return (skip_equal(runner->content));
 		}
-		else
-			return (NULL);
+		runner = runner->next;
 	}
+	if (do_free)
+		free(get_me);
 	return (NULL);
 }
 

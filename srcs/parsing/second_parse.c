@@ -6,7 +6,7 @@
 /*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 23:55:37 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/21 21:59:11 by ajakubcz         ###   ########.fr       */
+/*   Updated: 2023/06/25 20:56:41 by ajakubcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,15 @@ int	colapse_all(t_entry *entry, t_parse *parse)
 		{
 			parse[nbr].str = get_str(entry, &i, go_to_end_block(&entry[i]));
 			if (!parse[nbr].str)
-				return (free(entry), free_all_parse(parse), -1);
+				return (0);
 			nbr++;
 		}
 	}
 	parse[nbr].str = NULL;
+	set_type(parse);
 	if (check_parse(parse) == -1)
-		return (0);
-	return (set_type(parse), 1);
+		return (g_errno = 2, 0);
+	return (1);
 }
 
 static char	*get_str(t_entry *entry, int *i, int j)
@@ -59,6 +60,8 @@ static char	*get_str(t_entry *entry, int *i, int j)
 		*i += 1;
 		runner++;
 	}
+	if (!str)
+		ft_error(ERROR_42, NULL);
 	return (str);
 }
 

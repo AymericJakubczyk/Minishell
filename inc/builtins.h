@@ -30,7 +30,7 @@ char	*ft_str_skip_add(char *str);
 int		is_addition(char *str);
 
 //ft_getenv.c
-char	*ft_getenv(t_list **my_env, char *get_me);
+char	*ft_getenv(t_list **my_env, char *get_me, int do_free);
 void	ft_dup_env(char **env, t_list **my_env);
 
 //Unset.c

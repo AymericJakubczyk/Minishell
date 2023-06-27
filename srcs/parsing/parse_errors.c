@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_errors.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
+/*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 18:27:05 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/11 18:54:07 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/25 20:53:41 by ajakubcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static int	check_redirect_out(t_parse *input, int runner);
 static int	check_redirect_in(t_parse *input, int runner);
 static int	check_pipe(t_parse *input, int runner);
+static int	good_type(int type);
 
 int	check_parse(t_parse *input)
 {
@@ -23,14 +24,14 @@ int	check_parse(t_parse *input)
 	runner = 0;
 	while (input[runner].str)
 	{
+		if (input[runner].str[0] == '|')
+			if (check_pipe(input, runner) == -1)
+				return (-1);
 		if (input[runner].str[0] == '<')
 			if (check_redirect_in(input, runner) == -1)
 				return (-1);
 		if (input[runner].str[0] == '>')
 			if (check_redirect_out(input, runner) == -1)
-				return (-1);
-		if (input[runner].str[0] == '|')
-			if (check_pipe(input, runner) == -1)
 				return (-1);
 		runner++;
 	}
@@ -46,6 +47,8 @@ static int	check_pipe(t_parse *input, int runner)
 		else
 			return (ft_error(ERROR_7, NULL), -1);
 	}
+	if (runner - 1 >= 0 && !good_type(input[runner - 1].type))
+		return (ft_error(ERROR_7, NULL), -1);
 	return (0);
 }
 
@@ -71,4 +74,11 @@ static int	check_redirect_out(t_parse *input, int runner)
 			return (ft_error(ERROR_3, NULL), -1);
 	}
 	return (0);
+}
+
+static int	good_type(int type)
+{
+	if (type == REDIRECT_IN || type == REDIRECT_OUT || type == APPEND || type == HEREDOC)
+		return (0);
+	return (1);
 }
