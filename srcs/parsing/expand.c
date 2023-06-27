@@ -111,7 +111,7 @@ int	inc_size_of_var_value(t_list **my_env, t_entry *entry, int *i, int *size)
 
 	if (entry[*i + 1].c && entry[*i + 1].c == '?')
 	{
-		size += ft_strlen(ft_itoa(g_errno));
+		*size += ft_strlen(ft_itoa(g_errno));
 		*i += 2;
 	}
 	else
@@ -197,7 +197,8 @@ int	fill_with_env_value(t_entry *entry, t_entry *new_entry, t_list **my_env, int
 
 	if (entry[ind[0] + 1].c && entry[ind[0] + 1].c == '?')
 	{
-		fill_value_env(new_entry, entry[ind[0]].context, ft_strdup(ft_itoa(g_errno)), &ind[1]);
+		ft_printf("errno value : %s\n", ft_itoa(g_errno));
+		fill_value_env(new_entry, entry[ind[0]].context, ft_itoa(g_errno), &ind[1]);
 		ind[0] += 2;
 	}
 	else

@@ -23,6 +23,7 @@ int	main(int ac, char **av, char **env)
 
 	(void) ac;
 	(void) av;
+	g_errno = 0;
 	my_env = NULL;
 	if (!env || !env[0])
 		ft_create_env(&my_env);
