@@ -6,7 +6,7 @@
 /*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 18:24:28 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/25 20:49:21 by ajakubcz         ###   ########.fr       */
+/*   Updated: 2023/06/27 19:05:19 by ajakubcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	parse_and_exec(char *str, t_list **my_env)
 	if (!convert_entry_to_parse(new_entry, &parse))
 		return ;
 	free(new_entry);
-	print_parse(parse);
+	//print_parse(parse);
 	start_exec(parse, my_env);
 	free_all_parse(parse);
 }
@@ -55,7 +55,7 @@ int	convert_entry_to_parse(t_entry *entry, t_parse **parse)
 	*parse = malloc(sizeof(t_parse) * (size_of_parse(entry) + 1));
 	if (!*parse)
 	{
-		ft_error(ERROR_42,NULL);
+		ft_error(ERROR_42, NULL);
 		free(entry);
 		return (0);
 	}
@@ -69,10 +69,11 @@ int	convert_entry_to_parse(t_entry *entry, t_parse **parse)
 	//free(entry);
 }
 
-void conver_parse_to_list(t_parse *parse, t_list **list)
+//TO REMOVE
+void	conver_parse_to_list(t_parse *parse, t_list **list)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	while (parse[i].str)
 	{
@@ -81,7 +82,7 @@ void conver_parse_to_list(t_parse *parse, t_list **list)
 	}
 }
 
-void print_list(t_list *list)
+void	print_list(t_list *list)
 {
 	ft_printf("LIST :\n");
 	while (list)

@@ -6,7 +6,7 @@
 /*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 12:34:24 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/27 12:57:36 by ajakubcz         ###   ########.fr       */
+/*   Updated: 2023/06/27 18:43:33 by ajakubcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,11 @@ static void	keep_redirection(t_entry *entry, t_entry *new_entry, int *i, int *j)
 	while (entry[*i].c == chev)
 		copy_entry_value(entry, new_entry, i, j);
 	while (entry[*i].c && entry[*i].type == WHITESPACE)
-		*i += 1;
+	{
+		copy_entry_value(entry, new_entry, i, j);	
+		//*i += 1;
+		//*j += 1;
+	}
 	size = go_to_end_block(&entry[*i]);
 	while (entry[*i].c && size > 0)
 	{

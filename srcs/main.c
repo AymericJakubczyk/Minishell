@@ -6,13 +6,13 @@
 /*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:11:04 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/25 20:46:16 by ajakubcz         ###   ########.fr       */
+/*   Updated: 2023/06/27 16:53:14 by ajakubcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int g_errno;
+int		g_errno;
 
 void	handler(int sig);
 void	minishell(t_list **my_env);
@@ -35,7 +35,7 @@ int	main(int ac, char **av, char **env)
 	exit (1);
 }
 
-void minishell(t_list **my_env)
+void	minishell(t_list **my_env)
 {
 	char	*cmd;
 	char	*prompt;
@@ -49,7 +49,7 @@ void minishell(t_list **my_env)
 		cmd = readline(prompt);
 		ft_free(prompt, NULL);
 		if (!cmd)
-			break;
+			break ;
 		if (ft_strlen(cmd) != 0)
 			add_history(cmd);
 		parse_and_exec(cmd, my_env);

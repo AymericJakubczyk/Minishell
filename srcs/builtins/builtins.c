@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
+/*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:48 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/25 18:02:13 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/27 16:51:15 by ajakubcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,15 @@ void	ft_echo(char *str)
 char	*is_echos_flag(char *str)
 {
 	char	*output;
+
 	if (str[0] && str[0] == '-')
+	{
 		if (str[1] && str[1] == 'n')
-			{
-				output = ft_strdup(&str[3]);
-				return (free(str), output);
-			}
+		{
+			output = ft_strdup(&str[3]);
+			return (free(str), output);
+		}
+	}
 	return (str);
 }
 
@@ -83,7 +86,7 @@ void	ft_env(t_list **env)
 	}
 }
 
-char	*ft_pwd()
+char	*ft_pwd(void)
 {
 	char	*path;
 	int		size;

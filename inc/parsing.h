@@ -6,7 +6,7 @@
 /*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 15:52:05 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/27 12:57:57 by ajakubcz         ###   ########.fr       */
+/*   Updated: 2023/06/27 19:24:57 by ajakubcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int		next_parse_check(t_parse *input);
 //parse_utils.c
 char	*char_to_str(char c);
 int		size_of_parse(t_entry *entry);
-void	set_type_utils(int type1, int type2, int *i, t_parse *parse);
+void	set_type_utils(int type, int *i, t_parse *parse);
 void	set_type_utils2(int type, int *cmd, int *i, t_parse *parse);
 void	free_all_parse(t_parse *parse);
 

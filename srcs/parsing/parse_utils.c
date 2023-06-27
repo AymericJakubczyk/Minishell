@@ -6,7 +6,7 @@
 /*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 17:02:11 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/25 20:43:07 by ajakubcz         ###   ########.fr       */
+/*   Updated: 2023/06/27 19:24:52 by ajakubcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,21 @@ int	size_of_parse(t_entry *entry)
 	return (nbr);
 }
 
-void	set_type_utils(int type1, int type2, int *i, t_parse *parse)
+// void	set_type_utils(int type1, int type2, int *i, t_parse *parse)
+// {
+// 	parse[*i].type = type1;
+// 	*i += 1;
+// 	if (parse[*i].str)
+// 	{
+// 		parse[*i].type = type2;
+// 		*i += 1;
+// 	}
+// }
+
+void	set_type_utils(int type, int *i, t_parse *parse)
 {
-	parse[*i].type = type1;
+	parse[*i].type = type;
 	*i += 1;
-	if (parse[*i].str)
-	{
-		parse[*i].type = type2;
-		*i += 1;
-	}
 }
 
 void	set_type_utils2(int type, int *cmd, int *i, t_parse *parse)
