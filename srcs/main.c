@@ -6,15 +6,15 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:11:04 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/25 18:07:40 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/26 17:15:08 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int			ft_strcmp(char *s1, char*s2);
-void		handler(int sig);
-void minishell(t_list **my_env);
+int		ft_strcmp(char *s1, char*s2);
+void	handler(int sig);
+void	minishell(t_list **my_env);
 
 int	main(int ac, char **av, char **env)
 {
