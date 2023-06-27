@@ -6,7 +6,7 @@
 #    By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/01 14:11:17 by ajakubcz          #+#    #+#              #
-#    Updated: 2023/06/23 16:35:31 by cprojean         ###   ########.fr        #
+#    Updated: 2023/06/27 18:49:55 by cprojean         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,6 +67,8 @@ SRCS =			$(DIR_SRCS)main.c \
 				$(DIR_COLLECTOR)ft_garb_new.c \
 				$(DIR_EXEC)start_exec.c \
 				$(DIR_EXEC)exec_utils.c \
+				$(DIR_EXEC)execution.c \
+				$(DIR_EXEC)single_cmd.c \
 
 OBJS =			$(patsubst %.c, $(DIR_OBJ)%.o, $(SRCS))
 

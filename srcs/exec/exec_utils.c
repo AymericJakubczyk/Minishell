@@ -6,87 +6,91 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 14:08:26 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/23 16:44:35 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/27 14:30:52 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// char	*get_path(char *cmd, char **env)
-// {
-// 	char	**allpath;
-// 	char	*test_path;
-// 	char	*tmp;
-// 	int		i;
+static int	slash_in(char *str);
+static char	**get_all_path(t_list **envp);
+static int	check_env_path(char *str, char *str_path);
 
-// 	i = 0;
-// 	if (cmd && slash_in(cmd))
-// 	{
-// 		if (access(cmd, F_OK | X_OK) != 0)
-// 			return (ft_perr("no such file or directory: ", cmd, "\n"), NULL);
-// 		else
-// 			return (cmd);
-// 	}
-// 	allpath = get_all_path(env);
-// 	while (allpath && allpath[i])
-// 	{
-// 		tmp = ft_strjoin(allpath[i], "/");
-// 		test_path = ft_strjoin(tmp, cmd);
-// 		ft_free(tmp);
-// 		if (access(test_path, F_OK | X_OK) != -1)
-// 			return (free_all(allpath), test_path);
-// 		ft_free(test_path);
-// 		i++;
-// 	}
-// 	return (free_all(allpath), ft_perr("command not found: ", cmd, "\n"), NULL);
-// }
+char	*get_path(char *cmd, t_list **env)
+{
+	char	**allpath;
+	char	*test_path;
+	char	*tmp;
+	int		i;
 
-// static int	slash_in(char *str)
-// {
-// 	int	i;
+	i = 0;
+	if (cmd && slash_in(cmd))
+	{
+		if (access(cmd, F_OK | X_OK) != 0)
+			return (ft_printf("no such file or directory: \n"), NULL);
+		else
+			return (cmd);
+	}
+	allpath = get_all_path(env);
+	while (allpath && allpath[i])
+	{
+		tmp = ft_strjoin(allpath[i], "/");
+		test_path = ft_strjoin(tmp, cmd);
+		// ft_free(tmp);
+		if (access(test_path, F_OK | X_OK) != -1)
+			return (test_path);
+		// ft_free(test_path);
+		i++;
+	}
+	return (ft_printf("command not found: \n"), NULL);
+}
 
-// 	i = 0;
-// 	while (str[i])
-// 	{
-// 		if (str[i] == '/')
-// 			return (1);
-// 		i++;
-// 	}
-// 	return (0);
-// }
+static int	slash_in(char *str)
+{
+	int	i;
 
-// static char	**get_all_path(char **envp)
-// {
-// 	int		i;
-// 	char	*path;
-// 	char	**all_path;
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '/')
+			return (1);
+		i++;
+	}
+	return (0);
+}
 
-// 	path = NULL;
-// 	i = 0;
-// 	while (envp[i] && !path)
-// 	{
-// 		if (check_env_path(envp[i], "PATH=") == 1)
-// 			path = envp[i];
-// 		i++;
-// 	}
-// 	if (!envp[i])
-// 		return (NULL);
-// 	all_path = ft_split(&path[5], ':');
-// 	if (!all_path)
-// 		return (NULL);
-// 	return (all_path);
-// }
+static char	**get_all_path(t_list **envp)
+{
+	t_list	*runner;
+	char	*path;
+	char	**all_path;
 
-// static int	check_env_path(char *str, char *str_path)
-// {
-// 	int	i;
+	path = NULL;
+	runner = *envp;
+	while (runner->next && !path)
+	{
+		if (check_env_path(runner->content, "PATH=") == 1)
+			path = runner->content;
+		runner = runner->next;
+	}
+	if (!runner->content)
+		return (NULL);
+	all_path = ft_split(&path[5], ':');
+	if (!all_path)
+		return (NULL);
+	return (all_path);
+}
 
-// 	i = 0;
-// 	while (i < 5)
-// 	{
-// 		if (str[i] != str_path[i])
-// 			return (-1);
-// 		i++;
-// 	}
-// 	return (1);
-// }
+static int	check_env_path(char *str, char *str_path)
+{
+	int	i;
+
+	i = 0;
+	while (i < 5)
+	{
+		if (str[i] != str_path[i])
+			return (-1);
+		i++;
+	}
+	return (1);
+}

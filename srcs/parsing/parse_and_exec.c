@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_and_exec.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
+/*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 18:24:28 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/25 20:49:21 by ajakubcz         ###   ########.fr       */
+/*   Updated: 2023/06/27 14:15:33 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	parse_and_exec(char *str, t_list **my_env)
 		return ;
 	free(new_entry);
 	print_parse(parse);
-	start_exec(parse, my_env);
+	execution(parse, my_env);
 	free_all_parse(parse);
 }
 
