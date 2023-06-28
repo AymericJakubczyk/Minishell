@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   second_parse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
+/*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 23:55:37 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/27 19:41:26 by ajakubcz         ###   ########.fr       */
+/*   Updated: 2023/06/28 17:56:49 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	colapse_all(t_entry *entry, t_parse *parse)
 	}
 	parse[nbr].str = NULL;
 	set_type(parse, entry);
-	print_parse(parse);
+	// print_parse(parse);
 	if (check_parse(parse) == -1)
 		return (g_errno = 2, 0);
 	return (1);

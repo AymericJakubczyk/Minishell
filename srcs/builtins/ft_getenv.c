@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 15:07:28 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/26 16:15:30 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/28 16:16:11 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,6 @@
 
 void	ft_lstfree(t_list **my_env);
 void	ft_create_env(t_list **my_env);
-
-// char	*ft_getenv(t_list **my_env, char *get_me)
-// {
-// 	t_list	*runner;
-// 	int		size;
-
-// 	size = 0;
-// 	runner = *my_env;
-// 	while (runner != NULL && runner->content)
-// 	{
-// 		if (runner->content)
-// 		{
-// 			size = ft_equal_size(runner->content);
-// 			if (ft_strncmp(runner->content, get_me, size) == 0)
-// 				return (skip_equal(runner->content));
-// 			runner = runner->next;
-// 		}
-// 		else
-// 			return (NULL);
-// 	}
-// 	return (NULL);
-// }
 
 char	*ft_getenv(t_list **my_env, char *get_me, int do_free)
 {

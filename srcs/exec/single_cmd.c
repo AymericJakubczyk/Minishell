@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 18:46:17 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/28 10:53:51 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/28 19:09:14 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,21 @@
 void	handle_single_builtin(t_parse *parse, t_list **my_env, int runner);
 void	handle_forked_single_builtin(t_parse *parse, t_list **my_env, int runner);
 void	next_handle_forked_single_builtin(t_parse *parse, t_list **my_env, int runner, char *arg);
-void	exec_single_cmd(t_parse *parse, t_list **env, int runner);
+void	exec_single_cmd(t_parse *parse, t_list **env, int runner, t_exec *data);
 
-void	single_cmd(t_parse *parse, t_list **my_env)
+void	single_cmd(t_parse *parse, t_list **my_env, t_exec *data)
 {
 	int	runner;
+	int	file[2];
 
 	runner = 0;
+	init_file(&file[0], &file[1], data);
 	while (parse[runner].str)
 	{
 		if (parse[runner].type == INFILE)
-			dup_in(parse, runner);
+			file[0] = dup_in(parse, runner, data);
 		if (parse[runner].type == OUTFILE)
-			dup_out(parse, runner);
+			file[1] = dup_out(parse, runner, data);
 		runner++;
 	}
 	runner = 0;
@@ -40,10 +42,12 @@ void	single_cmd(t_parse *parse, t_list **my_env)
 			else if (which_builtin(parse, runner) == 2)
 				handle_forked_single_builtin(parse, my_env, runner);
 			else
-				exec_single_cmd(parse, my_env, runner);
+				exec_single_cmd(parse, my_env, runner, data);
 		}
 		runner++;
 	}
+	restore_dup(file, data);
+	// double_close(file[0], file[1]);
 }
 
 void	handle_single_builtin(t_parse *parse, t_list **my_env, int runner)
@@ -56,10 +60,13 @@ void	handle_single_builtin(t_parse *parse, t_list **my_env, int runner)
 	}
 	if (ft_strcmp(parse[runner].str, "unset") == 0)
 		ft_unset(my_env, parse[++runner].str);
-	if (ft_strcmp(parse[runner].str, "export") == 0)
+	if (ft_strcmp(parse[runner++].str, "export") == 0)
 	{
-		while (parse[++runner].str && parse[runner].type == CMD_ARG)
+		while (parse[runner].str && parse[runner].type == CMD_ARG)
+		{
 			ft_export(my_env, parse[runner].str);
+			runner++;
+		}
 	}
 	return ;
 }
@@ -106,19 +113,17 @@ void	next_handle_forked_single_builtin(t_parse *parse, t_list **my_env, int runn
 	}
 }
 
-void	exec_single_cmd(t_parse *parse, t_list **env, int runner)
+void	exec_single_cmd(t_parse *parse, t_list **env, int runner, t_exec *data)
 {
 	int		pid;
 
 	pid = fork();
 	if (pid == -1)
-	{
 		exit(1);
-	}
 	if (pid == 0)
 	{
-		ex_child(parse, env, runner);
+		ex_child(parse, env, runner, data);
 		exit(1);
 	}
-	waitpid(pid, NULL, 0);
+	waitpid(-1, NULL, 0);
 }

@@ -6,16 +6,17 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 12:38:49 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/27 19:38:25 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/28 18:49:01 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int		how_many_cmds(t_parse *parse);
-void	ex_child(t_parse *parse, t_list **env, int runner);
+void	ex_child(t_parse *parse, t_list **env, int runner, t_exec *data);
+void	print_tab(char **tab);
 
-void	execution(t_parse *parse, t_list **my_env)
+void	execution(t_parse *parse, t_list **my_env, t_exec *data)
 {
 	int	pipes;
 
@@ -27,7 +28,7 @@ void	execution(t_parse *parse, t_list **my_env)
 		// exec_with_forks(parse, my_env);
 	}
 	else
-		single_cmd(parse, my_env);
+		single_cmd(parse, my_env, data);
 }
 
 int	how_many_cmds(t_parse *parse)
@@ -46,7 +47,7 @@ int	how_many_cmds(t_parse *parse)
 	return (count);
 }
 
-void	ex_child(t_parse *parse, t_list **env, int runner)
+void	ex_child(t_parse *parse, t_list **env, int runner, t_exec *data)
 {
 	char	**arg;
 	char	*path;
@@ -54,20 +55,26 @@ void	ex_child(t_parse *parse, t_list **env, int runner)
 	int		count;
 
 	count = 0;
-	index = 1;
+	index = 0;
 	path = get_path(parse[runner].str, env);
 	if (!path)
 		exit (1);
 	count = how_much_args(parse, runner);
 	arg = malloc(sizeof(char *) * count + 1);
-	arg[0] = ft_strdup(parse[runner++].str);
+	if (!arg)
+		ft_printf("Malloc error in ex_child\n");
+	arg[index++] = ft_strdup(parse[runner++].str);
+	if (!arg[index - 1])
+		ft_printf("Malloc error in ex_child\n");
 	while (parse[runner].str && parse[runner].type == CMD_ARG)
 	{
-		arg[index] = ft_strdup(parse[runner].str);
-		runner++;
+		arg[index] = ft_strdup(parse[runner++].str);
+		if (!arg[index])
+			ft_printf("Malloc error in ex_child\n");
 		index++;
 	}
-	if (execve(path, arg, NULL) == -1)
+	arg[index] = '\0';
+	if (execve(path, arg, data->env) == -1)
 		ft_printf("Execution error \n");
 }
 
@@ -82,4 +89,16 @@ int	how_much_args(t_parse *parse, int runner)
 		runner++;
 	}
 	return (index);
+}
+
+void	print_tab(char **tab)
+{
+	int	runner;
+
+	runner = 0;
+	while (tab[runner])
+	{
+		ft_printf("%s\n", tab[runner]);
+		runner++;
+	}
 }

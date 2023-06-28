@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
+/*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 15:52:05 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/27 19:24:57 by ajakubcz         ###   ########.fr       */
+/*   Updated: 2023/06/28 15:35:17 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
+
+# include "exec.h"
 
 enum e_types {
 	CHAR,
@@ -70,7 +72,7 @@ int		ft_strcmp(char *s1, char*s2);
 char	*ft_get_prompt(t_list	**my_env);
 
 //parse_and_exec.c
-void	parse_and_exec(char *str, t_list **my_env);
+void	parse_and_exec(char *str, t_list **my_env, t_exec *data);
 
 //check_syntax.c
 int		check_syntax_quote(char *str);
