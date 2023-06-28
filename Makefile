@@ -71,6 +71,9 @@ SRCS =			$(DIR_SRCS)main.c \
 				$(DIR_EXEC)start_exec.c \
 				$(DIR_EXEC)exec_utils.c \
 				$(DIR_EXEC)execution.c \
+				$(DIR_EXEC)do_heredoc.c \
+				$(DIR_EXEC)expand_heredoc.c \
+				$(DIR_EXEC)heredoc_utils.c \
 				$(DIR_EXEC)single_cmd.c \
 				$(DIR_EXEC)single_cmd_utils.c \
 

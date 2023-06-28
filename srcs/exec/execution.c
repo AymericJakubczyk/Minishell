@@ -15,10 +15,28 @@
 int		how_many_cmds(t_parse *parse);
 void	ex_child(t_parse *parse, t_list **env, int runner);
 
+void print_all(char **all_limiter, char **str_heredoc)
+{
+	int i;
+
+	i = 0;
+	while (all_limiter[i])
+	{
+		ft_printf("limiter %d : %s \nSTRING : \n%sFIN STR\n", i, all_limiter[i], str_heredoc[i]);
+		i++;
+	}
+}
+
 void	execution(t_parse *parse, t_list **my_env)
 {
 	int	pipes;
+	t_exec	my_struct;
 
+	if (heredoc_in(parse))
+	{
+		do_heredoc(parse, &my_struct, my_env);
+		//print_all(my_struct.all_limiter, my_struct.str_heredoc);
+	}
 	//Heredoc here
 	pipes = how_many_cmds(parse);
 	if (pipes != 0)
