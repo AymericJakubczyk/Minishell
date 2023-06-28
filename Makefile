@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+         #
+#    By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/01 14:11:17 by ajakubcz          #+#    #+#              #
-#    Updated: 2023/06/27 19:14:52 by ajakubcz         ###   ########.fr        #
+#    Updated: 2023/06/28 11:23:47 by cprojean         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,6 +70,9 @@ SRCS =			$(DIR_SRCS)main.c \
 				$(DIR_COLLECTOR)ft_garb_new.c \
 				$(DIR_EXEC)start_exec.c \
 				$(DIR_EXEC)exec_utils.c \
+				$(DIR_EXEC)execution.c \
+				$(DIR_EXEC)single_cmd.c \
+				$(DIR_EXEC)single_cmd_utils.c \
 
 OBJS =			$(patsubst %.c, $(DIR_OBJ)%.o, $(SRCS))
 

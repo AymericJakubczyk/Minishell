@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
+/*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:48 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/27 16:51:15 by ajakubcz         ###   ########.fr       */
+/*   Updated: 2023/06/28 11:25:00 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ void	ft_env(t_list **env)
 	runner = *env;
 	while (runner != NULL)
 	{
-		ft_printf("%s\n", runner->content);
+		if (ft_equal_size(runner->content) != 0)
+			ft_printf("%s\n", runner->content);
 		runner = runner->next;
 	}
 }

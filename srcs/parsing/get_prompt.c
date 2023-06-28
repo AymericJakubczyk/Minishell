@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_prompt.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
+/*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 17:22:21 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/25 21:06:55 by ajakubcz         ###   ########.fr       */
+/*   Updated: 2023/06/27 12:30:11 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static char	*ft_get_path(t_list **my_env)
 			tmp = runner;
 		runner++;
 	}
-	output = ft_strdup(&path[tmp]);
+	output = ft_strdup(&path[++tmp]);
 	free(path);
 	if (!output)
 		return (NULL);
