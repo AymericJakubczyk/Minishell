@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 18:46:17 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/27 19:51:53 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/28 10:53:51 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,15 @@ void	single_cmd(t_parse *parse, t_list **my_env)
 	runner = 0;
 	while (parse[runner].str)
 	{
-		// if (parse[runner].type == INFILE)
-			// dup_in(parse, runner)
-		// if (parse[runner].type == OUTFILE)
-			// dup_out(parse, runner);
+		if (parse[runner].type == INFILE)
+			dup_in(parse, runner);
+		if (parse[runner].type == OUTFILE)
+			dup_out(parse, runner);
+		runner++;
+	}
+	runner = 0;
+	while (parse[runner].str)
+	{
 		if (parse[runner].type == COMMAND)
 		{
 			if (which_builtin(parse, runner) == 1)

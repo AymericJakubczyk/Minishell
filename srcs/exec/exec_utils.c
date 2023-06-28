@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 14:08:26 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/27 14:30:52 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/28 11:09:07 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*get_path(char *cmd, t_list **env)
 		// ft_free(test_path);
 		i++;
 	}
-	return (ft_printf("command not found: \n"), NULL);
+	return (ft_printf("command not found: %s\n", cmd), NULL);
 }
 
 static int	slash_in(char *str)

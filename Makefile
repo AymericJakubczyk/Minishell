@@ -6,7 +6,7 @@
 #    By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/01 14:11:17 by ajakubcz          #+#    #+#              #
-#    Updated: 2023/06/27 18:49:55 by cprojean         ###   ########.fr        #
+#    Updated: 2023/06/28 10:55:18 by cprojean         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,6 +69,7 @@ SRCS =			$(DIR_SRCS)main.c \
 				$(DIR_EXEC)exec_utils.c \
 				$(DIR_EXEC)execution.c \
 				$(DIR_EXEC)single_cmd.c \
+				$(DIR_EXEC)single_cmd_utils.c \
 
 OBJS =			$(patsubst %.c, $(DIR_OBJ)%.o, $(SRCS))
 
