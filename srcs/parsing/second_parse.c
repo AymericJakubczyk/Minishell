@@ -143,19 +143,16 @@ static void	set_type(t_parse *parse, t_entry *entry)
 			set_type_utils(APPEND, &i, parse);
 		else if (parse[i].str[0] == '|' && context_in_parse2(entry, parse, i) == NO_QUOTE)
 			set_type_utils2(PIPEE, &cmd, &i, parse);
+		else if (i - 1 >= 0 && parse[i - 1].type == REDIRECT_IN)
+			set_type_utils(INFILE, &i, parse);
+		else if (i - 1 >= 0 && parse[i - 1].type == HEREDOC)
+			set_type_utils(LIMITER, &i, parse);
+		else if (i - 1 >= 0 && (parse[i - 1].type == REDIRECT_OUT || parse[i - 1].type == APPEND))
+			set_type_utils(OUTFILE, &i, parse);
 		else if (cmd == 0)
 			set_type_utils2(COMMAND, &cmd, &i, parse);
 		else
-		{
-			if (i - 1 >= 0 && parse[i - 1].type == REDIRECT_IN)
-				set_type_utils(INFILE, &i, parse);
-			else if (i - 1 >= 0 && parse[i - 1].type == HEREDOC)
-				set_type_utils(LIMITER, &i, parse);
-			else if (i - 1 >= 0 && (parse[i - 1].type == REDIRECT_OUT || parse[i - 1].type == APPEND))
-				set_type_utils(OUTFILE, &i, parse);
-			else
-				set_type_utils(CMD_ARG, &i, parse);
-		}	
+			set_type_utils(CMD_ARG, &i, parse);	
 	}
 }
 
