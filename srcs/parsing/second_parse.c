@@ -14,6 +14,7 @@
 
 static char	*get_str(t_entry *entry, int *i, int j);
 static void	set_type(t_parse *parse, t_entry *entry);
+static void	next_set_type(t_parse *parse, int *i, int *cmd);
 
 int	colapse_all(t_entry *entry, t_parse *parse)
 {
@@ -95,35 +96,6 @@ int	go_to_end_block(t_entry *entry)
 	return (i);
 }
 
-// static void	set_type(t_parse *parse, t_entry *entry)
-// {
-// 	int	i;
-// 	int	cmd;
-
-// 	cmd = 0;
-// 	i = 0;
-// 	while (parse[i].str)
-// 	{
-// 		if (parse[i].str[0] == '<' && context_in_parse2(entry, parse, i) == NO_QUOTE && ft_strlen(parse[i].str) == 1)
-// 			set_type_utils(REDIRECT_IN, INFILE, &i, parse);
-// 		else if (parse[i].str[0] == '<' && context_in_parse2(entry, parse, i) == NO_QUOTE && ft_strlen(parse[i].str) == 2)
-// 			set_type_utils(HEREDOC, LIMITER, &i, parse);
-// 		else if (parse[i].str[0] == '>' && context_in_parse2(entry, parse, i) == NO_QUOTE && ft_strlen(parse[i].str) == 1)
-// 			set_type_utils(REDIRECT_OUT, OUTFILE, &i, parse);
-// 		else if (parse[i].str[0] == '>' && context_in_parse2(entry, parse, i) == NO_QUOTE && ft_strlen(parse[i].str) == 2)
-// 			set_type_utils(APPEND, OUTFILE, &i, parse);
-// 		else if (parse[i].str[0] == '|' && context_in_parse2(entry, parse, i) == NO_QUOTE)
-// 			set_type_utils2(PIPEE, &cmd, &i, parse);
-// 		else if (cmd == 0)
-// 			set_type_utils2(COMMAND, &cmd, &i, parse);
-// 		else
-// 		{
-// 			parse[i].type = CMD_ARG;
-// 			i++;
-// 		}	
-// 	}
-// }
-
 static void	set_type(t_parse *parse, t_entry *entry)
 {
 	int	i;
@@ -133,30 +105,42 @@ static void	set_type(t_parse *parse, t_entry *entry)
 	i = 0;
 	while (parse[i].str)
 	{
-		if (parse[i].str[0] == '<' && context_in_parse2(entry, parse, i) == NO_QUOTE && ft_strlen(parse[i].str) == 1)
+		if (parse[i].str[0] == '<' && context_in_parse(entry, parse, i) \
+			== NO_QUOTE && ft_strlen(parse[i].str) == 1)
 			set_type_utils(REDIRECT_IN, &i, parse);
-		else if (parse[i].str[0] == '<' && context_in_parse2(entry, parse, i) == NO_QUOTE && ft_strlen(parse[i].str) == 2)
+		else if (parse[i].str[0] == '<' && context_in_parse(entry, parse, i) \
+			== NO_QUOTE && ft_strlen(parse[i].str) == 2)
 			set_type_utils(HEREDOC, &i, parse);
-		else if (parse[i].str[0] == '>' && context_in_parse2(entry, parse, i) == NO_QUOTE && ft_strlen(parse[i].str) == 1)
+		else if (parse[i].str[0] == '>' && context_in_parse(entry, parse, i) \
+			== NO_QUOTE && ft_strlen(parse[i].str) == 1)
 			set_type_utils(REDIRECT_OUT, &i, parse);
-		else if (parse[i].str[0] == '>' && context_in_parse2(entry, parse, i) == NO_QUOTE && ft_strlen(parse[i].str) == 2)
+		else if (parse[i].str[0] == '>' && context_in_parse(entry, parse, i) \
+			== NO_QUOTE && ft_strlen(parse[i].str) == 2)
 			set_type_utils(APPEND, &i, parse);
-		else if (parse[i].str[0] == '|' && context_in_parse2(entry, parse, i) == NO_QUOTE)
+		else if (parse[i].str[0] == '|' && context_in_parse(entry, parse, i) \
+			== NO_QUOTE)
 			set_type_utils2(PIPEE, &cmd, &i, parse);
-		else if (i - 1 >= 0 && parse[i - 1].type == REDIRECT_IN)
-			set_type_utils(INFILE, &i, parse);
-		else if (i - 1 >= 0 && parse[i - 1].type == HEREDOC)
-			set_type_utils(LIMITER, &i, parse);
-		else if (i - 1 >= 0 && (parse[i - 1].type == REDIRECT_OUT || parse[i - 1].type == APPEND))
-			set_type_utils(OUTFILE, &i, parse);
-		else if (cmd == 0)
-			set_type_utils2(COMMAND, &cmd, &i, parse);
 		else
-			set_type_utils(CMD_ARG, &i, parse);	
+			next_set_type(parse, &i, &cmd);
 	}
 }
 
-int	context_in_parse2(t_entry *entry, t_parse *parse, int i)
+static void	next_set_type(t_parse *parse, int *i, int *cmd)
+{
+	if (*i - 1 >= 0 && parse[*i - 1].type == REDIRECT_IN)
+		set_type_utils(INFILE, i, parse);
+	else if (*i - 1 >= 0 && parse[*i - 1].type == HEREDOC)
+		set_type_utils(LIMITER, i, parse);
+	else if (*i - 1 >= 0 && (parse[*i - 1].type == REDIRECT_OUT || \
+		parse[*i - 1].type == APPEND))
+		set_type_utils(OUTFILE, i, parse);
+	else if (*cmd == 0)
+		set_type_utils2(COMMAND, cmd, i, parse);
+	else
+		set_type_utils(CMD_ARG, i, parse);
+}
+
+int	context_in_parse(t_entry *entry, t_parse *parse, int i)
 {
 	int	ind_parse;
 	int	ind_entry;

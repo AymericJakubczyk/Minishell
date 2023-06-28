@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 12:38:49 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/28 18:49:01 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/28 19:14:14 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,28 @@ int		how_many_cmds(t_parse *parse);
 void	ex_child(t_parse *parse, t_list **env, int runner, t_exec *data);
 void	print_tab(char **tab);
 
+void print_all(char **all_limiter, char **str_heredoc)
+{
+	int i;
+
+	i = 0;
+	while (all_limiter[i])
+	{
+		ft_printf("limiter %d : %s \nSTRING : \n%sFIN STR\n", i, all_limiter[i], str_heredoc[i]);
+		i++;
+	}
+}
+
 void	execution(t_parse *parse, t_list **my_env, t_exec *data)
 {
 	int	pipes;
+	t_exec	my_struct;
 
+	if (heredoc_in(parse))
+	{
+		do_heredoc(parse, &my_struct, my_env);
+		//print_all(my_struct.all_limiter, my_struct.str_heredoc);
+	}
 	//Heredoc here
 	pipes = how_many_cmds(parse);
 	if (pipes != 0)
