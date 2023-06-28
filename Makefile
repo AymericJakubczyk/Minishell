@@ -6,7 +6,7 @@
 #    By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/01 14:11:17 by ajakubcz          #+#    #+#              #
-#    Updated: 2023/06/28 10:55:18 by cprojean         ###   ########.fr        #
+#    Updated: 2023/06/28 11:23:47 by cprojean         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,6 +53,9 @@ SRCS =			$(DIR_SRCS)main.c \
 				$(DIR_PARSING)second_parse.c \
 				$(DIR_PARSING)parse_utils.c \
 				$(DIR_PARSING)expand.c \
+				$(DIR_PARSING)get_expand_size.c \
+				$(DIR_PARSING)fill_expand.c \
+				$(DIR_PARSING)expand_utils.c \
 				$(DIR_PARSING)utils.c \
 				$(DIR_PARSING)print.c \
 				$(DIR_BUILTINS)builtins.c \

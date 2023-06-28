@@ -6,7 +6,7 @@
 /*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 16:38:13 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/12 11:30:35 by ajakubcz         ###   ########.fr       */
+/*   Updated: 2023/06/27 18:58:30 by ajakubcz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ int	next_parse_check(t_parse *input)
 	runner = 0;
 	while (input[runner].str)
 	{
-		if (input[runner].str[0] == '<')
+		if (input[runner].type == REDIRECT_IN || input[runner].type == HEREDOC)
 			if (check_redirect_args(input, runner) == -1)
 				return (-1);
-		if (input[runner].str[0] == '>')
+		if (input[runner].type == REDIRECT_OUT || input[runner].type == APPEND)
 			if (check_redirect_args(input, runner) == -1)
 				return (-1);
-		if (input[runner].str[0] == '|')
+		if (input[runner].type == PIPEE)
 			if (check_pipe_args(input, runner) == -1)
 				return (-1);
 		runner++;
