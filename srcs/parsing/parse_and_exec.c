@@ -45,7 +45,7 @@ void	parse_and_exec(char *str, t_list **my_env, t_exec *data)
 	if (!convert_entry_to_parse(new_entry, &parse))
 		return ;
 	free(new_entry);
-	// print_parse(parse);
+	//print_parse(parse);
 	execution(parse, my_env, data);
 	free_all_parse(parse);
 }

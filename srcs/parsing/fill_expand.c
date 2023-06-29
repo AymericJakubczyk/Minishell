@@ -112,9 +112,24 @@ static void	keep_redirection(t_entry *entry, t_entry *new_entry, int *i, int *j)
 
 static void	else_fill_new_entry(t_entry *entry, t_entry *new_entry, int *ind)
 {
+	int quote;
+
 	if (entry[ind[0]].context == 0 && \
 		(entry[ind[0]].type == S_QUOTE || entry[ind[0]].type == D_QUOTE))
-		ind[0]++;
+	{
+		quote = entry[ind[0]].type;
+		// if (entry[ind[0] + 1].c && entry[ind[0] + 1].type == quote)
+		if((ind[0] - 1 < 0 || entry[ind[0] - 1].context == NO_QUOTE) && entry[ind[0] + 1].c && entry[ind[0] + 1].type == quote)
+		{
+				new_entry[ind[1]].c = ' ';
+				new_entry[ind[1]].type = VOID;
+				new_entry[ind[1]].context = 0;
+				ind[0] += 2;
+				ind[1] += 1;
+		}
+		else
+			ind[0]++;
+	}
 	else
 		copy_entry_value(entry, new_entry, &ind[0], &ind[1]);
 }

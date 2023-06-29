@@ -41,7 +41,7 @@ int	colapse_all(t_entry *entry, t_parse *parse)
 	}
 	parse[nbr].str = NULL;
 	set_type(parse, entry);
-	// print_parse(parse);
+	//print_parse(parse);
 	if (check_parse(parse) == -1)
 		return (g_errno = 2, 0);
 	return (1);
@@ -53,6 +53,11 @@ static char	*get_str(t_entry *entry, int *i, int j)
 	int		runner;
 
 	runner = 0;
+	if (entry[*i].type == VOID)
+	{
+		*i += 1;
+		return (char_to_str(0));
+	}
 	str = ft_strdup("");
 	if (!str)
 		return (NULL);

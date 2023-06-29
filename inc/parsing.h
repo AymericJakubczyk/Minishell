@@ -24,7 +24,8 @@ enum e_types {
 	S_QUOTE,
 	D_QUOTE,
 	STRING,
-	EXPAND
+	EXPAND,
+	VOID
 };
 
 enum e_context {
@@ -43,9 +44,7 @@ enum e_species {
 	REDIRECT_OUT,	//6
 	APPEND,			//7
 	COMMAND,		//8
-	CMD_ARG,		//9
-	AMBIGUOUS		//10
-	//EXPAND		//11
+	CMD_ARG			//9
 };
 
 typedef struct s_entry
@@ -69,7 +68,7 @@ char	*ft_strjoin4(char *s1, char *s2);
 int		ft_strcmp(char *s1, char*s2);
 
 //get_prompt.c
-char	*ft_get_prompt(t_list	**my_env);
+char	*ft_get_prompt(t_list **my_env);
 
 //parse_and_exec.c
 void	parse_and_exec(char *str, t_list **my_env, t_exec *data);
