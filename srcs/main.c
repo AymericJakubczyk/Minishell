@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:11:04 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/28 19:08:53 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/29 17:53:51 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,12 @@ int		g_errno;
 
 void	handler(int sig);
 void	init_data(t_exec *data, char **env);
-void	minishell(t_list **my_env, char **env);
+void	minishell(t_list **my_env, char **env, t_exec *data);
 
 int	main(int ac, char **av, char **env)
 {
 	t_list	*my_env;
+	t_exec	data;
 
 	(void) ac;
 	(void) av;
@@ -30,19 +31,19 @@ int	main(int ac, char **av, char **env)
 		ft_create_env(&my_env);
 	else
 		ft_dup_env(env, &my_env);
-	minishell(&my_env, env);
+	init_data(&data, env);
+	minishell(&my_env, env, &data);
 	ft_lstclear(&my_env, free);
+	double_close(data.fd_in, data.fd_out);
 	rl_clear_history();
 	exit (1);
 }
 
-void	minishell(t_list **my_env, char **env)
+void	minishell(t_list **my_env, char **env, t_exec *data)
 {
 	char	*cmd;
 	char	*prompt;
-	t_exec	data;
 
-	init_data(&data, env);
 	cmd = ft_strdup("");
 	while (ft_exit(cmd) == 0)
 	{
@@ -55,7 +56,7 @@ void	minishell(t_list **my_env, char **env)
 			break ;
 		if (ft_strlen(cmd) != 0)
 			add_history(cmd);
-		parse_and_exec(cmd, my_env, &data);
+		parse_and_exec(cmd, my_env, data);
 	}
 	if (!cmd)
 		ft_printf("\nCTRL-D\n");
@@ -75,5 +76,6 @@ void	init_data(t_exec *data, char **env)
 {
 	data->fd_in = dup(0);
 	data->fd_out = dup(1);
+	data->mode = 0;
 	data->env = env;
 }

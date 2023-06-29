@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 19:24:05 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/29 11:11:09 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/29 17:54:51 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	dup_in(t_parse *parse, int runner, int mode, int *pipe, t_exec *data)
 		infile = open(parse[runner].str, O_RDONLY);
 		if (dup2(infile, STDIN_FILENO) == -1)
 			ft_printf("Dup2 problem\n");
+		close (infile);
 	}
 	if (mode == 1)
 	{
@@ -46,11 +47,13 @@ int	dup_out(t_parse *parse, int runner)
 		ft_printf("Open file error");
 	if (dup2(outfile, STDOUT_FILENO) == -1)
 		ft_printf("Dup2 problem\n");
+	close (outfile);
 	return (outfile);
 }
 
-void	double_close(int file1, int file2)
+void	double_close(int *file1, int *file2)
 {
+	ft_printf("f1 : %d, f2 : %d\n", file1, file2);
 	if (file1)
 		close(file1);
 	if (file2)
@@ -65,9 +68,15 @@ void	restore_dup(int file[2], t_exec *data, int *pipe)
 	if (pipe && pipe != data->fd_in)
 		if (dup2(data->fd_in, STDIN_FILENO) == -1)
 			ft_printf("Dup2 failed to restore");
-	if (file[1] != data->fd_out)
+	else if (file[1] != data->fd_out)
 		if (dup2(data->fd_out, STDOUT_FILENO) == -1)
 			ft_printf("Dup2 failed to restore");
+	close(data->fd_in);
+	close(data->fd_out);
+	if (file[0] != 0)
+		close(file[0]);
+	if (file[1] != 0)
+		close(file[1]);
 }
 
 void	single_cmd_execution(t_parse *parse, t_list **my_env, t_exec *data)

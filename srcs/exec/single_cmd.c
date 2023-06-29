@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 18:46:17 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/29 11:28:19 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/29 17:55:07 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ void	single_cmd(t_parse *parse, t_list **my_env, t_exec *data)
 			file[1] = dup_out(parse, runner);
 		runner++;
 	}
+	double_close(pipes[0], pipes[1]);
 	single_cmd_execution(parse, my_env, data);
 	restore_dup(file, data, pipes[0]);
-	double_close(pipes[0], pipes[1]);
 }
 
 void	handle_single_builtin(t_parse *parse, t_list **my_env, int runner)
@@ -114,6 +114,7 @@ void	exec_single_cmd(t_parse *parse, t_list **env, int runner, t_exec *data)
 	if (pid == 0)
 	{
 		ex_child(parse, env, runner, data);
+		double_close(data->fd_in, data->fd_out);
 		exit(1);
 	}
 	waitpid(-1, NULL, 0);

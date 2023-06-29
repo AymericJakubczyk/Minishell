@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:51:36 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/29 13:10:13 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/29 13:43:33 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	is_alnum(char *str)
 	runner = 0;
 	while (str[runner])
 	{
-		if (ft_isalnum(str[runner]) == 0)
+		if (ft_isalnum(str[runner]) == 0 && str[runner] != '_')
 			return (0);
 		runner++;
 	}
