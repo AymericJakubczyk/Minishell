@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 18:46:17 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/28 19:09:14 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/29 11:28:19 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,34 +20,25 @@ void	exec_single_cmd(t_parse *parse, t_list **env, int runner, t_exec *data);
 void	single_cmd(t_parse *parse, t_list **my_env, t_exec *data)
 {
 	int	runner;
+	int	pipes[2];
 	int	file[2];
 
+	pipe(pipes);
 	runner = 0;
 	init_file(&file[0], &file[1], data);
 	while (parse[runner].str)
 	{
+		if (parse[runner].type == HEREDOC)
+			file[0] = dup_in(parse, runner, 1, pipes, data);
 		if (parse[runner].type == INFILE)
-			file[0] = dup_in(parse, runner, data);
+			file[0] = dup_in(parse, runner, 0, pipes, data);
 		if (parse[runner].type == OUTFILE)
-			file[1] = dup_out(parse, runner, data);
+			file[1] = dup_out(parse, runner);
 		runner++;
 	}
-	runner = 0;
-	while (parse[runner].str)
-	{
-		if (parse[runner].type == COMMAND)
-		{
-			if (which_builtin(parse, runner) == 1)
-				handle_single_builtin(parse, my_env, runner);
-			else if (which_builtin(parse, runner) == 2)
-				handle_forked_single_builtin(parse, my_env, runner);
-			else
-				exec_single_cmd(parse, my_env, runner, data);
-		}
-		runner++;
-	}
-	restore_dup(file, data);
-	// double_close(file[0], file[1]);
+	single_cmd_execution(parse, my_env, data);
+	restore_dup(file, data, pipes[0]);
+	double_close(pipes[0], pipes[1]);
 }
 
 void	handle_single_builtin(t_parse *parse, t_list **my_env, int runner)

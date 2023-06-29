@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:51:36 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/23 13:10:05 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/29 13:10:13 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	ft_unset(t_list **my_env, char *str)
 	t_list	*tmp;
 	int		size;
 
+	g_errno = 0;
 	if (is_alnum(str) == 0)
 		return (ft_error(ERROR_22, str));
 	size = ft_strlen(str);

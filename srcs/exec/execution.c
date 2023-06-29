@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 12:38:49 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/28 19:14:14 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/29 12:40:50 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,12 @@ void print_all(char **all_limiter, char **str_heredoc)
 void	execution(t_parse *parse, t_list **my_env, t_exec *data)
 {
 	int	pipes;
-	t_exec	my_struct;
-
+	
 	if (heredoc_in(parse))
 	{
-		do_heredoc(parse, &my_struct, my_env);
-		//print_all(my_struct.all_limiter, my_struct.str_heredoc);
+		do_heredoc(parse, data, my_env);
+		//print_all(data.all_limiter, data.str_heredoc);
 	}
-	//Heredoc here
 	pipes = how_many_cmds(parse);
 	if (pipes != 0)
 	{
@@ -74,11 +72,12 @@ void	ex_child(t_parse *parse, t_list **env, int runner, t_exec *data)
 
 	count = 0;
 	index = 0;
+	arg = NULL;
+	count = how_much_args(parse, runner);
 	path = get_path(parse[runner].str, env);
 	if (!path)
-		exit (1);
-	count = how_much_args(parse, runner);
-	arg = malloc(sizeof(char *) * count + 1);
+		ft_printf("Path is null");
+	arg = malloc(sizeof(char *) * (count + 1));
 	if (!arg)
 		ft_printf("Malloc error in ex_child\n");
 	arg[index++] = ft_strdup(parse[runner++].str);
@@ -91,7 +90,7 @@ void	ex_child(t_parse *parse, t_list **env, int runner, t_exec *data)
 			ft_printf("Malloc error in ex_child\n");
 		index++;
 	}
-	arg[index] = '\0';
+	arg[index] = NULL;
 	if (execve(path, arg, data->env) == -1)
 		ft_printf("Execution error \n");
 }

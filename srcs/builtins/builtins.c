@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:48 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/28 17:30:15 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/29 13:08:16 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	ft_echo(char *str)
 	}
 	else
 		ft_printf("%s\n", str);
+	g_errno = 0;
 }
 
 char	*is_echos_flag(char *str)
@@ -85,6 +86,7 @@ void	ft_env(t_list **env)
 			ft_printf("%s\n", runner->content);
 		runner = runner->next;
 	}
+	g_errno = 0;
 }
 
 char	*ft_pwd(void)
@@ -96,6 +98,7 @@ char	*ft_pwd(void)
 	path = malloc(sizeof(char) * (size));
 	getcwd(path, size);
 	return (path);
+	g_errno = 0;
 }
 
 void	ft_cd(char *directory, t_list **my_env)
@@ -111,4 +114,5 @@ void	ft_cd(char *directory, t_list **my_env)
 		ft_error(ERROR_99, NULL);
 	pwd = ft_strjoin4("PWD=", ft_pwd());
 	ft_export(my_env, pwd);
+	g_errno = 0;
 }

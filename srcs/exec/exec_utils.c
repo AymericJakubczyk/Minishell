@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 14:08:26 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/28 19:05:14 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/29 12:35:09 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ char	*get_path(char *cmd, t_list **env)
 	{
 		tmp = ft_strjoin(allpath[i], "/");
 		test_path = ft_strjoin(tmp, cmd);
-		// ft_free(tmp);
+		free(tmp);
 		if (access(test_path, F_OK | X_OK) != -1)
 			return (test_path);
-		// ft_free(test_path);
+		free(test_path);
 		i++;
 	}
 	return (ft_printf("command not found: %s\n", cmd), NULL);
