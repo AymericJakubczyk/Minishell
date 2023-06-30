@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 15:18:09 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/29 13:46:53 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/30 16:40:46 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ void	ft_export(t_list **my_env, char *str)
 	tmp = *my_env;
 	if (!str)
 		return (ft_print_export(my_env));
-	if (is_alnum(str) == 0)
-		return (ft_error(ERROR_22, str));
 	if (ft_equal_size(str) == 0)
 		ft_lstadd_back(my_env, ft_lstnew(ft_strdup(str), -1));
+	if (is_alpha_export(str) == 0)
+		return (ft_error(ERROR_22, str));
 	else if (is_allready_export(my_env, str))
 		return (export_again(my_env, str));
 	else if (is_addition(str) == 1)

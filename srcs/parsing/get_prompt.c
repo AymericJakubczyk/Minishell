@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 17:22:21 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/27 12:30:11 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/30 15:46:57 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*ft_get_prompt(t_list	**my_env)
 
 	user = ft_getenv(my_env, "USER", 0);
 	if (user == NULL)
-		user = "you";
+		user = ft_strdup("you");
 	path = ft_get_path(my_env);
 	prompt = ft_strjoin2(user, ft_strdup(":"));
 	prompt = ft_strjoin2(prompt, path);
@@ -61,29 +61,3 @@ static char	*ft_get_path(t_list **my_env)
 		return (NULL);
 	return (output);
 }
-
-// static int	is_in_path(char *home, char *path)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (home[i] && path[i] && home[i] == path[i])
-// 		i++;
-// 	if (home[i] == '\0')
-// 		return (1);
-// 	else
-// 		return (0);
-// }
-
-// static char	*replace_in_path(char *home, char *path)
-// {
-// 	int		i;
-// 	char	*new_path;
-
-// 	i = 0;
-// 	while (home[i] && path[i] && home[i] == path[i])
-// 		i++;
-// 	new_path = ft_strjoin("~", &path[i]);
-// 	free(path);
-// 	return (new_path);
-// }

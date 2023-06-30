@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 19:24:05 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/30 13:21:19 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/30 14:28:43 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,24 @@ int	dup_out(t_parse *parse, int runner)
 {
 	int	outfile;
 
-	outfile = open(parse[runner].str, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (!outfile)
-		ft_printf("Open file error");
-	if (dup2(outfile, STDOUT_FILENO) == -1)
-		ft_printf("Dup2 problem\n");
-	close (outfile);
+	if (parse[runner - 1].type == REDIRECT_OUT)
+	{
+		outfile = open(parse[runner].str, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		if (!outfile)
+			ft_printf("Open file error");
+		if (dup2(outfile, STDOUT_FILENO) == -1)
+			ft_printf("Dup2 problem\n");
+		close (outfile);
+	}
+	else if (parse[runner - 1].type == APPEND)
+	{
+		outfile = open(parse[runner].str, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		if (!outfile)
+			ft_printf("Open file error");
+		if (dup2(outfile, STDOUT_FILENO) == -1)
+			ft_printf("Dup2 problem\n");
+		close (outfile);
+	}
 	return (outfile);
 }
 
