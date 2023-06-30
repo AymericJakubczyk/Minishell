@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 14:06:16 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/29 17:52:15 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/30 13:37:31 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ typedef struct s_exec
 	char	**str_heredoc;
 	char	**env;
 	int		fd_in;
+	int		current_fd_in;
 	int		fd_out;
+	int		current_fd_out;
 	int		mode;
 }	t_exec;
 

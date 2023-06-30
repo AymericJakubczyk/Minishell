@@ -6,26 +6,26 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 19:24:05 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/29 17:54:51 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/30 13:21:19 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	dup_in(t_parse *parse, int runner, int mode, int *pipe, t_exec *data)
+int	dup_in(t_parse *parse, int runner, int *pipe, t_exec *data)
 {
 	int		infile;
 	char	*string;
 
 	infile = 0;
-	if (mode == 0)
+	if (parse[runner].type == INFILE)
 	{
 		infile = open(parse[runner].str, O_RDONLY);
 		if (dup2(infile, STDIN_FILENO) == -1)
 			ft_printf("Dup2 problem\n");
 		close (infile);
 	}
-	if (mode == 1)
+	else if (parse[runner].type == HEREDOC)
 	{
 		string = ft_get_str_hd(parse, data, 1);
 		write(pipe[1], string, ft_strlen(string));
@@ -53,7 +53,6 @@ int	dup_out(t_parse *parse, int runner)
 
 void	double_close(int *file1, int *file2)
 {
-	ft_printf("f1 : %d, f2 : %d\n", file1, file2);
 	if (file1)
 		close(file1);
 	if (file2)
@@ -62,21 +61,21 @@ void	double_close(int *file1, int *file2)
 
 void	restore_dup(int file[2], t_exec *data, int *pipe)
 {
+	// if (file[0])
+	// 	close(file[0]);
+	// if (file[1]);
+	// 	close(file[1]);
 	if (file[0] && file[0] != data->fd_in)
 		if (dup2(data->fd_in, STDIN_FILENO) == -1)
-			ft_printf("Dup2 failed to restore");
-	if (pipe && pipe != data->fd_in)
+			ft_printf("Dup2 failed to restore??? %d\n", data->fd_in);
+	else if (pipe && pipe != data->fd_in)
 		if (dup2(data->fd_in, STDIN_FILENO) == -1)
 			ft_printf("Dup2 failed to restore");
-	else if (file[1] != data->fd_out)
+	if (file[1] != data->fd_out)
 		if (dup2(data->fd_out, STDOUT_FILENO) == -1)
-			ft_printf("Dup2 failed to restore");
-	close(data->fd_in);
-	close(data->fd_out);
-	if (file[0] != 0)
-		close(file[0]);
-	if (file[1] != 0)
-		close(file[1]);
+			ft_printf("Dup2 failed to restore out %d\n", data->fd_out);
+	// close(data->fd_in);
+	// close(data->fd_out);
 }
 
 void	single_cmd_execution(t_parse *parse, t_list **my_env, t_exec *data)

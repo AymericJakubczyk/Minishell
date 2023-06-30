@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 14:08:26 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/29 17:19:54 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/30 13:38:29 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,8 @@ static int	check_env_path(char *str, char *str_path)
 	return (1);
 }
 
-void	init_file(int *fd1, int *fd2, t_exec *data)
+void	init_file(t_exec *data)
 {
-	*fd1 = data->fd_in;
-	*fd2 = data->fd_out;
+	data->current_fd_in = data->fd_in;
+	data->current_fd_out = data->fd_out;
 }

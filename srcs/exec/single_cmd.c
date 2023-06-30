@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 18:46:17 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/29 17:55:07 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/06/30 13:40:49 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,24 +21,23 @@ void	single_cmd(t_parse *parse, t_list **my_env, t_exec *data)
 {
 	int	runner;
 	int	pipes[2];
-	int	file[2];
 
 	pipe(pipes);
 	runner = 0;
-	init_file(&file[0], &file[1], data);
 	while (parse[runner].str)
 	{
 		if (parse[runner].type == HEREDOC)
-			file[0] = dup_in(parse, runner, 1, pipes, data);
+			data->current_fd_in = dup_in(parse, runner, pipes, data);
 		if (parse[runner].type == INFILE)
-			file[0] = dup_in(parse, runner, 0, pipes, data);
+			data->current_fd_in = dup_in(parse, runner, pipes, data);
 		if (parse[runner].type == OUTFILE)
-			file[1] = dup_out(parse, runner);
+			data->current_fd_out = dup_out(parse, runner);
 		runner++;
 	}
 	double_close(pipes[0], pipes[1]);
 	single_cmd_execution(parse, my_env, data);
-	restore_dup(file, data, pipes[0]);
+	double_close(data->current_fd_in, data->current_fd_out);
+	// restore_dup(file, data, pipes[0]);
 }
 
 void	handle_single_builtin(t_parse *parse, t_list **my_env, int runner)
@@ -117,5 +116,5 @@ void	exec_single_cmd(t_parse *parse, t_list **env, int runner, t_exec *data)
 		double_close(data->fd_in, data->fd_out);
 		exit(1);
 	}
-	waitpid(-1, NULL, 0);
+	waitpid(pid, NULL, 0);
 }
