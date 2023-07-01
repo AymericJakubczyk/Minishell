@@ -41,7 +41,7 @@ void	execution(t_parse *parse, t_list **my_env, t_exec *data)
 	if (pipes != 0)
 	{
 		ft_printf("Pipes\n");
-		// exec_with_forks(parse, my_env);
+		exec_with_forks(parse, my_env, data);
 	}
 	else
 		single_cmd(parse, my_env, data);

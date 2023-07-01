@@ -76,6 +76,8 @@ SRCS =			$(DIR_SRCS)main.c \
 				$(DIR_EXEC)heredoc_utils.c \
 				$(DIR_EXEC)single_cmd.c \
 				$(DIR_EXEC)single_cmd_utils.c \
+				$(DIR_EXEC)exec_with_forks.c \
+				$(DIR_EXEC)check_redirect.c \
 
 OBJS =			$(patsubst %.c, $(DIR_OBJ)%.o, $(SRCS))
 
