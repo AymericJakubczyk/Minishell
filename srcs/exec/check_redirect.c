@@ -10,17 +10,21 @@ void	set_context(t_entry *entry, int j, char quote);
 int size_expanded_redir(char *str, t_list **my_env);
 char	*colapse_entry(t_entry *entry);
 
-int	check_redirect(t_parse parse, t_list **my_env)
+int	check_redirect(t_parse parse, t_list **my_env, char **expanded, int in)
 {
-	char	*expanded;
+	//char	*expanded;
 
-	ft_printf("TEST\n");
-	expanded = expand_redirect(parse, my_env);
-	if (!expanded)
+	*expanded = expand_redirect(parse, my_env);
+	if (!*expanded)
 		return (0);
-	if (access(expanded, F_OK | R_OK) == -1)
+	if (in && access(*expanded, F_OK | R_OK) == -1)
 	{
-		ft_printf("bash : %s\n", strerror(errno));
+		printf("Minihell : %s: %s\n", *expanded, strerror(errno));
+		return (0);
+	}
+	if (!in && open(*expanded, O_WRONLY | O_CREAT | O_TRUNC, 0644) == -1)
+	{
+		printf("Minihell : %s: %s\n", *expanded, strerror(errno));
 		return (0);
 	}
 	return (1);
@@ -35,16 +39,16 @@ char *expand_redirect(t_parse parse, t_list **my_env)
 	entry = malloc(sizeof(t_entry) * (size_expanded_redir(parse.str, my_env) + 1));
 	if (!entry)
 	{
-		return (NULL);
 		//print error malloc;
+		return (NULL);
 	}
 	fill_expanded_redir(entry, parse.str, my_env);
-	print_entry(entry);
+	//print_entry(entry);
 	if (!check_expanded_redir(entry))
 		return (NULL);
 	expanded = colapse_entry(entry);
 	free(entry);
-	ft_printf("expanded : |%s|\n", expanded);
+	printf("expanded : |%s|\n", expanded);
 	return (expanded);
 }
 
@@ -188,12 +192,12 @@ int	check_expanded_redir(t_entry *entry)
 	while (entry[i].c && (entry[i].c == ' ' || entry[i].c == '\t') && entry[i].context == NO_QUOTE)
 		i++;
 	if (!entry[i].c)
-		return (ft_printf("AMBIGUOUS REDIRECTION !\n"), 0);
+		return (printf("AMBIGUOUS REDIRECTION !\n"), 0);
 	while (entry[i].c && i <= last_ind_char)
 	{
-		ft_printf("char : %c ind : %d last_ind : %d\n", entry[i].c, i, last_ind_char);
+		//ft_printf("char : %c ind : %d last_ind : %d\n", entry[i].c, i, last_ind_char);
 		if ((entry[i].c == ' ' || entry[i].c == '\t') && entry[i].context == NO_QUOTE)
-			return (ft_printf("AMBIGUOUS REDIRECTION !\n"), 0);
+			return (printf("AMBIGUOUS REDIRECTION !\n"), 0);
 		i++;
 	}
 	return (1);

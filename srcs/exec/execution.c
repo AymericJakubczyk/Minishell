@@ -16,7 +16,7 @@ int		how_many_cmds(t_parse *parse);
 void	ex_child(t_parse *parse, t_list **env, int runner, t_exec *data);
 void	print_tab(char **tab);
 
-void print_all(char **all_limiter, char **str_heredoc)
+void print_all_data(char **all_limiter, char **str_heredoc)
 {
 	int i;
 
@@ -35,7 +35,7 @@ void	execution(t_parse *parse, t_list **my_env, t_exec *data)
 	if (heredoc_in(parse))
 	{
 		do_heredoc(parse, data, my_env);
-		//print_all(data.all_limiter, data.str_heredoc);
+		//print_all_data(data.all_limiter, data.str_heredoc);
 	}
 	pipes = how_many_cmds(parse);
 	if (pipes != 0)
@@ -44,7 +44,10 @@ void	execution(t_parse *parse, t_list **my_env, t_exec *data)
 		exec_with_forks(parse, my_env, data);
 	}
 	else
+	{
+		ft_printf("single cmd\n");
 		single_cmd(parse, my_env, data);
+	}
 }
 
 int	how_many_cmds(t_parse *parse)

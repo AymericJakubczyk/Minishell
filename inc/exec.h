@@ -20,9 +20,11 @@ typedef struct s_exec
 	int		nbr_limiter;
 	char	**all_limiter;
 	char	**str_heredoc;
+	int		nbr_cmd;
 	char	**env;
 	int		fd_in;
 	int		fd_out;
+	int		prec_fd;
 }	t_exec;
 
 // //do_heredoc.c
