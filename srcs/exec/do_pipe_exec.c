@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 17:31:47 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/30 19:38:08 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/01 17:37:38 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	exec_with_forks(t_parse *parse, t_list **my_env, t_exec *data)
 	int	count;
 
 	count = how_many_pipes(parse);
-	pid = malloc(sizeof(int *) * count);
+	// pid = malloc(sizeof(int *) * count);
 	pipes[0] = 0;
 	pipes[1] = 0;
 	while (parse[index].str)
@@ -49,6 +49,7 @@ void	exec_with_forks(t_parse *parse, t_list **my_env, t_exec *data)
 void	each_cmd(t_parse *parse, t_list **my_env, t_exec *data, int *index)
 {
 	int	pipes[2];
+	int	file[2];
 	int	tmp;
 
 	tmp = index[0];
@@ -66,11 +67,13 @@ void	each_cmd(t_parse *parse, t_list **my_env, t_exec *data, int *index)
 			data->current_fd_out = dup_out(parse, index[0]);
 		index[0]++;
 	}
+	file[0] = data->current_fd_in;
+	file[1] = data->current_fd_out;
 	dup_inter_out(data, parse, index[1]);
 	double_close(pipes[0], pipes[1]);
 	piped_cmd_execution(parse, my_env, data, index[0]);
-	// double_close(data->pipe[0], data->pipe[1]);
-	// restore_dup(file, data, pipes[0]);
+	double_close(data->pipe[0], data->pipe[1]);
+	restore_dup(file, data, pipes[0]);
 }
 
 int	is_pipe_after(t_parse *parse, int index)

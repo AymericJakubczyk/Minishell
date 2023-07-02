@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 19:24:05 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/30 14:28:43 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/01 17:38:18 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void	restore_dup(int file[2], t_exec *data, int *pipe)
 	// 	close(file[0]);
 	// if (file[1]);
 	// 	close(file[1]);
+	// ft_printf("here\n");
 	if (file[0] && file[0] != data->fd_in)
 		if (dup2(data->fd_in, STDIN_FILENO) == -1)
 			ft_printf("Dup2 failed to restore??? %d\n", data->fd_in);
