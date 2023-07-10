@@ -21,10 +21,8 @@ void	parse_and_exec(char *str, t_list **my_env, t_exec *data)
 	t_entry	*entry;
 	t_entry	*new_entry;
 	t_parse	*parse;
-	t_list	*list;
 
 	new_entry = NULL;
-	list = NULL;
 	parse = NULL;
 	if (!check_syntax_quote(str))
 		return ;

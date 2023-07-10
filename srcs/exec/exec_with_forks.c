@@ -15,12 +15,17 @@
 
 void	exec_cmd(t_parse *parse, int num_cmd, t_list **my_env, t_exec *data);
 int	get_start_cmd(t_parse *parse, int num_cmd);
+int	redirect_in(t_parse *parse);
 void	do_redirect_in(t_parse *parse, t_list **my_env, t_exec *data);
+int	redirect_out(t_parse *parse);
 void	do_redirect_out(t_parse *parse, t_list **my_env, t_exec *data);
 char **get_arg(t_parse *parse);
 void fill_arg(t_parse *parse, char **arg);
 void do_classique_in_pipe(int num_cmd, t_exec *data);
 void do_classique_out_pipe(int num_cmd, t_exec *data);
+int	check_all_redirect_in(t_parse *parse, t_list **my_env, char **infile);
+int	check_all_redirect_out(t_parse *parse, t_list **my_env, char **outfile);
+int get_nbr_arg(t_parse *parse);
 
 void print_all(char **str)
 {
@@ -36,7 +41,7 @@ void print_all(char **str)
 	printf("END PRINT ALL\n");
 }
 
-void	wait_all(nbr_cmd)
+void	wait_all(int nbr_cmd)
 {
 	int i;
 
@@ -56,17 +61,35 @@ void	exec_with_forks(t_parse *parse, t_list **my_env, t_exec *data)
 
 	nbr_cmd = how_many_cmds(parse) + 1;
 	data->nbr_cmd = nbr_cmd;
+	data->prec_fd = 0;
 	num_cmd = 0;
 	while (num_cmd < nbr_cmd)
 	{
+		pipe(data->pipes);
+		//don't forget to secure pipe;
 		pid = fork();
-		if (pid == 0)
+		if (pid == -1)
+			ft_printf("error pid\n");
+		else if (pid == 0)
 		{
 			exec_cmd(parse, num_cmd, my_env, data);
 			exit(0);
 		}
+		else
+		{
+			if (data->prec_fd)
+				close(data->prec_fd);
+			data->prec_fd = data->pipes[0];
+			if (num_cmd == data->nbr_cmd - 1)
+				close(data->pipes[0]);
+			close(data->pipes[1]);
+		}
 		num_cmd++;
 	}
+	if (data->prec_fd)
+		close(data->prec_fd);
+	close(data->pipes[0]);
+	close(data->pipes[1]);
 	wait_all(nbr_cmd);
 }
 
@@ -76,16 +99,19 @@ void	exec_cmd(t_parse *parse, int num_cmd, t_list **my_env, t_exec *data)
 	char *path;
 	int start_cmd;
 
-	printf("new_cmd\n");
+	printf("new_cmd pipe : %d %d\n", data->prec_fd, data->pipes[1]);
 	start_cmd = get_start_cmd(parse, num_cmd);
 	if (redirect_in(&parse[start_cmd]))
 		do_redirect_in(&parse[start_cmd], my_env, data);
-	else 
+	else
 		do_classique_in_pipe(num_cmd, data);
 	if (redirect_out(&parse[start_cmd]))
 		do_redirect_out(&parse[start_cmd], my_env, data);
 	else
+	{
 		do_classique_out_pipe(num_cmd, data);
+		//dprintf(2, "classique out2 : %d %d\n", data->prec_fd ,data->pipes[0]);
+	}
 	arg = get_arg(&parse[start_cmd]);
 	//print_all(arg);
 	// if (!arg)
@@ -93,9 +119,10 @@ void	exec_cmd(t_parse *parse, int num_cmd, t_list **my_env, t_exec *data)
 	// if (is_builtin(arg[0]))
 	// 	do_builtin();
 	path = get_path(arg[0], my_env);
-	printf("path : %s\n", path);
+	dprintf(2, "path : %s\n", path);
 	// if (!path)
 	// 	exit
+	double_close(data->pipes[1], data->prec_fd);
 	execve(path, arg, data->env);
 	// exit car execve a crash si ici
 }
@@ -135,6 +162,7 @@ void	do_redirect_in(t_parse *parse, t_list **my_env, t_exec *data)
 	char *infile;
 	int fd;
 
+	(void) data;
 	infile = NULL;
 	if (check_all_redirect_in(parse, my_env, &infile) == 0) 
 	{
@@ -165,24 +193,26 @@ int	check_all_redirect_in(t_parse *parse, t_list **my_env, char **infile)
 
 void do_classique_in_pipe(int num_cmd, t_exec *data)
 {
+	close(data->pipes[0]);
 	if (num_cmd  > 0)
 	{
 		dup2(data->prec_fd, STDIN_FILENO);
 	}
-	close(data->prec_fd);
+	//close(data->prec_fd);
 }
 
 void do_classique_out_pipe(int num_cmd, t_exec *data)
 {
-	int pipes[2];
+	// int pipes[2];
 
-	pipe(pipes);
+	// pipe(pipes);
 	if (num_cmd < data->nbr_cmd - 1)
 	{
-		dup2(pipes[1], STDOUT_FILENO);
-		data->prec_fd = pipes[0];
+		//data->prec_fd = data->pipes[0];
+		//printf("classique out : %d %d\n", data->prec_fd ,data->pipes[0]);
+		dup2(data->pipes[1], STDOUT_FILENO);
 	}
-	close(pipes[1]);
+	//close(data->pipes[1]);
 }
 
 int	redirect_out(t_parse *parse)
@@ -207,6 +237,7 @@ void	do_redirect_out(t_parse *parse, t_list **my_env, t_exec *data)
 	char *outfile;
 	int	fd;
 
+	(void) data;
 	outfile = NULL;
 	if (check_all_redirect_out(parse, my_env, &outfile) == 0) 
 	{
@@ -241,7 +272,7 @@ char **get_arg(t_parse *parse)
 	int		size;
 
 	size = get_nbr_arg(parse);
-	printf("size of arg %d\n", size);
+	//dprintf(2, "size of arg %d\n", size);
 	arg = malloc(sizeof(char *) * (size + 1));
 	fill_arg(parse, arg);
 	return (arg);

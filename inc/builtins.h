@@ -20,7 +20,6 @@ void		ft_env(t_list **env);
 void		ft_cd(char *directory, t_list **my_env);
 int			ft_exit(char *array);
 
-
 //Export.c & his utils
 void	ft_export(t_list **my_env, char *str);
 int		is_allready_export(t_list **my_env, char *str);
@@ -32,6 +31,7 @@ int		is_addition(char *str);
 //ft_getenv.c
 char	*ft_getenv(t_list **my_env, char *get_me, int do_free);
 void	ft_dup_env(char **env, t_list **my_env);
+void	ft_create_env(t_list **my_env);
 
 //Unset.c
 void	ft_unset(t_list **my_env, char *str);

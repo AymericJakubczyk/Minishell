@@ -9,6 +9,7 @@ void	add_var(t_entry *entry, char *str, int *j, char quote);
 void	set_context(t_entry *entry, int j, char quote);
 int size_expanded_redir(char *str, t_list **my_env);
 char	*colapse_entry(t_entry *entry);
+int	check_expanded_redir(t_entry *entry);
 
 int	check_redirect(t_parse parse, t_list **my_env, char **expanded, int in)
 {

@@ -13,7 +13,6 @@
 #include "minishell.h"
 
 void	ft_lstfree(t_list **my_env);
-void	ft_create_env(t_list **my_env);
 
 char	*ft_getenv(t_list **my_env, char *get_me, int do_free)
 {

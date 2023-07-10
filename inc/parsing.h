@@ -13,7 +13,7 @@
 #ifndef PARSING_H
 # define PARSING_H
 
-# include "exec.h"
+// # include "struct.h"
 
 enum e_types {
 	CHAR,
@@ -46,19 +46,6 @@ enum e_species {
 	COMMAND,		//8
 	CMD_ARG			//9
 };
-
-typedef struct s_entry
-{
-	char	c;
-	int		type;
-	int		context;
-}	t_entry;
-
-typedef struct s_parse
-{
-	char	*str;
-	int		type;
-}	t_parse;
 
 //utils.c
 void	ft_free(char *s1, char *s2);

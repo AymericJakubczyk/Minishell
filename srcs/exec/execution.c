@@ -12,9 +12,8 @@
 
 #include "minishell.h"
 
-int		how_many_cmds(t_parse *parse);
-void	ex_child(t_parse *parse, t_list **env, int runner, t_exec *data);
-void	print_tab(char **tab);
+static int	how_much_args(t_parse *parse, int runner);
+static void	print_tab(char **tab);						//to delete
 
 void print_all_data(char **all_limiter, char **str_heredoc)
 {
@@ -98,7 +97,7 @@ void	ex_child(t_parse *parse, t_list **env, int runner, t_exec *data)
 		ft_printf("Execution error \n");
 }
 
-int	how_much_args(t_parse *parse, int runner)
+static int	how_much_args(t_parse *parse, int runner)
 {
 	int	index;
 
@@ -111,7 +110,7 @@ int	how_much_args(t_parse *parse, int runner)
 	return (index);
 }
 
-void	print_tab(char **tab)
+static void	print_tab(char **tab)
 {
 	int	runner;
 

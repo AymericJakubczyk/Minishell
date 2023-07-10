@@ -15,6 +15,7 @@
 static char	*get_str(t_entry *entry, int *i, int j);
 static void	set_type(t_parse *parse, t_entry *entry);
 static void	next_set_type(t_parse *parse, int *i, int *cmd);
+static int	context_in_parse(t_entry *entry, t_parse *parse, int i);
 
 int	colapse_all(t_entry *entry, t_parse *parse)
 {
@@ -145,11 +146,11 @@ static void	next_set_type(t_parse *parse, int *i, int *cmd)
 		set_type_utils(CMD_ARG, i, parse);
 }
 
-int	context_in_parse(t_entry *entry, t_parse *parse, int i)
+static int	context_in_parse(t_entry *entry, t_parse *parse, int i)
 {
-	int	ind_parse;
-	int	ind_entry;
-	int	j;
+	int		ind_parse;
+	int		ind_entry;
+	size_t	j;
 
 	ind_parse = 0;
 	ind_entry = 0;

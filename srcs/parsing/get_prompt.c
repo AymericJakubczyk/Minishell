@@ -12,9 +12,7 @@
 
 #include "minishell.h"
 
-static char	*ft_get_path(t_list **my_env);
-static int	is_in_path(char *home, char *path);
-static char	*replace_in_path(char *home, char *path);
+static char	*ft_get_path();
 
 char	*ft_get_prompt(t_list	**my_env)
 {
@@ -25,7 +23,7 @@ char	*ft_get_prompt(t_list	**my_env)
 	user = ft_getenv(my_env, "USER", 0);
 	if (user == NULL)
 		user = "you";
-	path = ft_get_path(my_env);
+	path = ft_get_path();
 	prompt = ft_strjoin2(user, ft_strdup(":"));
 	prompt = ft_strjoin2(prompt, path);
 	prompt = ft_strjoin2(prompt, ft_strdup("$ "));
@@ -39,7 +37,7 @@ char	*ft_get_prompt(t_list	**my_env)
 	return (prompt);
 }
 
-static char	*ft_get_path(t_list **my_env)
+static char	*ft_get_path()
 {
 	char	*path;
 	char	*output;
@@ -61,29 +59,3 @@ static char	*ft_get_path(t_list **my_env)
 		return (NULL);
 	return (output);
 }
-
-// static int	is_in_path(char *home, char *path)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (home[i] && path[i] && home[i] == path[i])
-// 		i++;
-// 	if (home[i] == '\0')
-// 		return (1);
-// 	else
-// 		return (0);
-// }
-
-// static char	*replace_in_path(char *home, char *path)
-// {
-// 	int		i;
-// 	char	*new_path;
-
-// 	i = 0;
-// 	while (home[i] && path[i] && home[i] == path[i])
-// 		i++;
-// 	new_path = ft_strjoin("~", &path[i]);
-// 	free(path);
-// 	return (new_path);
-// }
