@@ -23,7 +23,7 @@ int	check_redirect(t_parse parse, t_list **my_env, char **expanded, int in)
 		printf("Minihell : %s: %s\n", *expanded, strerror(errno));
 		return (0);
 	}
-	if (!in && open(*expanded, O_WRONLY | O_CREAT | O_TRUNC, 0644) == -1)
+	if (!in && open(*expanded, O_WRONLY | O_CREAT | O_APPEND, 0644) == -1)
 	{
 		printf("Minihell : %s: %s\n", *expanded, strerror(errno));
 		return (0);

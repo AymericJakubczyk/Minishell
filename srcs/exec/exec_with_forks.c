@@ -14,18 +14,20 @@
 
 
 void	exec_cmd(t_parse *parse, int num_cmd, t_list **my_env, t_exec *data);
-int	get_start_cmd(t_parse *parse, int num_cmd);
-int	redirect_in(t_parse *parse);
-void	do_redirect_in(t_parse *parse, t_list **my_env, t_exec *data);
-int	redirect_out(t_parse *parse);
+int		get_start_cmd(t_parse *parse, int num_cmd);
+int		redirect_in(t_parse *parse);
+void	do_redirect_in(t_parse *parse, t_list **my_env, t_exec *data, int num_cmd);
+int		redirect_out(t_parse *parse);
 void	do_redirect_out(t_parse *parse, t_list **my_env, t_exec *data);
-char **get_arg(t_parse *parse);
-void fill_arg(t_parse *parse, char **arg);
-void do_classique_in_pipe(int num_cmd, t_exec *data);
-void do_classique_out_pipe(int num_cmd, t_exec *data);
-int	check_all_redirect_in(t_parse *parse, t_list **my_env, char **infile);
-int	check_all_redirect_out(t_parse *parse, t_list **my_env, char **outfile);
-int get_nbr_arg(t_parse *parse);
+int		last_out(t_parse *parse);
+char	**get_arg(t_parse *parse);
+void	fill_arg(t_parse *parse, char **arg);
+void	do_classique_in_pipe(int num_cmd, t_exec *data);
+void	do_classique_out_pipe(int num_cmd, t_exec *data);
+int		check_all_redirect_in(t_parse *parse, t_list **my_env, char **infile);
+int		check_all_redirect_out(t_parse *parse, t_list **my_env, char **outfile);
+int		get_nbr_arg(t_parse *parse);
+void	redirect_heredoc(t_exec *data, int num_cmd);
 
 void print_all(char **str)
 {
@@ -102,7 +104,7 @@ void	exec_cmd(t_parse *parse, int num_cmd, t_list **my_env, t_exec *data)
 	printf("new_cmd pipe : %d %d\n", data->prec_fd, data->pipes[1]);
 	start_cmd = get_start_cmd(parse, num_cmd);
 	if (redirect_in(&parse[start_cmd]))
-		do_redirect_in(&parse[start_cmd], my_env, data);
+		do_redirect_in(&parse[start_cmd], my_env, data, num_cmd);
 	else
 		do_classique_in_pipe(num_cmd, data);
 	if (redirect_out(&parse[start_cmd]))
@@ -157,7 +159,7 @@ int	redirect_in(t_parse *parse)
 	return (0);
 }
 
-void	do_redirect_in(t_parse *parse, t_list **my_env, t_exec *data)
+void	do_redirect_in(t_parse *parse, t_list **my_env, t_exec *data, int num_cmd)
 {
 	char *infile;
 	int fd;
@@ -167,14 +169,51 @@ void	do_redirect_in(t_parse *parse, t_list **my_env, t_exec *data)
 	if (check_all_redirect_in(parse, my_env, &infile) == 0) 
 	{
 		printf("NOT GOOD REDIRECT IN\n");
-		//exit(1); //faudra free et exit proprement avec le bon message d'erreur
+		exit(1); //faudra free et exit proprement avec le bon message d'erreur
 	}
 	else
 	{
-		fd = open(infile, O_RDONLY);
 		printf("GOOD REDIRECT IN : %s\n", infile);
-		dup2(fd, STDIN_FILENO);
+		if (last_in(parse) == HEREDOC)
+			redirect_heredoc(data, num_cmd);
+		else
+		{
+			fd = open(infile, O_RDONLY);
+			dup2(fd, STDIN_FILENO);
+		}
 	}
+}
+
+int last_in(t_parse *parse)
+{
+	int type_redirect;
+	int i;
+
+	type_redirect = -1;
+	i = 0;
+	while (parse[i].str && parse[i].type != PIPEE)
+	{
+		if(parse[i].type == REDIRECT_IN || parse[i].type == HEREDOC)
+			type_redirect = parse[i].type;
+		i++;
+	}
+	return (type_redirect);
+}
+
+void	redirect_heredoc(t_exec *data, int num_cmd)
+{
+	int pipes[2];
+	char	*str;
+
+	pipe(pipes);
+	// secure le pipe
+	str = ft_get_str_hd(data->parse, data, num_cmd + 1);
+	printf("str herdoc : %s\n", str);
+	write(pipes[1], str, ft_strlen(str));
+	close(pipes[1]);
+	if (dup2(pipes[0], STDIN_FILENO) == -1)
+		ft_printf("Dup2 problem\n");
+	//close(pipes[1]);
 }
 
 int	check_all_redirect_in(t_parse *parse, t_list **my_env, char **infile)
@@ -185,7 +224,11 @@ int	check_all_redirect_in(t_parse *parse, t_list **my_env, char **infile)
 	while (parse[i].str && parse[i].type != PIPEE)
 	{
 		if (parse[i].type == REDIRECT_IN && !check_redirect(parse[i + 1], my_env, infile, 1))
+		{
+			if (*infile)
+				free(*infile);
 			return (0);
+		}
 		i++;
 	}
 	return (1);
@@ -242,14 +285,39 @@ void	do_redirect_out(t_parse *parse, t_list **my_env, t_exec *data)
 	if (check_all_redirect_out(parse, my_env, &outfile) == 0) 
 	{
 		printf("NOT GOOD REDIRECT OUT\n");
-		//exit(1); //faudra free et exit proprement avec le bon message d'erreur
+		exit(1); //faudra free et exit proprement avec le bon message d'erreur
 	}
 	else
 	{
 		printf("GOOD REDIRECT OUT : %s\n", outfile);
-		fd = open(outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		if (last_out(parse) == REDIRECT_OUT)
+		{
+			printf("CLASSIQUE REDIR\n");
+			fd = open(outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		}
+		else
+		{
+			printf("APPEND REDIR\n");
+			fd = open(outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		}
 		dup2(fd, STDOUT_FILENO);
 	}
+}
+
+int last_out(t_parse *parse)
+{
+	int type_redirect;
+	int i;
+
+	type_redirect = -1;
+	i = 0;
+	while (parse[i].str && parse[i].type != PIPEE)
+	{
+		if(parse[i].type == REDIRECT_OUT || parse[i].type == APPEND)
+			type_redirect = parse[i].type;
+		i++;
+	}
+	return (type_redirect);
 }
 
 int	check_all_redirect_out(t_parse *parse, t_list **my_env, char **outfile)
@@ -260,7 +328,11 @@ int	check_all_redirect_out(t_parse *parse, t_list **my_env, char **outfile)
 	while (parse[i].str && parse[i].type != PIPEE)
 	{
 		if ((parse[i].type == REDIRECT_OUT || parse[i].type == APPEND) && !check_redirect(parse[i + 1], my_env, outfile, 0))
+		{
+			if (*outfile)
+				free(*outfile);
 			return (0);
+		}
 		i++;
 	}
 	return (1);

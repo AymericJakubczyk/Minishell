@@ -31,6 +31,7 @@ void	execution(t_parse *parse, t_list **my_env, t_exec *data)
 {
 	int	pipes;
 	
+	data->parse = parse;
 	if (heredoc_in(parse))
 	{
 		do_heredoc(parse, data, my_env);
