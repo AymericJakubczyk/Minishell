@@ -166,5 +166,7 @@ static int	context_in_parse(t_entry *entry, t_parse *parse, int i)
 			ind_entry++;
 		ind_parse++;
 	}
+	if (entry[ind_entry].type == EXPAND) //si = expand alors return SI_Quote pour eviter de l'interpreter et faie comme si c'etait un argument
+		return (SI_QUOTE);
 	return (entry[ind_entry].context);
 }
