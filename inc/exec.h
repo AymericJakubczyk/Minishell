@@ -15,6 +15,11 @@
 
 // # include "struct.h"
 
+enum e_mode {
+	IN,
+	OUT
+};
+
 // execution.c
 void	execution(t_parse *parse, t_list **my_env, t_exec *data);
 int	how_many_cmds(t_parse *parse);
@@ -35,19 +40,32 @@ char	*expand_heredoc(char *str, t_list **my_env);
 //exec_with_forks.c
 void	exec_with_forks(t_parse *parse, t_list **my_env, t_exec *data);
 
+//exec_fork_utils.c
+int		last_redir(t_parse *parse, int mode);
+char	*get_last_file(t_parse *parse, t_list **my_env, int mode);
+char	**get_arg(t_parse *parse);
+
+//do_redirect.c
+int		redirect_in_cmd(t_parse *parse, int mode);
+void	do_classique_pipe(int num_cmd, t_exec *data, int mode);
+void	do_redirect_in(t_parse *parse, t_list **my_env, t_exec *data, int num_cmd);
+void	do_redirect_out(t_parse *parse, t_list **my_env, t_exec *data);
+
 //exec_utils.c
 char	*get_path(char *cmd, t_list **env);
 void	init_file(int *fd1, int *fd2, t_exec *data);
 
 //check_redirect.c
-int	check_redirect(t_parse parse, t_list **my_env, char **expanded, int in);
+int		check_all_redirect(t_parse *parse, t_list **my_env);
+int		check_redirect(t_parse parse, t_list **my_env, int in);
+char	*expand_redirect(t_parse parse, t_list **my_env);
 
 //single_cmd.c
 void	single_cmd(t_parse *parse, t_list **my_env, t_exec *data);
 
 //single_cmd_utils.c
-int	dup_in(t_parse *parse, int runner, int mode, int *pipe, t_exec *data);
-int	dup_out(t_parse *parse, int runner);
+int		dup_in(t_parse *parse, int runner, int mode, int *pipe, t_exec *data);
+int		dup_out(t_parse *parse, int runner);
 void	double_close(int file1, int file2);
 void	restore_dup(int file[2], t_exec *data, int *pipe);
 void	single_cmd_execution(t_parse *parse, t_list **my_env, t_exec *data);

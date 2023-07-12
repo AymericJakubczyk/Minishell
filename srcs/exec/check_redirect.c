@@ -1,40 +1,70 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_redirect.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/12 18:10:46 by ajakubcz          #+#    #+#             */
+/*   Updated: 2023/07/12 18:10:49 by ajakubcz         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
-char *expand_redirect(t_parse parse, t_list **my_env);
-int is_env_var(char *str, char quote);
+int		is_env_var(char *str, char quote);
 void	fill_expanded_redir(t_entry *entry, char *str, t_list **my_env);
-char *get_name_var(char *str,int *i);
+char	*get_name_var(char *str, int *i);
 void	add_var(t_entry *entry, char *str, int *j, char quote);
 void	set_context(t_entry *entry, int j, char quote);
-int size_expanded_redir(char *str, t_list **my_env);
+int		size_expanded_redir(char *str, t_list **my_env);
 char	*colapse_entry(t_entry *entry);
-int	check_expanded_redir(t_entry *entry);
+int		check_expanded_redir(t_entry *entry);
 
-int	check_redirect(t_parse parse, t_list **my_env, char **expanded, int in)
+int	check_all_redirect(t_parse *parse, t_list **my_env)
 {
-	//char	*expanded;
+	int	i;
 
-	*expanded = expand_redirect(parse, my_env);
-	if (!*expanded)
-		return (0);
-	if (in && access(*expanded, F_OK | R_OK) == -1)
+	i = 0;
+	while (parse[i].str && parse[i].type != PIPEE)
 	{
-		printf("Minihell : %s: %s\n", *expanded, strerror(errno));
+		if (parse[i].type == REDIRECT_IN && !check_redirect(parse[i + 1], my_env, IN))
+		{
+			return (0);
+		}
+		else if ((parse[i].type == REDIRECT_OUT || parse[i].type == APPEND) && !check_redirect(parse[i + 1], my_env, OUT))
+		{
+			return (0);
+		}
+		i++;
+	}
+	return (1);
+}
+
+int	check_redirect(t_parse parse, t_list **my_env, int mode)
+{
+	char	*expanded;
+
+	expanded = expand_redirect(parse, my_env);
+	if (!expanded)
+		return (0);
+	if (mode == IN && access(expanded, F_OK | R_OK) == -1)
+	{
+		printf("Minihell : %s: %s\n", expanded, strerror(errno));
 		return (0);
 	}
-	if (!in && open(*expanded, O_WRONLY | O_CREAT | O_APPEND, 0644) == -1)
+	if (mode == OUT && open(expanded, O_WRONLY | O_CREAT, 0644) == -1)
 	{
-		printf("Minihell : %s: %s\n", *expanded, strerror(errno));
+		printf("Minihell : %s: %s\n", expanded, strerror(errno));
 		return (0);
 	}
 	return (1);
 }
 
-char *expand_redirect(t_parse parse, t_list **my_env)
+char	*expand_redirect(t_parse parse, t_list **my_env)
 {
-	t_entry *entry;
-	char *expanded;
+	t_entry	*entry;
+	char	*expanded;
 
 	expanded = NULL;
 	entry = malloc(sizeof(t_entry) * (size_expanded_redir(parse.str, my_env) + 1));
@@ -49,11 +79,11 @@ char *expand_redirect(t_parse parse, t_list **my_env)
 		return (NULL);
 	expanded = colapse_entry(entry);
 	free(entry);
-	printf("expanded : |%s|\n", expanded);
+	//printf("expanded : |%s|\n", expanded);
 	return (expanded);
 }
 
-int size_expanded_redir(char *str, t_list **my_env)
+int	size_expanded_redir(char *str, t_list **my_env)
 {
 	int		i;
 	char	quote;
@@ -74,7 +104,7 @@ int size_expanded_redir(char *str, t_list **my_env)
 			quote = 0;
 			i++;
 		}
-		else if(str[i] == '$' && is_env_var(&str[i], quote))
+		else if (str[i] == '$' && is_env_var(&str[i], quote))
 		{
 			if (str[i + 1] == '?')
 			{
@@ -93,16 +123,16 @@ int size_expanded_redir(char *str, t_list **my_env)
 	return (size);
 }
 
-int is_env_var(char *str, char quote)
+int	is_env_var(char *str, char quote)
 {
 	if (quote != '\'' && str[1] && (ft_isalnum(str[1]) || str[1] == '_' || str[1] == '?'))
 		return (1);
 	return (0);
 }
 
-char *get_name_var(char *str,int *i)
+char	*get_name_var(char *str,int *i)
 {
-	char *name;
+	char	*name;
 
 	name = ft_strdup("");
 	*i += 1;
@@ -135,7 +165,7 @@ void	fill_expanded_redir(t_entry *entry, char *str, t_list **my_env)
 			quote = 0;
 			i++;
 		}
-		else if(str[i] == '$' && is_env_var(&str[i], quote))
+		else if (str[i] == '$' && is_env_var(&str[i], quote))
 		{
 			if (str[i + 1] == '?')
 			{
@@ -159,7 +189,7 @@ void	fill_expanded_redir(t_entry *entry, char *str, t_list **my_env)
 
 void	add_var(t_entry *entry, char *str, int *j, char quote)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str && str[i])
@@ -185,8 +215,8 @@ void	set_context(t_entry *entry, int j, char quote)
 
 int	check_expanded_redir(t_entry *entry)
 {
-	int i;
-	int last_ind_char;
+	int	i;
+	int	last_ind_char;
 
 	i = 0;
 	last_ind_char = get_ind_last_char(entry);
@@ -204,9 +234,9 @@ int	check_expanded_redir(t_entry *entry)
 	return (1);
 }
 
-int get_ind_last_char(t_entry *entry)
+int	get_ind_last_char(t_entry *entry)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (entry[i].c)
@@ -221,7 +251,7 @@ char	*colapse_entry(t_entry *entry)
 {
 	int		i;
 	char	*expanded;
-	int last_ind_char;
+	int		last_ind_char;
 
 	i = 0;
 	last_ind_char = get_ind_last_char(entry);

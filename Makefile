@@ -40,6 +40,8 @@ DIR_COLLECTOR = $(DIR_SRCS)collector/
 
 DIR_EXEC = $(DIR_SRCS)exec/
 
+DIR_EXEC_WITH_FORK = $(DIR_EXEC)with_fork/
+
 DIR_INCLUDES = ./inc/
 
 SRCS =			$(DIR_SRCS)main.c \
@@ -76,8 +78,10 @@ SRCS =			$(DIR_SRCS)main.c \
 				$(DIR_EXEC)heredoc_utils.c \
 				$(DIR_EXEC)single_cmd.c \
 				$(DIR_EXEC)single_cmd_utils.c \
-				$(DIR_EXEC)exec_with_forks.c \
 				$(DIR_EXEC)check_redirect.c \
+				$(DIR_EXEC_WITH_FORK)exec_with_forks.c \
+				$(DIR_EXEC_WITH_FORK)do_redirect.c \
+				$(DIR_EXEC_WITH_FORK)exec_fork_utils.c \
 
 OBJS =			$(patsubst %.c, $(DIR_OBJ)%.o, $(SRCS))
 

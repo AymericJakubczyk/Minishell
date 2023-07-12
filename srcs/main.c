@@ -49,6 +49,7 @@ void	minishell(t_list **my_env, char **env)
 		free(cmd);
 		prompt = ft_get_prompt(my_env);
 		signal(SIGINT, handler);
+		signal(SIGQUIT, SIG_IGN); //ignorer le ctrl-'\'
 		cmd = readline(prompt);
 		ft_free(prompt, NULL);
 		if (!cmd)

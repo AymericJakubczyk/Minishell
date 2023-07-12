@@ -40,12 +40,12 @@ void	execution(t_parse *parse, t_list **my_env, t_exec *data)
 	pipes = how_many_cmds(parse);
 	if (pipes != 0)
 	{
-		ft_printf("Pipes\n");
+		//ft_printf("Pipes\n");
 		exec_with_forks(parse, my_env, data);
 	}
 	else
 	{
-		ft_printf("single cmd\n");
+		//ft_printf("single cmd\n");
 		single_cmd(parse, my_env, data);
 	}
 }
