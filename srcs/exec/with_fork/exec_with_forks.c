@@ -78,7 +78,8 @@ static void	exec_cmd(t_parse *parse, int num_cmd, t_list **my_env, t_exec *data)
 	// if (!arg)
 	// 	exit
 	// if (is_builtin(arg[0]))
-	// 	do_builtin();
+	if (do_builtin(&parse[start_cmd], my_env))
+		exit(1);
 	path = get_path(arg[0], my_env);
 	//dprintf(2, "path : %s\n", path);
 	// if (!path)

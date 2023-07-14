@@ -15,6 +15,35 @@
 static int	get_nbr_arg(t_parse *parse);
 static void	fill_arg(t_parse *parse, char **arg);
 
+int do_builtin(t_parse *parse, t_list **my_env)
+{
+	int runner;
+
+	runner = 0;
+	while (parse[runner].str && parse[runner].type != PIPEE)
+	{
+		if (parse[runner].type == COMMAND)
+		{
+			if (ft_strcmp(parse[runner].str, "echo") == 0)
+				return (ft_echo(parse), 1);
+			if (ft_strcmp(parse[runner].str, "env") == 0)
+				return (ft_env(my_env), 1);
+			if (ft_strcmp(parse[runner].str, "pwd") == 0)
+				return (ft_pwd(), 1);
+			if (ft_strcmp(parse[runner].str, "export") == 0)
+				return (ft_export(my_env, parse), 1);
+			if (ft_strcmp(parse[runner].str, "exit") == 0)
+				return (exit(1), 1);
+			if (ft_strcmp(parse[runner].str, "unset") == 0)
+				return (ft_unset(my_env, parse), 1);
+			if (ft_strcmp(parse[runner].str, "cd") == 0)
+				return (ft_cd(my_env, parse), 1);
+		}
+		runner++;
+	}
+	return (0);
+}
+
 int	last_redir(t_parse *parse, int mode)
 {
 	int	type_redirect;
