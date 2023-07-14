@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 15:18:09 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/30 16:40:46 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/14 03:34:00 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,33 @@ char	**dup_env_sort(char **array, t_list **my_env);
 void	export_again(t_list **my_env, char *str);
 void	add_to_existing_one(t_list *tmp, char *str);
 
-void	ft_export(t_list **my_env, char *str)
+void	ft_export(t_list **my_env, t_parse *parse)
 {
 	t_list	*tmp;
-
+	int		runner;
 	g_errno = 0;
 	tmp = *my_env;
-	if (!str)
+
+	runner = 1;
+	if (!parse[runner].str || parse[runner].type != CMD_ARG)
 		return (ft_print_export(my_env));
-	if (ft_equal_size(str) == 0)
-		ft_lstadd_back(my_env, ft_lstnew(ft_strdup(str), -1));
-	if (is_alpha_export(str) == 0)
-		return (ft_error(ERROR_22, str));
-	else if (is_allready_export(my_env, str))
-		return (export_again(my_env, str));
-	else if (is_addition(str) == 1)
-		add_to_existing_one(tmp, str);
-	else
-		ft_lstadd_back(my_env, ft_lstnew(ft_str_skip_add(str), -1));
+	while (parse[runner].str)
+	{
+		if (parse[runner].type == CMD_ARG)
+		{
+			if (is_allready_export(my_env, parse[runner].str))
+				export_again(my_env, parse[runner].str);
+			else if (is_addition(parse[runner].str) == 1)
+				add_to_existing_one(tmp, parse[runner].str);
+			else if (ft_equal_size(parse[runner].str) == 0)
+				ft_lstadd_back(my_env, ft_lstnew(ft_strdup(parse[runner].str), -1));
+			else if (is_alpha_export(parse[runner].str) == 0)
+				ft_error(ERROR_22, parse[runner].str);
+			else
+				ft_lstadd_back(my_env, ft_lstnew(ft_str_skip_add(parse[runner].str), -1));
+		}
+		runner++;
+	}
 }
 
 void	add_to_existing_one(t_list *tmp, char *str)
@@ -43,6 +52,8 @@ void	add_to_existing_one(t_list *tmp, char *str)
 	{
 		if (ft_strncmp(tmp->content, str, ft_equal_size(str) - 1) == 0)
 		{
+			if (equal(tmp->content) == 0)
+				tmp->content = ft_strjoin3(tmp->content, "=");
 			tmp->content = ft_strjoin2(tmp->content, skip_equal(str));
 			if (!tmp->content)
 				return ;
@@ -90,7 +101,7 @@ void	ft_print_export(t_list **my_env)
 	while (i < ft_lstsize(*my_env))
 	{
 		ft_putstr_fd("declare -x ", 1);
-		ft_putstr_fd(array[i], 1);
+		ft_putstr_fd(add_quotes(array[i]), 1);
 		ft_putchar_fd('\n', 1);
 		i++;
 	}

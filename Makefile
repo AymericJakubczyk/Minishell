@@ -6,7 +6,7 @@
 #    By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/01 14:11:17 by ajakubcz          #+#    #+#              #
-#    Updated: 2023/06/30 18:43:58 by cprojean         ###   ########.fr        #
+#    Updated: 2023/07/13 21:46:46 by cprojean         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,6 +64,7 @@ SRCS =			$(DIR_SRCS)main.c \
 				$(DIR_BUILTINS)unset.c \
 				$(DIR_BUILTINS)ft_exit.c \
 				$(DIR_BUILTINS)ft_getenv.c \
+				$(DIR_BUILTINS)builtins_utils.c \
 				$(DIR_COLLECTOR)ft_garb_addback.c \
 				$(DIR_COLLECTOR)ft_garb_clear.c \
 				$(DIR_COLLECTOR)ft_garb_last.c \
@@ -76,8 +77,6 @@ SRCS =			$(DIR_SRCS)main.c \
 				$(DIR_EXEC)heredoc_utils.c \
 				$(DIR_EXEC)single_cmd.c \
 				$(DIR_EXEC)single_cmd_utils.c \
-				$(DIR_EXEC)do_pipe_exec.c \
-				$(DIR_EXEC)pipe_exec_utils.c \
 
 OBJS =			$(patsubst %.c, $(DIR_OBJ)%.o, $(SRCS))
 

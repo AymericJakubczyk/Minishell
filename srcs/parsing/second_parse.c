@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 23:55:37 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/28 17:56:49 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/13 21:01:42 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int	colapse_all(t_entry *entry, t_parse *parse)
 		}
 	}
 	parse[nbr].str = NULL;
+	parse[nbr].type = -1;
 	set_type(parse, entry);
 	// print_parse(parse);
 	if (check_parse(parse) == -1)

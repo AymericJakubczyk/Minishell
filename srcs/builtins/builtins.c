@@ -6,79 +6,54 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:48 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/29 13:56:51 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/14 04:22:37 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*is_echos_flag(char *str);
+int	is_echos_flag(char *str);
 
-// void	ft_echo(char **array)
-// {
-// 	int	runner;
-// 	int	type;
-
-// 	runner = 1;
-// 	type = 0;
-// 	if (ft_strncmp(array[1], "-n", 2) == 0)
-// 	{
-// 		type = -1;
-// 		runner++;
-// 	}
-// 	while (array[runner])
-// 	{
-// 		ft_printf("%s ", array[runner]);
-// 		runner++;
-// 	}
-// 	if (type != -1)
-// 		ft_printf("\n");
-// }
-
-void	ft_echo(char *str)
+void	ft_echo(t_parse *parse)
 {
+	int	index;
+	int	type;
 	int	flag;
 
 	flag = 0;
-	if (!str)
+	type = 0;
+	index = 0;
+	while(parse[index].str && parse[index].type != PIPEE)
 	{
+		if (parse[index].type == CMD_ARG)
+		{
+			if (is_echos_flag(parse[index].str) == 0 || flag == 1)
+			{
+				if (flag == 1)
+					ft_printf(" ");
+				ft_printf("%s", parse[index].str);
+				flag = 1;
+			}
+			else if (flag != 1)
+				type = 1;
+		}
+		index++;
+	}
+	if (!type)
 		ft_printf("\n");
-		return ;
-	}
-	if (str[0] && str[0] == '-')
-		if (str[1] && str[1] == 'n')
-			flag = 1;
-	str = is_echos_flag(str);
-	if (flag == 1)
-	{
-		if (!str[2])
-			return ;
-		ft_printf("%s", str);
-	}
-	else
-		ft_printf("%s\n", str);
-	g_errno = 0;
 }
 
-char	*is_echos_flag(char *str)
+int	is_echos_flag(char *str)
 {
-	char	*output;
-	int		runner;
+	int	runner;
 
 	runner = 0;
-	if (str[runner] && str[runner] == '-')
-	{
+	if (str[runner++] == '-')
+	while (str[runner] && str[runner] == 'n')
 		runner++;
-		while(str[runner] && str[runner] == 'n' && str[runner + 1])
-		{
-			runner++;
-		}
-		if (str[runner] == ' ')
-			runner++;
-		output = ft_strdup(&str[runner]);
-		return (free(str), output);
-	}
-	return (str);
+	if (runner == ft_strlen(str))
+		return (1);
+	return (0);
 }
 
 void	ft_env(t_list **env)
@@ -107,18 +82,27 @@ char	*ft_pwd(void)
 	g_errno = 0;
 }
 
-void	ft_cd(char *directory, t_list **my_env)
+void	ft_cd(t_list **my_env, t_parse *parse)
 {
 	char	*oldpwd;
-	char	*pwd;
+	int		runner;
+	int		count;
 
+	count = 0;
+	runner = 0;
+	while (parse[runner].str)
+	{
+		if (parse[runner].type == CMD_ARG)
+			count++;
+		runner++;
+	}
+	if (runner > 1)
+	{
+		ft_error(ERROR_23, parse[runner].str);
+		return ;
+	}
 	oldpwd = ft_strjoin4("OLDPWD=", ft_pwd());
-	ft_export(my_env, oldpwd);
-	if (!directory)
-		chdir(ft_getenv(my_env, "HOME", 0));
-	else if (chdir(directory) != 0)
-		ft_error(ERROR_99, NULL);
-	pwd = ft_strjoin4("PWD=", ft_pwd());
-	ft_export(my_env, pwd);
+	do_ft_export(my_env, oldpwd);
+	next_cd(my_env, parse[runner]);
 	g_errno = 0;
 }

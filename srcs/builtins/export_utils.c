@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 15:06:32 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/30 16:54:59 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/14 03:05:42 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ int	ft_equal_size(char *str)
 		return (0);
 	while (str[runner] && str[runner] != '=')
 		runner++;
-	if (runner == ft_strlen(str))
-		return (0);
 	return (runner);
 }
 

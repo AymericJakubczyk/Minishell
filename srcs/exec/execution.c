@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 12:38:49 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/30 18:51:37 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/13 20:37:38 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	execution(t_parse *parse, t_list **my_env, t_exec *data)
 	if (pipes != 0)
 	{
 		// ft_printf("Pipes\n");
-		exec_with_forks(parse, my_env, data);
+		// exec_with_forks(parse, my_env, data);
 	}
 	else
 		single_cmd(parse, my_env, data);
