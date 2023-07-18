@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:51:36 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/14 03:47:29 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/18 15:54:44 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,22 +40,23 @@ void	unset_cmd(t_list **my_env, t_parse *parse, int index, int *count)
 	t_list	*tmp;
 
 	if (is_alpha(parse[index].str) == 0)
-		return (ft_error(ERROR_22, parse[index].str));
+		return (ft_error(ERROR_22, parse[index].str, 1));
 	runner = *my_env;
 	tmp = *my_env;
 	while (runner != NULL)
 	{
-		if (ft_strncmp(runner->content, parse[index].str, ft_strlen(parse[index].str)) == 0 && count != 0)
+		if (ft_strncmp(runner->content, parse[index].str, \
+		ft_strlen(parse[index].str)) == 0 && count != 0)
 		{
 			free(runner->content);
 			free(runner);
 			tmp->next = runner->next;
 		}
-		else if (ft_strncmp(runner->content, parse[index].str, ft_strlen(parse[index].str)) == 0 && count == 0)
+		else if (ft_strncmp(runner->content, parse[index].str, \
+		ft_strlen(parse[index].str)) == 0 && count == 0)
 			first_var_unset(my_env);
 		tmp = runner;
 		runner = runner->next;
-		*count++;
 	}
 }
 

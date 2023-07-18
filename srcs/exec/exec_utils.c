@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 14:08:26 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/30 13:38:29 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/18 11:03:10 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static int	slash_in(char *str);
 static char	**get_all_path(t_list **envp);
 static int	check_env_path(char *str, char *str_path);
+void		init_file(t_exec *data);
 
 char	*get_path(char *cmd, t_list **env)
 {

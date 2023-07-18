@@ -23,6 +23,7 @@
 # include <fcntl.h>
 # include "../libft/libft.h"
 # include "../libft/ft_printf.h"
+# include "struct.h"
 # include "error.h"
 # include "collector.h"
 # include "parsing.h"

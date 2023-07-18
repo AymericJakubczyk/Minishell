@@ -6,14 +6,13 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 15:07:28 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/30 16:16:28 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/18 15:36:06 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 void	ft_lstfree(t_list **my_env);
-void	ft_create_env(t_list **my_env);
 
 char	*ft_getenv(t_list **my_env, char *get_me, int do_free)
 {
@@ -25,7 +24,7 @@ char	*ft_getenv(t_list **my_env, char *get_me, int do_free)
 	size = ft_strlen(get_me);
 	while (runner != NULL && runner->content)
 	{
-		if (ft_strncmp(runner->content, get_me, size) == 0 && 
+		if (ft_strncmp(runner->content, get_me, size) == 0 && \
 			(size == ft_equal_size(runner->content)))
 		{
 			if (do_free)
@@ -56,7 +55,7 @@ void	ft_dup_env(char **env, t_list **my_env)
 		if (!new)
 		{
 			ft_lstfree(my_env);
-			ft_error(ERROR_42, NULL);
+			ft_error(ERROR_42, NULL, 12);
 			exit (42);
 		}
 		ft_lstadd_back(my_env, new);

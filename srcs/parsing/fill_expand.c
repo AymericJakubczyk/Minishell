@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_expand.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
+/*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 12:34:24 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/27 18:43:33 by ajakubcz         ###   ########.fr       */
+/*   Updated: 2023/07/18 15:36:18 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,7 @@ static int	fill_with_env_value(t_entry *entry, t_entry *new_entry, \
 		name_env = get_name_env(entry, &ind[0]);
 		if (!name_env)
 		{
-			ft_error(ERROR_42, NULL);
-			g_errno = 12;
+			ft_error(ERROR_42, NULL, 12);
 			return (-1);
 		}
 		fill_value_env(new_entry, context, ft_getenv(my_env, name_env, 1), \
@@ -97,11 +96,7 @@ static void	keep_redirection(t_entry *entry, t_entry *new_entry, int *i, int *j)
 	while (entry[*i].c == chev)
 		copy_entry_value(entry, new_entry, i, j);
 	while (entry[*i].c && entry[*i].type == WHITESPACE)
-	{
-		copy_entry_value(entry, new_entry, i, j);	
-		//*i += 1;
-		//*j += 1;
-	}
+		copy_entry_value(entry, new_entry, i, j);
 	size = go_to_end_block(&entry[*i]);
 	while (entry[*i].c && size > 0)
 	{
@@ -112,9 +107,24 @@ static void	keep_redirection(t_entry *entry, t_entry *new_entry, int *i, int *j)
 
 static void	else_fill_new_entry(t_entry *entry, t_entry *new_entry, int *ind)
 {
+	int	quote;
+
 	if (entry[ind[0]].context == 0 && \
 		(entry[ind[0]].type == S_QUOTE || entry[ind[0]].type == D_QUOTE))
-		ind[0]++;
+	{
+		quote = entry[ind[0]].type;
+		if ((ind[0] - 1 < 0 || entry[ind[0] - 1].context == NO_QUOTE) && \
+			entry[ind[0] + 1].c && entry[ind[0] + 1].type == quote)
+		{
+			new_entry[ind[1]].c = ' ';
+			new_entry[ind[1]].type = VOID;
+			new_entry[ind[1]].context = 0;
+			ind[0] += 2;
+			ind[1] += 1;
+		}
+		else
+			ind[0]++;
+	}
 	else
 		copy_entry_value(entry, new_entry, &ind[0], &ind[1]);
 }

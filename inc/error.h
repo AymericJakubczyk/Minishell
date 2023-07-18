@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:16:31 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/25 15:28:57 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/18 15:47:03 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,5 @@
 # define ERROR_42 "help allocation broke\n"
 # define ERROR_99 "tu crois aller ou comme ca\n"
 
-void	ft_error(const char *error, char *problem);
+void	ft_error(const char *error, char *problem, int nbrerror);
 #endif

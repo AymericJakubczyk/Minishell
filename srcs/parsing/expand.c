@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
+/*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 15:13:46 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/27 12:58:36 by ajakubcz         ###   ########.fr       */
+/*   Updated: 2023/07/18 15:36:10 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	expand(t_entry *entry, t_entry **new_entry, t_list **my_env)
 	*new_entry = malloc(sizeof(t_entry) * (size + 1));
 	if (!new_entry)
 	{
-		ft_error(ERROR_42, NULL);
+		ft_error(ERROR_42, NULL, 12);
 		return ;
 	}
 	fill_expand(entry, *new_entry, my_env);

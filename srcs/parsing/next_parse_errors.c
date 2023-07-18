@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   next_parse_errors.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
+/*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 16:38:13 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/27 18:58:30 by ajakubcz         ###   ########.fr       */
+/*   Updated: 2023/07/18 15:29:43 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,14 @@ static int	check_redirect_args(t_parse *input, int runner)
 	if (input[runner + 1].str && input[runner + 1].str[0])
 		return (0);
 	else
-		return (ft_error(ERROR_19, NULL), -1);
+		return (ft_error(ERROR_19, NULL, 2), -1);
 }
 
 static int	check_pipe_args(t_parse *input, int runner)
 {
-	if (((runner - 1) >= 0) && input[runner + 1].str && input[runner + 1].str[0])
+	if (((runner - 1) >= 0) && input[runner + 1].str && \
+		input[runner + 1].str[0])
 		return (0);
 	else
-		return (ft_error(ERROR_20, NULL), -1);
+		return (ft_error(ERROR_20, NULL, 2), -1);
 }

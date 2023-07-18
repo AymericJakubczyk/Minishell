@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 18:24:28 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/30 16:42:49 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/18 15:36:43 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,31 +21,26 @@ void	parse_and_exec(char *str, t_list **my_env, t_exec *data)
 	t_entry	*entry;
 	t_entry	*new_entry;
 	t_parse	*parse;
-	t_list	*list;
 
 	new_entry = NULL;
-	list = NULL;
 	parse = NULL;
 	if (!check_syntax_quote(str))
 		return ;
 	entry = malloc(sizeof(t_entry) * (ft_strlen(str) + 1));
 	if (!entry)
 	{
-		ft_error(ERROR_42, NULL);
+		ft_error(ERROR_42, NULL, 12);
 		return ;
 	}
 	init_entry(entry, str);
-	//print_entry(entry);
 	if (!convert_entry_to_parse(entry, &parse))
 		return ;
 	free_all_parse(parse);
 	expand(entry, &new_entry, my_env);
-	//print_entry(new_entry);
 	free(entry);
 	if (!convert_entry_to_parse(new_entry, &parse))
 		return ;
 	free(new_entry);
-	// print_parse(parse);
 	execution(parse, my_env, data);
 	free_all_parse(parse);
 }
@@ -55,7 +50,7 @@ int	convert_entry_to_parse(t_entry *entry, t_parse **parse)
 	*parse = malloc(sizeof(t_parse) * (size_of_parse(entry) + 1));
 	if (!*parse)
 	{
-		ft_error(ERROR_42, NULL);
+		ft_error(ERROR_42, NULL, 12);
 		free(entry);
 		return (0);
 	}
@@ -66,7 +61,6 @@ int	convert_entry_to_parse(t_entry *entry, t_parse **parse)
 		return (0);
 	}
 	return (1);
-	//free(entry);
 }
 
 //TO REMOVE

@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 23:55:37 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/13 21:01:42 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/18 15:36:49 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static char	*get_str(t_entry *entry, int *i, int j);
 static void	set_type(t_parse *parse, t_entry *entry);
 static void	next_set_type(t_parse *parse, int *i, int *cmd);
+static int	context_in_parse(t_entry *entry, t_parse *parse, int i);
 
 int	colapse_all(t_entry *entry, t_parse *parse)
 {
@@ -42,7 +43,6 @@ int	colapse_all(t_entry *entry, t_parse *parse)
 	parse[nbr].str = NULL;
 	parse[nbr].type = -1;
 	set_type(parse, entry);
-	// print_parse(parse);
 	if (check_parse(parse) == -1)
 		return (g_errno = 2, 0);
 	return (1);
@@ -54,6 +54,11 @@ static char	*get_str(t_entry *entry, int *i, int j)
 	int		runner;
 
 	runner = 0;
+	if (entry[*i].type == VOID)
+	{
+		*i += 1;
+		return (char_to_str(0));
+	}
 	str = ft_strdup("");
 	if (!str)
 		return (NULL);
@@ -64,7 +69,7 @@ static char	*get_str(t_entry *entry, int *i, int j)
 		runner++;
 	}
 	if (!str)
-		ft_error(ERROR_42, NULL);
+		ft_error(ERROR_42, NULL, 12);
 	return (str);
 }
 
@@ -141,11 +146,11 @@ static void	next_set_type(t_parse *parse, int *i, int *cmd)
 		set_type_utils(CMD_ARG, i, parse);
 }
 
-int	context_in_parse(t_entry *entry, t_parse *parse, int i)
+static int	context_in_parse(t_entry *entry, t_parse *parse, int i)
 {
-	int	ind_parse;
-	int	ind_entry;
-	int	j;
+	int		ind_parse;
+	int		ind_entry;
+	size_t	j;
 
 	ind_parse = 0;
 	ind_entry = 0;
@@ -161,5 +166,9 @@ int	context_in_parse(t_entry *entry, t_parse *parse, int i)
 			ind_entry++;
 		ind_parse++;
 	}
+	if (entry[ind_entry].type == EXPAND)
+		return (SI_QUOTE);
 	return (entry[ind_entry].context);
 }
+//si = expand alors return SI_Quote pour eviter de 
+//l'interpreter et faie comme si c'etait un argument

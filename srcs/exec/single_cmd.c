@@ -6,38 +6,40 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 18:46:17 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/14 03:50:59 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/18 15:57:27 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 void	handle_single_builtin(t_parse *parse, t_list **my_env, int runner);
-void	handle_forked_single_builtin(t_parse *parse, t_list **my_env, int runner);
-void	next_handle_forked_single_builtin(t_parse *parse, t_list **my_env, int runner);
+void	handle_forked_single_builtin(t_parse *parse, \
+		t_list **my_env, int runner);
+void	next_handle_forked_single_builtin(t_parse *parse, \
+		t_list **my_env, int runner);
 void	exec_single_cmd(t_parse *parse, t_list **env, int runner, t_exec *data);
 
 void	single_cmd(t_parse *parse, t_list **my_env, t_exec *data)
 {
 	int	runner;
-	int	pipes[2];
 
-	pipe(pipes);
+	pipe(data->pipes);
 	runner = 0;
+	if (!check_all_redirect(parse, my_env))
+		return ;
 	while (parse[runner].str)
 	{
 		if (parse[runner].type == HEREDOC)
-			data->current_fd_in = dup_in(parse, runner, pipes, data);
+			data->current_fd_in = dup_in(parse, runner, data, my_env);
 		if (parse[runner].type == INFILE)
-			data->current_fd_in = dup_in(parse, runner, pipes, data);
+			data->current_fd_in = dup_in(parse, runner, data, my_env);
 		if (parse[runner].type == OUTFILE)
-			data->current_fd_out = dup_out(parse, runner);
+			data->current_fd_out = dup_out(parse, runner, my_env);
 		runner++;
 	}
-	double_close(pipes[0], pipes[1]);
+	double_close(&data->pipes[0], &data->pipes[1]);
 	single_cmd_execution(parse, my_env, data);
-	double_close(data->current_fd_in, data->current_fd_out);
-	// restore_dup(file, data, pipes[0]);
+	double_close(&data->current_fd_in, &data->current_fd_out);
 }
 
 void	handle_single_builtin(t_parse *parse, t_list **my_env, int runner)
@@ -51,7 +53,8 @@ void	handle_single_builtin(t_parse *parse, t_list **my_env, int runner)
 	return ;
 }
 
-void	handle_forked_single_builtin(t_parse *parse, t_list **my_env, int runner)
+void	handle_forked_single_builtin(t_parse *parse, \
+		t_list **my_env, int runner)
 {
 	int		pid;
 
@@ -69,7 +72,8 @@ void	handle_forked_single_builtin(t_parse *parse, t_list **my_env, int runner)
 	waitpid(-1, NULL, 0);
 }
 
-void	next_handle_forked_single_builtin(t_parse *parse, t_list **my_env, int runner)
+void	next_handle_forked_single_builtin(t_parse *parse, \
+		t_list **my_env, int runner)
 {
 	if (ft_strcmp(parse[runner].str, "echo") == 0)
 		return (ft_echo(parse));
@@ -89,7 +93,7 @@ void	exec_single_cmd(t_parse *parse, t_list **env, int runner, t_exec *data)
 	if (pid == 0)
 	{
 		ex_child(parse, env, runner, data);
-		double_close(data->fd_in, data->fd_out);
+		double_close(&data->fd_in, &data->fd_out);
 		exit(1);
 	}
 	waitpid(pid, NULL, 0);

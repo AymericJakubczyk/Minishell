@@ -6,14 +6,14 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 15:52:05 by cprojean          #+#    #+#             */
-/*   Updated: 2023/06/28 19:18:16 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/18 13:17:50 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
 
-# include "exec.h"
+// # include "struct.h"
 
 enum e_types {
 	CHAR,
@@ -24,7 +24,8 @@ enum e_types {
 	S_QUOTE,
 	D_QUOTE,
 	STRING,
-	EXPAND
+	EXPAND,
+	VOID
 };
 
 enum e_context {
@@ -34,32 +35,18 @@ enum e_context {
 };
 
 enum e_species {
-	INFILE,			//0
-	OUTFILE,		//1
-	PIPEE,			//2
-	REDIRECT_IN,	//3
-	HEREDOC,		//4
-	LIMITER,		//5
-	REDIRECT_OUT,	//6
-	APPEND,			//7
-	COMMAND,		//8
-	CMD_ARG,		//9
-	AMBIGUOUS		//10
-	//EXPAND		//11
+	INFILE,
+	OUTFILE,
+	PIPEE,
+	REDIRECT_IN,
+	HEREDOC,
+	LIMITER,
+	REDIRECT_OUT,
+	APPEND,
+	COMMAND,
+	CMD_ARG
 };
-
-typedef struct s_entry
-{
-	char	c;
-	int		type;
-	int		context;
-}	t_entry;
-
-typedef struct s_parse
-{
-	char	*str;
-	int		type;
-}	t_parse;
+//from 0 to 9
 
 //utils.c
 void	ft_free(char *s1, char *s2);
@@ -69,7 +56,7 @@ char	*ft_strjoin4(char *s1, char *s2);
 int		ft_strcmp(char *s1, char*s2);
 
 //get_prompt.c
-char	*ft_get_prompt(t_list	**my_env);
+char	*ft_get_prompt(t_list **my_env);
 
 //parse_and_exec.c
 void	parse_and_exec(char *str, t_list **my_env, t_exec *data);
@@ -101,10 +88,10 @@ void	free_all_parse(t_parse *parse);
 void	expand(t_entry *entry, t_entry **new_entry, t_list **my_env);
 
 //get_expand_size.c
-int	get_expand_size(t_entry *entry, t_list **my_env);
+int		get_expand_size(t_entry *entry, t_list **my_env);
 
 //fill_expand.c
-int	fill_expand(t_entry *entry, t_entry *new_entry, t_list **my_env);
+int		fill_expand(t_entry *entry, t_entry *new_entry, t_list **my_env);
 
 //expand_utils.c
 char	*get_name_env(t_entry *entry, int *i);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_expand_size.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
+/*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 12:30:16 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/27 12:46:53 by ajakubcz         ###   ########.fr       */
+/*   Updated: 2023/07/18 15:36:23 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	inc_size_after_chev(t_entry *entry, int *i, int *size);
 static void	inc_size_of_tild_value(t_list **my_env, int *i, int *size);
 static int	inc_size_of_var_value(t_list **my_env, t_entry *entry, int *i, \
 	int *size);
-static void	ft_increment(int *i, int *size);
+static void	ft_increment(t_entry *entry, int *i, int *size);
 
 int	get_expand_size(t_entry *entry, t_list **my_env)
 {
@@ -40,7 +40,7 @@ int	get_expand_size(t_entry *entry, t_list **my_env)
 				return (-1);
 		}
 		else
-			ft_increment(&i, &size);
+			ft_increment(entry, &i, &size);
 	}
 	return (size);
 }
@@ -90,7 +90,7 @@ static int	inc_size_of_var_value(t_list **my_env, t_entry *entry, int *i, \
 		name_env = get_name_env(entry, i);
 		if (!name_env)
 		{
-			ft_error(ERROR_42, NULL);
+			ft_error(ERROR_42, NULL, 12);
 			g_errno = 12;
 			return (-1);
 		}
@@ -101,8 +101,25 @@ static int	inc_size_of_var_value(t_list **my_env, t_entry *entry, int *i, \
 	return (0);
 }
 
-static void	ft_increment(int *i, int *size)
+static void	ft_increment(t_entry *entry, int *i, int *size)
 {
-	*i += 1;
-	*size += 1;
+	char	quote;
+
+	if (entry[*i].c == '\'' || entry[*i].c == '\"')
+	{
+		quote = entry[*i].c;
+		if ((*i - 1 < 0 || entry[*i - 1].context == NO_QUOTE) && \
+			entry[*i + 1].c && entry[*i + 1].c == quote)
+		{
+			*size += 1;
+			*i += 2;
+		}
+		else
+			*i += 1;
+	}
+	else
+	{
+		*i += 1;
+		*size += 1;
+	}
 }

@@ -28,7 +28,7 @@ int	is_allready_export(t_list **my_env, char *str)
 
 int	ft_equal_size(char *str)
 {
-	int	runner;
+	size_t	runner;
 
 	runner = 0;
 	if (!str)

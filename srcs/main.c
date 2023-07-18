@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:11:04 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/30 15:49:03 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/18 15:46:15 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	minishell(t_list **my_env, char **env, t_exec *data)
 		free(cmd);
 		prompt = ft_get_prompt(my_env);
 		signal(SIGINT, handler);
+		signal(SIGQUIT, SIG_IGN);
 		cmd = readline(prompt);
 		ft_free(prompt, NULL);
 		if (!cmd)
@@ -58,12 +59,13 @@ void	minishell(t_list **my_env, char **env, t_exec *data)
 			add_history(cmd);
 		parse_and_exec(cmd, my_env, data);
 		dup_entrys(data);
-		double_close(data->fd_in, data->fd_out);
+		double_close(&data->fd_in, &data->fd_out);
 	}
 	if (!cmd)
 		ft_printf("\nCTRL-D\n");
 	free(cmd);
 }
+//ignorer le ctrl-'\'
 
 void	handler(int sig)
 {
@@ -88,8 +90,8 @@ void	dup_entrys(t_exec *data)
 {
 	if (data->current_fd_in != data->fd_in)
 		if (dup2(data->fd_in, STDIN_FILENO) == -1)
-				ft_printf("Dup2 failed to restore ALED %d\n", data->fd_in);				
+			ft_printf("Dup2 failed to restore ALED %d\n", data->fd_in);
 	if (data->current_fd_out != data->fd_out)
 		if (dup2(data->fd_out, STDOUT_FILENO) == -1)
-				ft_printf("Dup2 failed to restore PUTAIN %d\n", data->fd_out);
+			ft_printf("Dup2 failed to restore PUTAIN %d\n", data->fd_out);
 }

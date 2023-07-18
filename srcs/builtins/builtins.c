@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:48 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/18 10:42:05 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/18 15:47:58 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_echo(t_parse *parse)
 	flag = 0;
 	type = 0;
 	index = 0;
-	while(parse[index].str && parse[index].type != PIPEE)
+	while (parse[index].str && parse[index].type != PIPEE)
 	{
 		if (parse[index].type == CMD_ARG)
 		{
@@ -45,12 +45,12 @@ void	ft_echo(t_parse *parse)
 
 int	is_echos_flag(char *str)
 {
-	int	runner;
+	size_t	runner;
 
 	runner = 0;
 	if (str[runner++] == '-')
-	while (str[runner] && str[runner] == 'n')
-		runner++;
+		while (str[runner] && str[runner] == 'n')
+			runner++;
 	if (runner == ft_strlen(str))
 		return (1);
 	return (0);
@@ -102,7 +102,7 @@ void	ft_cd(t_list **my_env, t_parse *parse)
 	}
 	if (count > 1)
 	{
-		ft_error(ERROR_23, parse[runner].str);
+		ft_error(ERROR_23, parse[runner].str, 1);
 		return ;
 	}
 	oldpwd = ft_strjoin4("OLDPWD=", ft_pwd());

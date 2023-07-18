@@ -6,13 +6,13 @@
 #    By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/01 14:11:17 by ajakubcz          #+#    #+#              #
-#    Updated: 2023/07/13 21:46:46 by cprojean         ###   ########.fr        #
+#    Updated: 2023/07/18 16:10:46 by cprojean         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-CFLAGS = -Wall -Wextra -g3 #Werror
+CFLAGS = -Wall -Wextra -Werror -g3
 
 LIB = libft/libft.a
 
@@ -40,6 +40,8 @@ DIR_COLLECTOR = $(DIR_SRCS)collector/
 
 DIR_EXEC = $(DIR_SRCS)exec/
 
+DIR_EXEC_WITH_FORK = $(DIR_EXEC)with_fork/
+
 DIR_INCLUDES = ./inc/
 
 SRCS =			$(DIR_SRCS)main.c \
@@ -61,6 +63,7 @@ SRCS =			$(DIR_SRCS)main.c \
 				$(DIR_BUILTINS)builtins.c \
 				$(DIR_BUILTINS)export.c \
 				$(DIR_BUILTINS)export_utils.c \
+				$(DIR_BUILTINS)export_utils2.c \
 				$(DIR_BUILTINS)unset.c \
 				$(DIR_BUILTINS)ft_exit.c \
 				$(DIR_BUILTINS)ft_getenv.c \
@@ -77,6 +80,10 @@ SRCS =			$(DIR_SRCS)main.c \
 				$(DIR_EXEC)heredoc_utils.c \
 				$(DIR_EXEC)single_cmd.c \
 				$(DIR_EXEC)single_cmd_utils.c \
+				$(DIR_EXEC)check_redirect.c \
+				$(DIR_EXEC_WITH_FORK)exec_with_forks.c \
+				$(DIR_EXEC_WITH_FORK)do_redirect.c \
+				$(DIR_EXEC_WITH_FORK)exec_fork_utils.c \
 
 OBJS =			$(patsubst %.c, $(DIR_OBJ)%.o, $(SRCS))
 
