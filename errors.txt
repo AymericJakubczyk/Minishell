@@ -1,3 +1,0 @@
-cprojean:maxiHell$ cat | echo salut ca va | echo -nnnnnnnnnnnn -nnnnnnnnnnnn salut ca va
-salut ca vacat: -: Bad file descriptor
-cat: closing standard input: Bad file descriptor

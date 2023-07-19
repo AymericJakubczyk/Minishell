@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 15:40:43 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/18 15:53:47 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/19 10:28:02 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ char	*ft_pwd(void);
 void	ft_echo(t_parse *parse);
 void	ft_env(t_list **env);
 void	ft_cd(t_list **my_env, t_parse *parse);
-int		ft_exit(char *array);
+// int		ft_exit(char *array);
+void	ft_exit(t_parse *parse);
 
 //Bultins utils
 void	do_ft_export(t_list **my_env, char *str);

@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 12:34:24 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/18 15:36:18 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/19 10:01:08 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int	fill_expand(t_entry *entry, t_entry *new_entry, t_list **my_env)
 		else
 			else_fill_new_entry(entry, new_entry, ind);
 	}
+	// ft_printf("ind 1 value : %d\n", ind[1]);
 	new_entry[ind[1]].c = 0;
 	return (0);
 }

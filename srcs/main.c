@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:11:04 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/18 15:46:15 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/19 10:22:49 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	minishell(t_list **my_env, char **env, t_exec *data)
 	char	*prompt;
 
 	cmd = ft_strdup("");
-	while (ft_exit(cmd) == 0)
+	while (42)
 	{
 		init_data(data, env);
 		free(cmd);

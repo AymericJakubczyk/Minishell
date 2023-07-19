@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 12:38:49 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/18 15:56:10 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/18 18:35:58 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ void	ex_child(t_parse *parse, t_list **env, int runner, t_exec *data)
 	arg = NULL;
 	count = how_much_args(parse, runner);
 	path = get_path(parse[runner].str, env);
+	if (!path)
+		return ;
 	arg = malloc(sizeof(char *) * (count + 1));
 	if (!arg)
 		ft_printf("Malloc error in ex_child\n");

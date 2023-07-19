@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 23:55:37 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/18 15:36:49 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/19 09:59:59 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ static char	*get_str(t_entry *entry, int *i, int j)
 		*i += 1;
 		runner++;
 	}
+	// ft_printf("colapse_all\n\n");
 	if (!str)
 		ft_error(ERROR_42, NULL, 12);
 	return (str);
