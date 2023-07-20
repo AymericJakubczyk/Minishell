@@ -16,6 +16,7 @@ static void	exec_cmd(t_parse *parse, int num_cmd, \
 		t_list **my_env, t_exec *data);
 static int	get_start_cmd(t_parse *parse, int num_cmd);
 static void	wait_all(int nbr_cmd);
+void		handler_fork(int sig);
 
 void	exec_with_forks(t_parse *parse, t_list **my_env, t_exec *data)
 {
@@ -30,16 +31,21 @@ void	exec_with_forks(t_parse *parse, t_list **my_env, t_exec *data)
 	while (num_cmd < nbr_cmd)
 	{
 		pipe(data->pipes);
+		signal(SIGINT, SIG_IGN);
 		pid = fork();
 		if (pid == -1)
 			ft_printf("error pid\n");
 		else if (pid == 0)
 		{
+			signal(SIGINT, SIG_DFL);
+			//signal(SIGINT, handler_fork);
 			exec_cmd(parse, num_cmd, my_env, data);
 			exit(0);
 		}
 		else
 		{
+			signal(SIGINT, SIG_IGN);
+			signal(SIGINT, handler_fork);
 			if (data->prec_fd)
 				close(data->prec_fd);
 			data->prec_fd = data->pipes[0];
@@ -56,6 +62,13 @@ void	exec_with_forks(t_parse *parse, t_list **my_env, t_exec *data)
 	wait_all(nbr_cmd);
 }
 //don't forget to secure pipe;
+
+void	handler_fork(int sig)
+{
+	(void) sig;
+	ft_printf("\n");
+	//exit(0);
+}
 
 static void	exec_cmd(t_parse *parse, int num_cmd, t_list **my_env, t_exec *data)
 {
@@ -78,7 +91,7 @@ static void	exec_cmd(t_parse *parse, int num_cmd, t_list **my_env, t_exec *data)
 	if (do_builtin(&parse[start_cmd], my_env))
 		exit(1);
 	path = get_path(arg[0], my_env);
-	double_close(&data->pipes[1], &data->prec_fd);
+	//double_close(&data->pipes[1], &data->prec_fd);
 	execve(path, arg, data->env);
 }
 // exit car execve a crash si ici
