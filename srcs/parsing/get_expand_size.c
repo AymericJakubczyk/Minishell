@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 12:30:16 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/18 15:36:23 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/20 23:51:23 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,13 @@ static int	inc_size_of_var_value(t_list **my_env, t_entry *entry, int *i, \
 {
 	char	*value_env;
 	char	*name_env;
+	char	*itoa;
 
 	if (entry[*i + 1].c && entry[*i + 1].c == '?')
 	{
-		*size += ft_strlen(ft_itoa(g_errno));
+		itoa = ft_itoa(g_errno);
+		*size += ft_strlen(itoa);
+		free(itoa);
 		*i += 2;
 	}
 	else

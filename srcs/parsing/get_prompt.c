@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 17:22:21 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/18 15:36:26 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/21 00:31:47 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static char	*ft_get_path(void)
 	int		tmp;
 
 	tmp = 0;
-	path = ft_pwd();
+	path = ft_pwd(0);
 	runner = 0;
 	while (path[runner])
 	{

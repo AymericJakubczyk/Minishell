@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 15:40:43 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/19 10:28:02 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/21 00:30:27 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define BUILTINS_H
 
 //Builtins.c
-char	*ft_pwd(void);
+char	*ft_pwd(int mode);
 void	ft_echo(t_parse *parse);
 void	ft_env(t_list **env);
 void	ft_cd(t_list **my_env, t_parse *parse);

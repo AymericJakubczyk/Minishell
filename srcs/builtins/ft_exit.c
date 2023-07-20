@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:07:31 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/19 10:34:04 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/21 00:09:29 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,10 @@ void	ft_exit(t_parse *parse)
 		{
 			arg = ft_atoi(parse[runner].str);
 			if (arg != 0)
+			{
+				g_errno = arg;
 				exit(arg);
+			}
 			else
 			{
 				ft_error("exit", parse[runner].str, 2);

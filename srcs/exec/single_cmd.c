@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 18:46:17 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/19 10:44:28 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/21 01:08:36 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	handle_forked_single_builtin(t_parse *parse, \
 		t_list **my_env, int runner)
 {
 	int	pid;
+	int	status;
 
 	pid = fork();
 	if (pid == -1)
@@ -69,9 +70,11 @@ void	handle_forked_single_builtin(t_parse *parse, \
 			ft_export(my_env, parse);
 		else
 			next_handle_forked_single_builtin(parse, my_env, runner);
-		exit (1);
+		exit (0);
 	}
-	waitpid(-1, NULL, 0);
+	waitpid(-1, &status, 0);
+	if (WIFEXITED(status))
+		g_errno = WEXITSTATUS(status);
 }
 
 void	next_handle_forked_single_builtin(t_parse *parse, \
@@ -82,12 +85,13 @@ void	next_handle_forked_single_builtin(t_parse *parse, \
 	else if (ft_strcmp(parse[runner].str, "env") == 0)
 		ft_env(my_env);
 	else if (ft_strcmp(parse[runner].str, "pwd") == 0)
-		ft_printf("%s\n", ft_pwd());
+		ft_printf("%s\n", ft_pwd(1));
 }
 
 void	exec_single_cmd(t_parse *parse, t_list **env, int runner, t_exec *data)
 {
-	int		pid;
+	int	pid;
+	int	status;
 
 	pid = fork();
 	if (pid == -1)
@@ -96,7 +100,9 @@ void	exec_single_cmd(t_parse *parse, t_list **env, int runner, t_exec *data)
 	{
 		ex_child(parse, env, runner, data);
 		double_close(&data->fd_in, &data->fd_out);
-		exit(1);
+		exit(0);
 	}
-	waitpid(pid, NULL, 0);
+	waitpid(-1, &status, 0);
+	if (WIFEXITED(status))
+		g_errno = WEXITSTATUS(status);
 }

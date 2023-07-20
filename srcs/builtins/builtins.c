@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:48 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/18 15:47:58 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/21 01:16:05 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_echo(t_parse *parse)
 	flag = 0;
 	type = 0;
 	index = 0;
-	while (parse[index].str && parse[index].type != PIPEE)
+	while (parse[index].str && parse[index++].type != PIPEE)
 	{
 		if (parse[index].type == CMD_ARG)
 		{
@@ -37,10 +37,10 @@ void	ft_echo(t_parse *parse)
 			else if (flag != 1)
 				type = 1;
 		}
-		index++;
 	}
 	if (!type)
 		ft_printf("\n");
+	g_errno = 0;
 }
 
 int	is_echos_flag(char *str)
@@ -48,9 +48,12 @@ int	is_echos_flag(char *str)
 	size_t	runner;
 
 	runner = 0;
-	if (str[runner++] == '-')
+	if (str[runner] == '-')
+	{
+		runner++;
 		while (str[runner] && str[runner] == 'n')
 			runner++;
+	}
 	if (runner == ft_strlen(str))
 		return (1);
 	return (0);
@@ -70,16 +73,14 @@ void	ft_env(t_list **env)
 	g_errno = 0;
 }
 
-char	*ft_pwd(void)
+char	*ft_pwd(int mode)
 {
 	char	*path;
-	int		size;
 
-	size = 2048;
-	path = malloc(sizeof(char) * (size));
-	getcwd(path, size);
+	if (mode != 0)
+		g_errno = 0;
+	path = getcwd(NULL, 0);
 	return (path);
-	g_errno = 0;
 }
 
 void	ft_cd(t_list **my_env, t_parse *parse)
@@ -92,6 +93,7 @@ void	ft_cd(t_list **my_env, t_parse *parse)
 	count = 0;
 	flag = 0;
 	runner = 0;
+	g_errno = 0;
 	while (parse[runner++].str)
 	{
 		if (parse[runner].type == CMD_ARG)
@@ -105,8 +107,7 @@ void	ft_cd(t_list **my_env, t_parse *parse)
 		ft_error(ERROR_23, parse[runner].str, 1);
 		return ;
 	}
-	oldpwd = ft_strjoin4("OLDPWD=", ft_pwd());
+	oldpwd = ft_strjoin4("OLDPWD=", ft_pwd(0));
 	do_ft_export(my_env, oldpwd);
 	next_cd(my_env, parse[flag].str);
-	g_errno = 0;
 }

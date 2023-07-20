@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 12:34:24 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/19 10:01:08 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/21 00:14:20 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static int	fill_with_env_value(t_entry *entry, t_entry *new_entry, \
 
 	if (entry[ind[0] + 1].c && entry[ind[0] + 1].c == '?')
 	{
-		ft_printf("errno value : %s\n", ft_itoa(g_errno));
+		// ft_printf("errno value : %s, %d\n", ft_itoa(g_errno), g_errno);
 		fill_value_env(new_entry, entry[ind[0]].context, ft_itoa(g_errno), \
 			&ind[1]);
 		ind[0] += 2;

@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 09:14:56 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/18 16:08:58 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/21 00:12:01 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,9 @@ static void	exec_cmd(t_parse *parse, int num_cmd, t_list **my_env, t_exec *data)
 	if (do_builtin(&parse[start_cmd], my_env))
 		exit(1);
 	path = get_path(arg[0], my_env);
-	double_close(&data->pipes[1], &data->prec_fd);
+	// double_close(&data->pipes[1], &data->prec_fd);
 	execve(path, arg, data->env);
 }
-// exit car execve a crash si ici
 
 static int	get_start_cmd(t_parse *parse, int num_cmd)
 {
@@ -102,11 +101,16 @@ static int	get_start_cmd(t_parse *parse, int num_cmd)
 static void	wait_all(int nbr_cmd)
 {
 	int	i;
+	int	status;
 
 	i = 0;
 	while (i < nbr_cmd)
 	{
-		waitpid(-1, NULL, 0);
+		waitpid(-1, &status, 0);
 		i++;
+	}
+	if (WIFEXITED(status))
+	{
+		g_errno = WEXITSTATUS(status);
 	}
 }
