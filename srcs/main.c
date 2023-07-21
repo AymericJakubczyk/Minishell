@@ -61,14 +61,13 @@ void	minishell(t_list **my_env, char **env, t_exec *data)
 		dup_entrys(data);
 		double_close(&data->fd_in, &data->fd_out);
 	}
-	if (!cmd)
+	if (!cmd) //if CTRL-D
 	{
-		ft_printf("\nCTRL-D\n");
+		ft_printf("exit\n"); 
 		rl_clear_history();
 	}
 	free(cmd);
 }
-//ignorer le ctrl-'\'
 
 void	handler(int sig)
 {

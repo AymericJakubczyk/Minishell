@@ -50,7 +50,7 @@ void	handle_single_builtin(t_parse *parse, t_list **my_env, int runner)
 		ft_unset(my_env, parse);
 	else if (ft_strcmp(parse[runner].str, "exit") == 0)
 		ft_exit(parse);
-	else if (ft_strcmp(parse[runner++].str, "export") == 0)
+	else if (ft_strcmp(parse[runner].str, "export") == 0)
 		ft_export(my_env, parse);
 	return ;
 }
@@ -94,9 +94,17 @@ void	exec_single_cmd(t_parse *parse, t_list **env, int runner, t_exec *data)
 		exit(1);
 	if (pid == 0)
 	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		ex_child(parse, env, runner, data);
 		double_close(&data->fd_in, &data->fd_out);
-		exit(1);
+		exit(0);
+	}
+	else
+	{
+		signal(SIGINT, SIG_IGN);
+		signal(SIGINT, handler_fork);
+		signal(SIGQUIT, handler_fork_slash);
 	}
 	waitpid(pid, NULL, 0);
 }

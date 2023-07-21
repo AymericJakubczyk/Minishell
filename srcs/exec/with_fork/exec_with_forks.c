@@ -16,7 +16,6 @@ static void	exec_cmd(t_parse *parse, int num_cmd, \
 		t_list **my_env, t_exec *data);
 static int	get_start_cmd(t_parse *parse, int num_cmd);
 static void	wait_all(int nbr_cmd);
-void		handler_fork(int sig);
 
 void	exec_with_forks(t_parse *parse, t_list **my_env, t_exec *data)
 {
@@ -31,21 +30,20 @@ void	exec_with_forks(t_parse *parse, t_list **my_env, t_exec *data)
 	while (num_cmd < nbr_cmd)
 	{
 		pipe(data->pipes);
-		signal(SIGINT, SIG_IGN);
+		//signal(SIGINT, SIG_IGN);
 		pid = fork();
 		if (pid == -1)
 			ft_printf("error pid\n");
 		else if (pid == 0)
 		{
-			signal(SIGINT, SIG_DFL);
-			//signal(SIGINT, handler_fork);
+			signal(SIGQUIT, SIG_DFL);
 			exec_cmd(parse, num_cmd, my_env, data);
 			exit(0);
 		}
 		else
 		{
-			signal(SIGINT, SIG_IGN);
 			signal(SIGINT, handler_fork);
+			signal(SIGQUIT, handler_fork_slash);
 			if (data->prec_fd)
 				close(data->prec_fd);
 			data->prec_fd = data->pipes[0];
@@ -67,6 +65,14 @@ void	handler_fork(int sig)
 {
 	(void) sig;
 	ft_printf("\n");
+	//exit(0);
+}
+
+void	handler_fork_slash(int sig)
+{
+	(void) sig;
+	//dprintf(2, "TEST \\\n");
+	ft_printf("Quit (core dumped)\n");
 	//exit(0);
 }
 

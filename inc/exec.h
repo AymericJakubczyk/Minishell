@@ -84,4 +84,9 @@ int		get_ind_last_char(t_entry *entry);
 //exec_fork_utils.c
 int		do_builtin(t_parse *parse, t_list **my_env);
 
+
+
+void		handler_fork(int sig);
+void		handler_fork_slash(int sig);
+
 #endif
