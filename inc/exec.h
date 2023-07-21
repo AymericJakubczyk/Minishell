@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 14:06:16 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/18 16:10:04 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/22 00:37:53 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	*expand_redirect(t_parse parse, t_list **my_env);
 //single_cmd.c
 void	single_cmd(t_parse *parse, t_list **my_env, t_exec *data);
 void	handle_forked_single_builtin(t_parse *parse, \
-		t_list **my_env, int runner);
+		t_list **my_env, int runner, t_exec *data);
 void	handle_single_builtin(t_parse *parse, t_list **my_env, int runner);
 void	exec_single_cmd(t_parse *parse, t_list **env, int runner, t_exec *data);
 

@@ -6,14 +6,13 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 12:38:49 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/20 23:57:37 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/22 00:49:13 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static int	how_much_args(t_parse *parse, int runner);
-// static void	print_tab(char **tab);
 
 void	print_all_data(char **all_limiter, char **str_heredoc)
 {
@@ -63,16 +62,13 @@ void	ex_child(t_parse *parse, t_list **env, int runner, t_exec *data)
 	char	**arg;
 	char	*path;
 	int		index;
-	int		count;
 
-	count = 0;
 	index = 0;
 	arg = NULL;
-	count = how_much_args(parse, runner);
 	path = get_path(parse[runner].str, env);
 	if (!path)
 		return ;
-	arg = malloc(sizeof(char *) * (count + 1));
+	arg = malloc(sizeof(char *) * (how_much_args(parse, runner) + 1));
 	if (!arg)
 		ft_printf("Malloc error in ex_child\n");
 	arg[index++] = ft_strdup(parse[runner++].str);
@@ -101,15 +97,3 @@ static int	how_much_args(t_parse *parse, int runner)
 	}
 	return (index);
 }
-
-// static void	print_tab(char **tab)
-// {
-// 	int	runner;
-
-// 	runner = 0;
-// 	while (tab[runner])
-// 	{
-// 		ft_printf("%s\n", tab[runner]);
-// 		runner++;
-// 	}
-// }

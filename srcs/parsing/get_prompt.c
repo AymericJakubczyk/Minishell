@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 17:22:21 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/21 00:31:47 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/21 01:32:37 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,16 @@ static char	*ft_get_path(void)
 
 	tmp = 0;
 	path = ft_pwd(0);
+	if (!path)
+		path = ft_strdup("whereami");
 	runner = 0;
 	while (path[runner])
 	{
 		if (path[runner] == '/')
-			tmp = runner;
+			tmp = runner + 1;
 		runner++;
 	}
-	output = ft_strdup(&path[++tmp]);
+	output = ft_strdup(&path[tmp]);
 	free(path);
 	if (!output)
 		return (NULL);

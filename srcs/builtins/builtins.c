@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:48 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/21 01:16:05 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/21 04:31:50 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,25 @@ int	is_echos_flag(char *str)
 	return (0);
 }
 
-void	ft_env(t_list **env)
+void	ft_env(t_list **env, t_parse *parse)
 {
 	t_list	*runner;
+	int		index;
 
+	index = 0;
 	runner = *env;
+	while(parse[index].str && parse[index].type != PIPEE)
+	{
+		if (parse[index].type == CMD_ARG)
+		{
+			ft_error(ERROR_13, parse[index].str, 127);
+			return ;
+		}
+		index++;
+	}
 	while (runner != NULL)
 	{
-		if (ft_equal_size(runner->content) != 0)
+		if (ft_equal_ind(runner->content) != 0)
 			ft_printf("%s\n", runner->content);
 		runner = runner->next;
 	}
@@ -80,6 +91,8 @@ char	*ft_pwd(int mode)
 	if (mode != 0)
 		g_errno = 0;
 	path = getcwd(NULL, 0);
+	if (!path && mode != 0)
+		ft_printf("LOST\n");
 	return (path);
 }
 

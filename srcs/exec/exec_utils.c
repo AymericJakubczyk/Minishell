@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 14:08:26 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/21 01:19:13 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/21 03:18:58 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*get_path(char *cmd, t_list **env)
 	if (cmd && slash_in(cmd))
 	{
 		if (access(cmd, F_OK | X_OK) != 0)
-			return (ft_printf("no such file or directory: \n"), NULL);
+			return (ft_error(ERROR_13, cmd, 127), exit(g_errno), NULL);
 		else
 			return (cmd);
 	}

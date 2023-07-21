@@ -6,82 +6,98 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:07:31 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/21 00:09:29 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/21 23:05:36 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	no_whitespaces(char	*array);
+int		no_whitespaces(char	*array);
+int		is_num(char *str);
+void	count_args(t_parse *parse);
 
-// int	ft_exit(char *array)
-// {
-// 	int		runner;
-// 	int		count;
-// 	char	*string;
-
-// 	count = 0;
-// 	runner = -1;
-// 	if (ft_strcmp(array, "exit") == 0)
-// 		return (-1);
-// 	string = malloc(sizeof(char) * (no_whitespaces(array)) + 1);
-// 	if (!string)
-// 		return (-12);
-// 	while (array[++runner])
-// 	{
-// 		if (array[runner] != ' ' && array[runner] != '\t')
-// 		{
-// 			string[count] = array[runner];
-// 			count++;
-// 		}
-// 	}
-// 	string[count] = '\0';
-// 	if (ft_strcmp(string, "exit") == 0)
-// 		return (free(string), -1);
-// 	if ((ft_strncmp(string, "exit", 4) == 0) && (ft_strcmp(string, "exit") != 0))
-// 		return (free(string), ft_error(ERROR_21, "exit", 2), -1);
-// 	return (free(string), 0);
-// }
-
-// int	no_whitespaces(char	*array)
-// {
-// 	int	runner;
-// 	int	count;
-
-// 	count = 0;
-// 	runner = 0;
-// 	while (array[runner])
-// 	{
-// 		if (array[runner] != ' ' && array[runner] != '\t')
-// 			count++;
-// 		runner++;
-// 	}
-// 	return (count);
-// }
-
-void	ft_exit(t_parse *parse)
+void	count_args(t_parse *parse)
 {
-	int	arg;
 	int	runner;
+	int	count;
 
+	count = 0;
 	runner = 0;
-	while (parse[runner].str)
+	while (parse[runner].type != PIPEE && parse[runner].str)
 	{
 		if (parse[runner].type == CMD_ARG)
 		{
-			arg = ft_atoi(parse[runner].str);
-			if (arg != 0)
+			if (is_num(parse[runner].str) != 0)
 			{
-				g_errno = arg;
-				exit(arg);
-			}
-			else
-			{
-				ft_error("exit", parse[runner].str, 2);
+				ft_error(ERROR_21, "exit", 2);
 				exit(2);
 			}
+			count++;
 		}
 		runner++;
 	}
+	if (count > 1)
+	{
+		ft_error(ERROR_23, "exit", 1);
+		exit(g_errno);
+	}
+}
+
+int	is_num(char *str)
+{
+	int	runner;
+
+	runner = 0;
+	while (str[runner])
+	{
+		if (runner == 0 && (str[runner] == '-' || str[runner] == '+'))
+			runner++;
+		if (ft_isdigit(str[runner]) != 1)
+			return (1);
+		runner++;
+	}
+	return (0);
+}
+
+void	ft_exit(t_parse *parse, t_list **my_env)
+{
+	int	runner;
+
+	runner = 0;
+	count_args(parse);
+	while (parse[runner].str)
+	{
+		next_exit(runner, parse, my_env);
+		runner++;
+	}
+	ft_lstclear(my_env, free);
+	free_all_parse(parse);
+	rl_clear_history();
 	exit(1);
+}
+
+void	next_exit(int runner, t_parse *parse, t_list **my_env)
+{
+	int	arg;
+
+	if (parse[runner].type == CMD_ARG)
+	{
+		arg = ft_atoi(parse[runner].str);
+		if (arg != 0)
+		{
+			g_errno = arg;
+			free_all_parse(parse);
+			ft_lstclear(my_env, free);
+			rl_clear_history();
+			exit(arg);
+		}
+		else
+		{
+			ft_error(ERROR_21, "exit", 2);
+			ft_lstclear(my_env, free);
+			free_all_parse(parse);
+			rl_clear_history();
+			exit(2);
+		}
+	}
 }

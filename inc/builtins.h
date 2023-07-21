@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 15:40:43 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/21 00:30:27 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/21 22:58:32 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 //Builtins.c
 char	*ft_pwd(int mode);
 void	ft_echo(t_parse *parse);
-void	ft_env(t_list **env);
+void	ft_env(t_list **env, t_parse *parse);
 void	ft_cd(t_list **my_env, t_parse *parse);
-// int		ft_exit(char *array);
-void	ft_exit(t_parse *parse);
+void	ft_exit(t_parse *parse, t_list **my_env);
+void	next_exit(int runner, t_parse *parse, t_list **my_env);
 
 //Bultins utils
 void	do_ft_export(t_list **my_env, char *str);
@@ -38,6 +38,8 @@ void	check_export_type(t_list **my_env, t_parse *parse, int runner, t_list *tmp)
 void	export_again(t_list **my_env, char *str);
 void	add_to_existing_one(t_list *tmp, char *str);
 int		is_alpha_export(char *str);
+int		ft_equal_ind(char *str);
+void	print_it(char **array, t_list **my_env);
 
 //ft_getenv.c
 char	*ft_getenv(t_list **my_env, char *get_me, int do_free);

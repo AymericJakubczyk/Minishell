@@ -6,40 +6,22 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 18:46:17 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/21 01:08:36 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/22 01:25:30 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 void	handle_single_builtin(t_parse *parse, t_list **my_env, int runner);
-void	handle_forked_single_builtin(t_parse *parse, \
-		t_list **my_env, int runner);
 void	next_handle_forked_single_builtin(t_parse *parse, \
 		t_list **my_env, int runner);
 void	exec_single_cmd(t_parse *parse, t_list **env, int runner, t_exec *data);
 
 void	single_cmd(t_parse *parse, t_list **my_env, t_exec *data)
 {
-	int	runner;
-
-	pipe(data->pipes);
-	runner = 0;
 	if (!check_all_redirect(parse, my_env))
-		return ;
-	while (parse[runner].str)
-	{
-		if (parse[runner].type == HEREDOC)
-			data->current_fd_in = dup_in(parse, runner, data, my_env);
-		if (parse[runner].type == INFILE)
-			data->current_fd_in = dup_in(parse, runner, data, my_env);
-		if (parse[runner].type == OUTFILE)
-			data->current_fd_out = dup_out(parse, runner, my_env);
-		runner++;
-	}
-	double_close(&data->pipes[0], &data->pipes[1]);
+		exit (1);
 	single_cmd_execution(parse, my_env, data);
-	double_close(&data->current_fd_in, &data->current_fd_out);
 }
 
 void	handle_single_builtin(t_parse *parse, t_list **my_env, int runner)
@@ -49,14 +31,14 @@ void	handle_single_builtin(t_parse *parse, t_list **my_env, int runner)
 	else if (ft_strcmp(parse[runner].str, "unset") == 0)
 		ft_unset(my_env, parse);
 	else if (ft_strcmp(parse[runner].str, "exit") == 0)
-		ft_exit(parse);
+		ft_exit(parse, my_env);
 	else if (ft_strcmp(parse[runner++].str, "export") == 0)
 		ft_export(my_env, parse);
 	return ;
 }
 
 void	handle_forked_single_builtin(t_parse *parse, \
-		t_list **my_env, int runner)
+		t_list **my_env, int runner, t_exec *data)
 {
 	int	pid;
 	int	status;
@@ -66,10 +48,16 @@ void	handle_forked_single_builtin(t_parse *parse, \
 		exit (1);
 	if (pid == 0)
 	{
+		if (redirect_in_cmd(parse, IN))
+			do_redirect_in(parse, my_env, data, 1);
+		if (redirect_in_cmd(parse, OUT))
+			do_redirect_out(parse, my_env, data);
 		if (ft_strcmp(parse[runner].str, "export") == 0)
 			ft_export(my_env, parse);
 		else
 			next_handle_forked_single_builtin(parse, my_env, runner);
+		ft_lstclear(my_env, free);
+		double_close(&data->fd_in, &data->fd_out);
 		exit (0);
 	}
 	waitpid(-1, &status, 0);
@@ -80,12 +68,23 @@ void	handle_forked_single_builtin(t_parse *parse, \
 void	next_handle_forked_single_builtin(t_parse *parse, \
 		t_list **my_env, int runner)
 {
+	char	*path;
+
 	if (ft_strcmp(parse[runner].str, "echo") == 0)
 		return (ft_echo(parse));
 	else if (ft_strcmp(parse[runner].str, "env") == 0)
-		ft_env(my_env);
+		ft_env(my_env, parse);
 	else if (ft_strcmp(parse[runner].str, "pwd") == 0)
-		ft_printf("%s\n", ft_pwd(1));
+	{
+		path = ft_pwd(1);
+		if (!path)
+			return ;
+		else 
+		{
+			ft_printf("%s\n", path);
+			free(path);
+		}
+	}
 }
 
 void	exec_single_cmd(t_parse *parse, t_list **env, int runner, t_exec *data)
@@ -98,8 +97,12 @@ void	exec_single_cmd(t_parse *parse, t_list **env, int runner, t_exec *data)
 		exit(1);
 	if (pid == 0)
 	{
+		if (redirect_in_cmd(parse, IN))
+			do_redirect_in(parse, env, data, 1);
+		if (redirect_in_cmd(parse, OUT))
+			do_redirect_out(parse, env, data);
+		// double_close(&data->fd_in, &data->fd_out);
 		ex_child(parse, env, runner, data);
-		double_close(&data->fd_in, &data->fd_out);
 		exit(0);
 	}
 	waitpid(-1, &status, 0);

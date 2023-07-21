@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 17:34:51 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/18 14:35:31 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/22 01:35:08 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ t_exec *data, int num_cmd)
 	else
 	{
 		fd = open(infile, O_RDONLY);
-		dup2(fd, STDIN_FILENO);
+		data->fd_in = dup2(fd, STDIN_FILENO);
+		close(fd);
 	}
 }
 
@@ -70,7 +71,9 @@ void	do_redirect_out(t_parse *parse, t_list **my_env, t_exec *data)
 		fd = open(outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else
 		fd = open(outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	dup2(fd, STDOUT_FILENO);
+	free(outfile);
+	data->fd_out = dup2(fd, STDOUT_FILENO);
+	close(fd);
 }
 
 static void	redirect_heredoc(t_exec *data, int num_cmd)
