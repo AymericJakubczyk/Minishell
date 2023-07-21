@@ -34,7 +34,11 @@ void	execution(t_parse *parse, t_list **my_env, t_exec *data)
 
 	data->parse = parse;
 	if (heredoc_in(parse))
+	{
 		do_heredoc(parse, data, my_env);
+		if (g_errno == 130)
+			return ;
+	}
 	pipes = how_many_cmds(parse);
 	if (pipes != 0)
 		exec_with_forks(parse, my_env, data);

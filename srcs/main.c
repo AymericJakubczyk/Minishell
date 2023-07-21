@@ -62,7 +62,10 @@ void	minishell(t_list **my_env, char **env, t_exec *data)
 		double_close(&data->fd_in, &data->fd_out);
 	}
 	if (!cmd)
+	{
 		ft_printf("\nCTRL-D\n");
+		rl_clear_history();
+	}
 	free(cmd);
 }
 //ignorer le ctrl-'\'
@@ -84,6 +87,8 @@ void	init_data(t_exec *data, char **env)
 	data->current_fd_out = data->fd_out;
 	data->mode = 0;
 	data->env = env;
+	data->all_limiter = NULL;
+	data->str_heredoc = NULL;
 }
 
 void	dup_entrys(t_exec *data)
@@ -94,4 +99,31 @@ void	dup_entrys(t_exec *data)
 	if (data->current_fd_out != data->fd_out)
 		if (dup2(data->fd_out, STDOUT_FILENO) == -1)
 			ft_printf("Dup2 failed to restore PUTAIN %d\n", data->fd_out);
+}
+
+void free_all(char **str)
+{
+	int i;
+
+	i = 0;
+	while (str && str[i])
+	{
+		free(str[i]);
+		i++;
+	}
+	if (str)
+		free(str);
+}
+
+void	print_all(char **str)
+{
+	int i;
+
+	i = 0;
+	ft_printf("NYCTALOPE\n");
+	while (str && str[i])
+	{
+		ft_printf("%s\n", str[i]);
+		i++;
+	}
 }

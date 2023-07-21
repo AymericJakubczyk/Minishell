@@ -104,4 +104,16 @@ void	fill_value_env(t_entry *new_entry, int context, char *value_env, \
 //print.c
 void	print_parse(t_parse *parse);
 
+
+
+
+
+
+
+
+
+void	print_all(char **str);
+void	free_all(char **str);
+void	handler(int sig);
+
 #endif
