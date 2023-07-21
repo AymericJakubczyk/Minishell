@@ -64,6 +64,13 @@ static void	fill_all_limiter(t_parse *parse, t_exec *my_struct)
 	my_struct->all_limiter[j] = NULL;
 }
 
+void handler_heredoc(int sig)
+{
+	(void) sig;
+	g_errno = 130;
+	close(0);
+}
+
 static void	get_heredoc(t_exec *my_struct, t_list **my_env)
 {
 	int		i;
@@ -72,13 +79,34 @@ static void	get_heredoc(t_exec *my_struct, t_list **my_env)
 	char	*limiter;
 
 	i = 0;
-	ft_printf("test\n");
+	//ft_printf("test\n");
 	limiter = limiter_without_quote(my_struct->all_limiter[i]);
 	quote_in_lim = quote_in(my_struct->all_limiter[i]);
 	while (i < my_struct->nbr_limiter)
 	{
+		signal(SIGINT, SIG_IGN);
+		signal(SIGINT, handler_heredoc);
 		str = readline(">");
-		if (ft_strcmp(str, limiter) == 0)
+		if (!str)
+		{
+			if (g_errno == 130)
+			{
+				ft_printf("pourquoi tu CTRL-C mon reuf ????\n");
+				//free tout
+				break ;
+			}
+			else
+				ft_printf("pourquoi tu CTRL-D mon reuf ????\n");
+			
+			free(limiter);
+			i++;
+			if (i < my_struct->nbr_limiter)
+			{
+				limiter = limiter_without_quote(my_struct->all_limiter[i]);
+				quote_in_lim = quote_in(my_struct->all_limiter[i]);
+			}
+		}
+		else if (ft_strcmp(str, limiter) == 0)
 		{
 			free(str);
 			free(limiter);
@@ -97,5 +125,7 @@ static void	get_heredoc(t_exec *my_struct, t_list **my_env)
 			my_struct->str_heredoc[i] = ft_strjoin2(my_struct->str_heredoc[i], str);
 		}
 	}
+	if (i == my_struct->nbr_limiter)
+		g_errno = 0;
 	my_struct->str_heredoc[i] = NULL;
 }

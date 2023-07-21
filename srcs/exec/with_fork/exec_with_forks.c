@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 09:14:56 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/21 00:12:01 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/22 01:48:21 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,20 @@ void	exec_with_forks(t_parse *parse, t_list **my_env, t_exec *data)
 	while (num_cmd < nbr_cmd)
 	{
 		pipe(data->pipes);
+		//signal(SIGINT, SIG_IGN);
 		pid = fork();
 		if (pid == -1)
 			ft_printf("error pid\n");
 		else if (pid == 0)
 		{
+			signal(SIGQUIT, SIG_DFL);
 			exec_cmd(parse, num_cmd, my_env, data);
 			exit(0);
 		}
 		else
 		{
+			signal(SIGINT, handler_fork);
+			signal(SIGQUIT, handler_fork_slash);
 			if (data->prec_fd)
 				close(data->prec_fd);
 			data->prec_fd = data->pipes[0];
@@ -56,6 +60,21 @@ void	exec_with_forks(t_parse *parse, t_list **my_env, t_exec *data)
 	wait_all(nbr_cmd);
 }
 //don't forget to secure pipe;
+
+void	handler_fork(int sig)
+{
+	(void) sig;
+	ft_printf("\n");
+	//exit(0);
+}
+
+void	handler_fork_slash(int sig)
+{
+	(void) sig;
+	//dprintf(2, "TEST \\\n");
+	ft_printf("Quit (core dumped)\n");
+	//exit(0);
+}
 
 static void	exec_cmd(t_parse *parse, int num_cmd, t_list **my_env, t_exec *data)
 {

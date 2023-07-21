@@ -108,7 +108,7 @@ static void	ft_increment(t_entry *entry, int *i, int *size)
 {
 	char	quote;
 
-	if (entry[*i].c == '\'' || entry[*i].c == '\"')
+	if (entry[*i].context == NO_QUOTE && (entry[*i].c == '\'' || entry[*i].c == '\"'))
 	{
 		quote = entry[*i].c;
 		if ((*i - 1 < 0 || entry[*i - 1].context == NO_QUOTE) && \

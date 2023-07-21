@@ -44,6 +44,11 @@ void	parse_and_exec(char *str, t_list **my_env, t_exec *data)
 	free(new_entry);
 	// print_parse(parse);
 	execution(parse, my_env, data);
+	// print_all(data->all_limiter);
+	// print_all(data->str_heredoc);
+	if (data->all_limiter)
+		free(data->all_limiter);
+	free_all(data->str_heredoc);
 	free_all_parse(parse);
 }
 
