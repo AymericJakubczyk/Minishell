@@ -6,11 +6,13 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 21:47:06 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/22 02:03:54 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/22 05:08:09 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*dup_char(char dup);
 
 char	*add_quotes(char *str)
 {
@@ -19,7 +21,7 @@ char	*add_quotes(char *str)
 	int		runner;
 
 	if (ft_strlen(str) == (size_t)ft_equal_size(str))
-		return (str);
+		return (ft_strdup(str));
 	runner = 0;
 	size = ft_strlen(str);
 	output = malloc(sizeof(char) * (size + 3));
@@ -40,6 +42,16 @@ char	*add_quotes(char *str)
 	output[++runner] = '\0';
 	return (output);
 }
+
+// char	*dup_char(char dup)
+// {
+// 	char	*output;
+
+// 	output = malloc(sizeof(char) * 1);
+// 	output[0] = dup;
+// 	output[1] = '\0';
+// 	return (output);
+// }
 
 int	equal(char *str)
 {

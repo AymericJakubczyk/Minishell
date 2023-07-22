@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:07:31 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/22 04:30:54 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/22 04:44:51 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,8 @@ void	next_exit(int runner, t_parse *parse, t_list **my_env)
 		if (arg != 0)
 		{
 			g_errno = arg;
-			print_parse(parse);
-			// free_all_parse(parse);
+			// print_parse(parse);
+			free_all_parse(parse);
 			ft_lstclear(my_env, free);
 			rl_clear_history();
 			exit(arg);

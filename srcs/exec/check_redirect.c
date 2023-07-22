@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 18:10:46 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/22 01:28:34 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/22 04:40:54 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int	check_all_redirect(t_parse *parse, t_list **my_env)
 int	check_redirect(t_parse parse, t_list **my_env, int mode)
 {
 	char	*expanded;
-	int		opened;
 
 	expanded = expand_redirect(parse, my_env);
 	if (!expanded)
@@ -54,18 +53,14 @@ int	check_redirect(t_parse parse, t_list **my_env, int mode)
 	if (mode == IN && access(expanded, F_OK | R_OK) == -1)
 	{
 		printf("Minihell : %s: %s\n", expanded, strerror(errno));
-		return (free(expanded), 0);
+		return (0);
 	}
-	opened = open(expanded, O_WRONLY | O_CREAT, 0644);
-	if (mode == OUT && opened == -1)
+	if (mode == OUT && open(expanded, O_WRONLY | O_CREAT, 0644) == -1)
 	{
-		close(opened);
 		printf("Minihell : %s: %s\n", expanded, strerror(errno));
-		return (free(expanded), 0);
+		return (0);
 	}
-	else
-		close(opened);
-	return (free(expanded), 1);
+	return (1);
 }
 
 char	*expand_redirect(t_parse parse, t_list **my_env)

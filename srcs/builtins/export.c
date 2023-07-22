@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 15:18:09 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/21 22:44:06 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/22 05:21:56 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,17 +77,19 @@ void	ft_print_export(t_list **my_env)
 
 	export = *my_env;
 	i = 0;
-	array = malloc(sizeof(char *) * ft_lstsize(export));
+	array = malloc(sizeof(char *) * ft_lstsize(export) + 1);
 	if (!array)
 		return ;
-	while (export != NULL)
+	while (export)
 	{
-		array[i++] = export->content;
+		array[i] = ft_strdup(export->content);
 		export = export->next;
+		i++;
 	}
+	array[i] = NULL;
 	array = dup_env_sort(array, my_env);
 	print_it(array, my_env);
-	free(array);
+	free_all(array);
 }
 
 char	**dup_env_sort(char **array, t_list **my_env)

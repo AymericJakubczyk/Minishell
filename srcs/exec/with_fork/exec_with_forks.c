@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 09:14:56 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/22 04:16:20 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/22 05:16:12 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	exec_cmd(t_parse *parse, int num_cmd, \
 		t_list **my_env, t_exec *data);
-static int	get_start_cmd(t_parse *parse, int num_cmd);
+int	get_start_cmd(t_parse *parse, int num_cmd);
 static void	wait_all(int nbr_cmd);
 
 void	exec_with_forks(t_parse *parse, t_list **my_env, t_exec *data)
@@ -94,7 +94,7 @@ static void	exec_cmd(t_parse *parse, int num_cmd, t_list **my_env, t_exec *data)
 	else
 		do_classique_pipe(num_cmd, data, OUT);
 	arg = get_arg(&parse[start_cmd]);
-	if (do_builtin(&parse[start_cmd], my_env, arg))
+	if (do_builtin(parse, my_env, arg, num_cmd))
 	{
 		ft_lstclear(my_env, free);
 		free_all(arg);
@@ -103,11 +103,11 @@ static void	exec_cmd(t_parse *parse, int num_cmd, t_list **my_env, t_exec *data)
 		exit(1);
 	}
 	path = get_path(arg[0], my_env);
-	double_close(&data->fd_in, &data->fd_out);
+	// double_close(&data->fd_in, &data->fd_out);
 	execve(path, arg, data->env);
 }
 
-static int	get_start_cmd(t_parse *parse, int num_cmd)
+int	get_start_cmd(t_parse *parse, int num_cmd)
 {
 	int	start;
 	int	n_cmd;

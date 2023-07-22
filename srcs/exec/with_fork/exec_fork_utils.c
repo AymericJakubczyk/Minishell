@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 17:34:47 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/22 04:15:07 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/22 04:41:46 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 static int	get_nbr_arg(t_parse *parse);
 static void	fill_arg(t_parse *parse, char **arg);
 
-int	do_builtin(t_parse *parse, t_list **my_env, char **arg)
+int	do_builtin(t_parse *parse, t_list **my_env, char **arg, int num_cmd)
 {
 	int		runner;
 	char	*pwd;
 
-	runner = 0;
+	runner = get_start_cmd(parse, num_cmd);
 	while (parse[runner].str && parse[runner].type != PIPEE)
 	{
 		if (parse[runner].type == COMMAND)
