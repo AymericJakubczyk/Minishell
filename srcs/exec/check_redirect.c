@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 18:10:46 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/22 16:55:22 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/22 18:15:49 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int		size_expanded_redir(char *str, t_list **my_env);
 char	*colapse_entry(t_entry *entry);
 int		check_expanded_redir(t_entry *entry);
 
-int	check_all_redirect(t_parse *parse, t_list **my_env)
+int	check_all_redirect(t_parse *parse, t_list **my_env, t_exec *data)
 {
 	int	i;
 
@@ -31,11 +31,17 @@ int	check_all_redirect(t_parse *parse, t_list **my_env)
 		if (parse[i].type == REDIRECT_IN && \
 		!check_redirect(parse[i + 1], my_env, IN))
 		{
+			ft_lstclear(my_env, free);
+			free_all_parse(data->parse);
+			rl_clear_history();
 			return (0);
 		}
 		else if ((parse[i].type == REDIRECT_OUT || parse[i].type == APPEND) \
 		&& !check_redirect(parse[i + 1], my_env, OUT))
 		{
+			ft_lstclear(my_env, free);
+			free_all_parse(data->parse);
+			rl_clear_history();
 			return (0);
 		}
 		i++;
@@ -52,7 +58,7 @@ int	check_redirect(t_parse parse, t_list **my_env, int mode)
 		return (0);
 	if (mode == IN && access(expanded, F_OK | R_OK) == -1)
 	{
-		printf("Minihell : %s: %s\n", expanded, strerror(errno));
+		printf("Minihell aled: %s: %s\n", expanded, strerror(errno));
 		return (free(expanded), 0);
 	}
 	if (mode == OUT && open(expanded, O_WRONLY | O_CREAT, 0644) == -1)
@@ -268,4 +274,26 @@ char	*colapse_entry(t_entry *entry)
 		i++;
 	}
 	return (expanded);
+}
+
+int	check_all_redirect_without_fork(t_parse *parse, t_list **my_env)
+{
+	int	i;
+
+	i = 0;
+	while (parse[i].str && parse[i].type != PIPEE)
+	{
+		if (parse[i].type == REDIRECT_IN && \
+		!check_redirect(parse[i + 1], my_env, IN))
+		{
+			return (0);
+		}
+		else if ((parse[i].type == REDIRECT_OUT || parse[i].type == APPEND) \
+		&& !check_redirect(parse[i + 1], my_env, OUT))
+		{
+			return (0);
+		}
+		i++;
+	}
+	return (1);
 }

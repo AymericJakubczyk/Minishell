@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 09:14:56 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/22 17:00:08 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/22 17:34:38 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static void	exec_cmd(t_parse *parse, int num_cmd, t_list **my_env, t_exec *data)
 	int		start_cmd;
 
 	start_cmd = get_start_cmd(parse, num_cmd);
-	if (!check_all_redirect(&parse[start_cmd], my_env))
+	if (!check_all_redirect(&parse[start_cmd], my_env, data))
 		exit (1);
 	if (redirect_in_cmd(&parse[start_cmd], IN))
 		do_redirect_in(&parse[start_cmd], my_env, data, num_cmd);

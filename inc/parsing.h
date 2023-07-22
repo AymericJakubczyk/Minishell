@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 15:52:05 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/18 13:17:50 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/22 17:39:22 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,14 +103,6 @@ void	fill_value_env(t_entry *new_entry, int context, char *value_env, \
 
 //print.c
 void	print_parse(t_parse *parse);
-
-
-
-
-
-
-
-
 
 void	print_all(char **str);
 void	free_all(char **str);

@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 14:06:16 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/22 17:01:13 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/22 18:17:10 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ char	*get_path(char *cmd, t_list **env, t_parse *parse);
 void	init_file(t_exec *data);
 
 //check_redirect.c
-int		check_all_redirect(t_parse *parse, t_list **my_env);
+int		check_all_redirect(t_parse *parse, t_list **my_env, t_exec *data);
+int		check_all_redirect_without_fork(t_parse *parse, t_list **my_env);
 int		check_redirect(t_parse parse, t_list **my_env, int in);
 char	*expand_redirect(t_parse parse, t_list **my_env);
 
