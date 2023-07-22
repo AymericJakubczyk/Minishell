@@ -92,18 +92,20 @@ static void	get_heredoc(t_exec *my_struct, t_list **my_env)
 		str = readline(">");
 		if (!str)
 		{
+			i++;
 			if (g_errno == 130)
 			{
 				ft_printf("\n");
+				my_struct->str_heredoc[my_struct->nbr_limiter] = NULL;
 				dup2(stdin_copy, 0);
 				close(stdin_copy);
+				free(limiter);
 				//free tout
 				break ;
 			}
 			else
 				ft_printf("minihell: warning: here-document delimited by end-of-file (wanted '%s')\n" ,limiter);
 			free(limiter);
-			i++;
 			if (i < my_struct->nbr_limiter)
 			{
 				limiter = limiter_without_quote(my_struct->all_limiter[i]);

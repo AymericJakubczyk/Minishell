@@ -36,7 +36,7 @@ char	*expand_heredoc(char *str, t_list **my_env)
 		str_expanded = ft_strjoin2(str_expanded, ft_getenv(my_env, \
 		get_name_env_hd(str, &i), 1));
 	str_expanded = ft_strjoin2(str_expanded, get_str_after_var(str, &i));
-	return (str_expanded);
+	return (free(str), str_expanded);
 }
 
 static int	var_in(char *str)
