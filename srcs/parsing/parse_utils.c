@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
+/*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 17:02:11 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/27 19:24:52 by ajakubcz         ###   ########.fr       */
+/*   Updated: 2023/07/22 04:28:34 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,10 @@ void	free_all_parse(t_parse *parse)
 	i = 0;
 	while (parse[i].str)
 	{
-		free(parse[i].str);
+		if (parse[i].str)
+			free(parse[i].str);
 		i++;
 	}
-	free(parse);
+	if (parse)
+		free(parse);
 }

@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 18:46:17 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/22 01:47:34 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/22 03:42:39 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	handle_single_builtin(t_parse *parse, t_list **my_env, int runner)
 	else if (ft_strcmp(parse[runner].str, "unset") == 0)
 		ft_unset(my_env, parse);
 	else if (ft_strcmp(parse[runner].str, "exit") == 0)
-		ft_exit(parse, my_env);
+		ft_exit(parse, my_env, NULL);
 	else if (ft_strcmp(parse[runner].str, "export") == 0)
 		ft_export(my_env, parse);
 	return ;
@@ -57,6 +57,8 @@ void	handle_forked_single_builtin(t_parse *parse, \
 		else
 			next_handle_forked_single_builtin(parse, my_env, runner);
 		ft_lstclear(my_env, free);
+		free_all_parse(parse);
+		rl_clear_history();
 		double_close(&data->fd_in, &data->fd_out);
 		exit (0);
 	}

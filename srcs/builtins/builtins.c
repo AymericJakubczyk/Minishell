@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:48 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/21 04:31:50 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/22 02:38:05 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,15 +112,13 @@ void	ft_cd(t_list **my_env, t_parse *parse)
 		if (parse[runner].type == CMD_ARG)
 		{
 			count++;
-			flag = count;
+			flag = runner;
 		}
 	}
 	if (count > 1)
-	{
-		ft_error(ERROR_23, parse[runner].str, 1);
-		return ;
-	}
+		return (ft_error(ERROR_23, parse[runner].str, 1));
 	oldpwd = ft_strjoin4("OLDPWD=", ft_pwd(0));
 	do_ft_export(my_env, oldpwd);
+	free(oldpwd);
 	next_cd(my_env, parse[flag].str);
 }

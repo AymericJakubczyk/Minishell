@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:07:31 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/21 23:05:36 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/22 04:30:54 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int		no_whitespaces(char	*array);
 int		is_num(char *str);
-void	count_args(t_parse *parse);
+static void	count_args(t_parse *parse, t_list **my_env);
 
-void	count_args(t_parse *parse)
+static void	count_args(t_parse *parse, t_list **my_env)
 {
 	int	runner;
 	int	count;
@@ -29,6 +29,9 @@ void	count_args(t_parse *parse)
 		{
 			if (is_num(parse[runner].str) != 0)
 			{
+				free_all_parse(parse);
+				ft_lstclear(my_env, free);
+				rl_clear_history();
 				ft_error(ERROR_21, "exit", 2);
 				exit(2);
 			}
@@ -37,10 +40,7 @@ void	count_args(t_parse *parse)
 		runner++;
 	}
 	if (count > 1)
-	{
-		ft_error(ERROR_23, "exit", 1);
-		exit(g_errno);
-	}
+		return (ft_error(ERROR_23, "exit", 1), exit(g_errno));
 }
 
 int	is_num(char *str)
@@ -59,12 +59,13 @@ int	is_num(char *str)
 	return (0);
 }
 
-void	ft_exit(t_parse *parse, t_list **my_env)
+void	ft_exit(t_parse *parse, t_list **my_env, char **arg)
 {
 	int	runner;
-
 	runner = 0;
-	count_args(parse);
+	if (arg != NULL)
+		free_all(arg);
+	count_args(parse, my_env);
 	while (parse[runner].str)
 	{
 		next_exit(runner, parse, my_env);
@@ -86,7 +87,8 @@ void	next_exit(int runner, t_parse *parse, t_list **my_env)
 		if (arg != 0)
 		{
 			g_errno = arg;
-			free_all_parse(parse);
+			print_parse(parse);
+			// free_all_parse(parse);
 			ft_lstclear(my_env, free);
 			rl_clear_history();
 			exit(arg);

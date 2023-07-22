@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:11:04 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/22 01:50:48 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/22 04:09:09 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void	minishell(t_list **my_env, char **env, t_exec *data)
 		if (ft_strlen(cmd) != 0)
 			add_history(cmd);
 		parse_and_exec(cmd, my_env, data);
-		// dup_entrys(data);
 	}
 	if (!cmd) //if CTRL-D
 	{
@@ -94,7 +93,8 @@ void free_all(char **str)
 	i = 0;
 	while (str && str[i])
 	{
-		free(str[i]);
+		if (str[i])
+			free(str[i]);
 		i++;
 	}
 	if (str)

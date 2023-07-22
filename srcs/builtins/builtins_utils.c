@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 21:47:06 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/21 01:15:56 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/22 02:03:54 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,12 @@ void	next_cd(t_list **my_env, char *str)
 	else if (chdir(str) != 0)
 	{
 		ft_error(ERROR_99, NULL, 1);
-		return ;
+		return (free(home));
 	}
+	free(home);
 	pwd = ft_strjoin4("PWD=", ft_pwd(0));
 	do_ft_export(my_env, pwd);
+	free(pwd);
 }
 
 void	do_ft_export(t_list **my_env, char *str)

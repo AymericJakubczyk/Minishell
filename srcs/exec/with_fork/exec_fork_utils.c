@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 17:34:47 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/22 01:34:32 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/22 04:15:07 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,10 @@
 static int	get_nbr_arg(t_parse *parse);
 static void	fill_arg(t_parse *parse, char **arg);
 
-int	do_builtin(t_parse *parse, t_list **my_env)
+int	do_builtin(t_parse *parse, t_list **my_env, char **arg)
 {
-	int	runner;
+	int		runner;
+	char	*pwd;
 
 	runner = 0;
 	while (parse[runner].str && parse[runner].type != PIPEE)
@@ -29,11 +30,14 @@ int	do_builtin(t_parse *parse, t_list **my_env)
 			if (ft_strcmp(parse[runner].str, "env") == 0)
 				return (ft_env(my_env, parse), 1);
 			if (ft_strcmp(parse[runner].str, "pwd") == 0)
-				return (ft_printf("%s\n", ft_pwd(1)), 1);
+			{
+				pwd = ft_pwd(1);
+				return (ft_printf("%s\n", pwd), free(pwd), 1);
+			}
 			if (ft_strcmp(parse[runner].str, "export") == 0)
 				return (puts("EXPORT"), ft_export(my_env, parse), 1);
 			if (ft_strcmp(parse[runner].str, "exit") == 0)
-				return (ft_exit(parse, my_env), 1);
+				return (ft_exit(parse, my_env, arg), 1);
 			if (ft_strcmp(parse[runner].str, "unset") == 0)
 				return (ft_unset(my_env, parse), 1);
 			if (ft_strcmp(parse[runner].str, "cd") == 0)
@@ -120,7 +124,7 @@ static void	fill_arg(t_parse *parse, char **arg)
 	{
 		if (parse[i].type == COMMAND)
 		{
-			arg[0] = parse[i].str;
+			arg[0] = ft_strdup(parse[i].str);
 			num_arg++;
 		}
 		i++;
@@ -130,7 +134,7 @@ static void	fill_arg(t_parse *parse, char **arg)
 	{
 		if (parse[i].type == CMD_ARG)
 		{
-			arg[num_arg] = parse[i].str;
+			arg[num_arg] = ft_strdup(parse[i].str);
 			num_arg++;
 		}
 		i++;

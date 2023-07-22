@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 09:14:56 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/22 01:48:21 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/22 04:16:20 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,16 @@ static void	exec_cmd(t_parse *parse, int num_cmd, t_list **my_env, t_exec *data)
 	else
 		do_classique_pipe(num_cmd, data, OUT);
 	arg = get_arg(&parse[start_cmd]);
-	if (do_builtin(&parse[start_cmd], my_env))
+	if (do_builtin(&parse[start_cmd], my_env, arg))
+	{
+		ft_lstclear(my_env, free);
+		free_all(arg);
+		rl_clear_history();
+		free_all_parse(parse);
 		exit(1);
+	}
 	path = get_path(arg[0], my_env);
-	// double_close(&data->pipes[1], &data->prec_fd);
+	double_close(&data->fd_in, &data->fd_out);
 	execve(path, arg, data->env);
 }
 

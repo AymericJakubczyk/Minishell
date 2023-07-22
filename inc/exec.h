@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 14:06:16 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/22 00:37:53 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/22 03:38:47 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int		which_builtin(t_parse *parse, int runner);
 int		get_ind_last_char(t_entry *entry);
 
 //exec_fork_utils.c
-int		do_builtin(t_parse *parse, t_list **my_env);
+int	do_builtin(t_parse *parse, t_list **my_env, char **arg);
 
 
 

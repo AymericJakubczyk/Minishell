@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 17:34:51 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/22 01:35:08 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/22 04:03:12 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ void	do_classique_pipe(int num_cmd, t_exec *data, int mode)
 {
 	close(data->pipes[0]);
 	if (mode == IN && num_cmd > 0)
-		dup2(data->prec_fd, STDIN_FILENO);
+		data->fd_in = dup2(data->prec_fd, STDIN_FILENO);
 	if (mode == OUT && num_cmd < data->nbr_cmd - 1)
-		dup2(data->pipes[1], STDOUT_FILENO);
+		data->fd_out = dup2(data->pipes[1], STDOUT_FILENO);
 }
 
 void	do_redirect_in(t_parse *parse, t_list **my_env, \
