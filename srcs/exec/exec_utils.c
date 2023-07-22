@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 14:08:26 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/21 03:18:58 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/22 17:05:29 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static char	**get_all_path(t_list **envp);
 static int	check_env_path(char *str, char *str_path);
 void		init_file(t_exec *data);
 
-char	*get_path(char *cmd, t_list **env)
+char	*get_path(char *cmd, t_list **env, t_parse *parse)
 {
 	char	**allpath;
 	char	*test_path;
@@ -28,7 +28,13 @@ char	*get_path(char *cmd, t_list **env)
 	if (cmd && slash_in(cmd))
 	{
 		if (access(cmd, F_OK | X_OK) != 0)
-			return (ft_error(ERROR_13, cmd, 127), exit(g_errno), NULL);
+		{
+			ft_error(ERROR_13, cmd, 127);
+			free_all_parse(parse);
+			rl_clear_history();
+			ft_lstclear(env, free);
+			return (exit(g_errno), NULL);
+		}
 		else
 			return (cmd);
 	}
@@ -45,7 +51,11 @@ char	*get_path(char *cmd, t_list **env)
 		free(test_path);
 		i++;
 	}
-	return (ft_error(ERROR_12, cmd, 127), exit(g_errno), NULL);
+	ft_error(ERROR_12, cmd, 127);
+	free_all(allpath);
+	free_all_parse(parse);
+	rl_clear_history();
+	return (ft_lstclear(env, free), exit(g_errno), NULL);
 }
 
 static int	slash_in(char *str)

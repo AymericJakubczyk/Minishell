@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:11:04 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/22 04:09:09 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/22 17:16:29 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,9 @@ void	init_data(t_exec *data, char **env)
 	data->str_heredoc = NULL;
 }
 
-void free_all(char **str)
+void	free_all(char **str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str && str[i])

@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 12:38:49 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/22 00:49:13 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/22 17:00:17 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	ex_child(t_parse *parse, t_list **env, int runner, t_exec *data)
 
 	index = 0;
 	arg = NULL;
-	path = get_path(parse[runner].str, env);
+	path = get_path(parse[runner].str, env, parse);
 	if (!path)
 		return ;
 	arg = malloc(sizeof(char *) * (how_much_args(parse, runner) + 1));

@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 14:06:16 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/22 04:43:17 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/22 17:01:13 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	do_redirect_in(t_parse *parse, t_list **my_env, t_exec *data, \
 void	do_redirect_out(t_parse *parse, t_list **my_env, t_exec *data);
 
 //exec_utils.c
-char	*get_path(char *cmd, t_list **env);
+char	*get_path(char *cmd, t_list **env, t_parse *parse);
 void	init_file(t_exec *data);
 
 //check_redirect.c

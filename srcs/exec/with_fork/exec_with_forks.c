@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 09:14:56 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/22 05:16:12 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/22 17:00:08 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ static void	exec_cmd(t_parse *parse, int num_cmd, t_list **my_env, t_exec *data)
 		free_all_parse(parse);
 		exit(1);
 	}
-	path = get_path(arg[0], my_env);
+	path = get_path(arg[0], my_env, parse);
 	// double_close(&data->fd_in, &data->fd_out);
 	execve(path, arg, data->env);
 }
