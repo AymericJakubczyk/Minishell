@@ -66,7 +66,8 @@ void	ft_exit(t_parse *parse, t_list **my_env, char **arg, t_exec *data)
 	ft_lstclear(my_env, free);
 	free_all_parse(data->parse);
 	rl_clear_history();
-	exit(1);
+	//exit(1);
+	exit(g_errno);
 }
 
 static void	next_exit(int runner, t_parse *parse, t_list **my_env, t_exec *data)

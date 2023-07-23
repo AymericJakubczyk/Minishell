@@ -105,10 +105,10 @@ int	check_dir(char *str)
 
 void	do_ft_export(t_list **my_env, char *str)
 {
-	t_list	*tmp;
+	//t_list	*tmp;
 
 	g_errno = 0;
-	tmp = *my_env;
+	//	tmp = *my_env;
 	if (is_allready_export(my_env, str))
 		export_again(my_env, str);
 	else

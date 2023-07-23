@@ -15,7 +15,7 @@
 static void	exec_cmd(t_parse *parse, int num_cmd, \
 		t_list **my_env, t_exec *data);
 int	get_start_cmd(t_parse *parse, int num_cmd);
-static void	wait_all(int nbr_cmd);
+static void	wait_all(int nbr_cmd, t_exec *data);
 
 void	exec_with_forks(t_parse *parse, t_list **my_env, t_exec *data)
 {
@@ -24,6 +24,7 @@ void	exec_with_forks(t_parse *parse, t_list **my_env, t_exec *data)
 	int	pid;
 
 	nbr_cmd = how_many_cmds(parse) + 1;
+	data->all_pid = malloc(sizeof(int) * nbr_cmd);
 	data->nbr_cmd = nbr_cmd;
 	data->prec_fd = 0;
 	num_cmd = 0;
@@ -42,6 +43,7 @@ void	exec_with_forks(t_parse *parse, t_list **my_env, t_exec *data)
 		}
 		else
 		{
+			data->all_pid[num_cmd] = pid;
 			signal(SIGINT, handler_fork);
 			signal(SIGQUIT, handler_fork_slash);
 			if (data->prec_fd)
@@ -57,7 +59,7 @@ void	exec_with_forks(t_parse *parse, t_list **my_env, t_exec *data)
 		close(data->prec_fd);
 	close(data->pipes[0]);
 	close(data->pipes[1]);
-	wait_all(nbr_cmd);
+	wait_all(nbr_cmd, data);
 }
 //don't forget to secure pipe;
 
@@ -100,7 +102,7 @@ static void	exec_cmd(t_parse *parse, int num_cmd, t_list **my_env, t_exec *data)
 		free_all(arg);
 		rl_clear_history();
 		free_all_parse(parse);
-		exit(1);
+		exit(0);
 	}
 	path = get_path(arg[0], my_env, parse);
 	// double_close(&data->fd_in, &data->fd_out);
@@ -123,7 +125,7 @@ int	get_start_cmd(t_parse *parse, int num_cmd)
 	return (start);
 }
 
-static void	wait_all(int nbr_cmd)
+static void	wait_all(int nbr_cmd, t_exec *data)
 {
 	int	i;
 	int	status;
@@ -131,11 +133,12 @@ static void	wait_all(int nbr_cmd)
 	i = 0;
 	while (i < nbr_cmd)
 	{
-		waitpid(-1, &status, 0);
+		waitpid(data->all_pid[i], &status, 0);
 		i++;
 	}
 	if (WIFEXITED(status))
 	{
 		g_errno = WEXITSTATUS(status);
+		//ft_dprintf("g_errno : %d\n", g_errno);
 	}
 }
