@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:51:36 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/23 03:46:41 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/23 03:59:40 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,5 @@ int	is_alpha_export(char *str)
 		}
 		runner++;
 	}
-	if (runner == 0 && )
 	return (1);
 }
