@@ -231,12 +231,12 @@ int	check_expanded_redir(t_entry *entry)
 	entry[i].c == '\t') && entry[i].context == NO_QUOTE)
 		i++;
 	if (!entry[i].c)
-		return (printf("AMBIGUOUS REDIRECTION !\n"), 0);
+		return (ft_dprintf("AMBIGUOUS REDIRECTION !\n"), 0);
 	while (entry[i].c && i <= last_ind_char)
 	{
 		if ((entry[i].c == ' ' || entry[i].c == '\t') \
 		&& entry[i].context == NO_QUOTE)
-			return (printf("AMBIGUOUS REDIRECTION !\n"), 0);
+			return (ft_dprintf("AMBIGUOUS REDIRECTION !\n"), 0);
 		i++;
 	}
 	return (1);
