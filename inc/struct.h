@@ -40,6 +40,7 @@ typedef struct s_exec
 	int		fd_out;
 	int		pipes[2];
 	int		prec_fd;
+	int		*all_pid;
 	t_parse	*parse;
 }	t_exec;
 
