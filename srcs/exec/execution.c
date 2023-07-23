@@ -86,7 +86,10 @@ void	ex_child(t_parse *parse, t_list **env, int runner, t_exec *data)
 	}
 	arg[index] = NULL;
 	if (execve(path, arg, data->env) == -1)
-		return ;
+	{
+		ft_error(ERROR_12, parse[runner].str, 127);
+		exit(g_errno);
+	}
 }
 
 static int	how_much_args(t_parse *parse, int runner)

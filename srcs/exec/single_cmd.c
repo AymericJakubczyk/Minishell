@@ -21,7 +21,7 @@ void	single_cmd(t_parse *parse, t_list **my_env, t_exec *data)
 	single_cmd_execution(parse, my_env, data);
 }
 
-void	handle_single_builtin(t_parse *parse, t_list **my_env, int runner)
+void	handle_single_builtin(t_parse *parse, t_list **my_env, int runner, t_exec *data)
 {
 	if (!check_all_redirect_without_fork(parse, my_env))
 		return ;
@@ -30,7 +30,7 @@ void	handle_single_builtin(t_parse *parse, t_list **my_env, int runner)
 	else if (ft_strcmp(parse[runner].str, "unset") == 0)
 		ft_unset(my_env, parse);
 	else if (ft_strcmp(parse[runner].str, "exit") == 0)
-		ft_exit(parse, my_env, NULL);
+		ft_exit(parse, my_env, NULL, data);
 	else if (ft_strcmp(parse[runner].str, "export") == 0)
 		ft_export(my_env, parse);
 	return ;
