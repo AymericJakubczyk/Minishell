@@ -77,11 +77,14 @@ static void	get_heredoc(t_exec *my_struct, t_list **my_env)
 	int		quote_in_lim;
 	char	*str;
 	char	*limiter;
-
+	int		stdin_copy;
+	
+	stdin_copy = dup(0);
 	i = 0;
 	//ft_printf("test\n");
 	limiter = limiter_without_quote(my_struct->all_limiter[i]);
 	quote_in_lim = quote_in(my_struct->all_limiter[i]);
+	g_errno = 0;
 	while (i < my_struct->nbr_limiter)
 	{
 		signal(SIGINT, SIG_IGN);
@@ -89,17 +92,20 @@ static void	get_heredoc(t_exec *my_struct, t_list **my_env)
 		str = readline(">");
 		if (!str)
 		{
+			i++;
 			if (g_errno == 130)
 			{
-				ft_printf("pourquoi tu CTRL-C mon reuf ????\n");
+				ft_printf("\n");
+				my_struct->str_heredoc[my_struct->nbr_limiter] = NULL;
+				dup2(stdin_copy, 0);
+				close(stdin_copy);
+				free(limiter);
 				//free tout
 				break ;
 			}
 			else
-				ft_printf("pourquoi tu CTRL-D mon reuf ????\n");
-			
+				ft_printf("minihell: warning: here-document delimited by end-of-file (wanted '%s')\n" ,limiter);
 			free(limiter);
-			i++;
 			if (i < my_struct->nbr_limiter)
 			{
 				limiter = limiter_without_quote(my_struct->all_limiter[i]);
@@ -125,7 +131,5 @@ static void	get_heredoc(t_exec *my_struct, t_list **my_env)
 			my_struct->str_heredoc[i] = ft_strjoin2(my_struct->str_heredoc[i], str);
 		}
 	}
-	if (i == my_struct->nbr_limiter)
-		g_errno = 0;
 	my_struct->str_heredoc[i] = NULL;
 }

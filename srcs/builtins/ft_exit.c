@@ -6,80 +6,70 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:07:31 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/23 03:19:01 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/23 03:36:03 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int		no_whitespaces(char	*array);
-int		is_num(char *str);
+// static int	is_num(char *str);
 int		do_overflow(char *str);
-static void	count_args(t_parse *parse, t_list **my_env);
+static void	count_args(t_parse *parse);
+static void	next_exit(int runner, t_parse *parse, t_list **my_env, t_exec *data);
 
-static void	count_args(t_parse *parse, t_list **my_env)
+static void	count_args(t_parse *parse)
 {
 	int	runner;
 	int	count;
 
 	count = 0;
 	runner = 0;
-	(void) my_env;
 	while (parse[runner].type != PIPEE && parse[runner].str)
 	{
 		if (parse[runner].type == CMD_ARG)
-		{
-			// if (is_num(parse[runner].str) != 0)
-			// {
-			// 	free_all_parse(parse);
-			// 	ft_lstclear(my_env, free);
-			// 	rl_clear_history();
-			// 	ft_error(ERROR_18, "exit", 2);
-			// 	exit(2);
-			// }
 			count++;
-		}
 		runner++;
 	}
 	if (count > 1)
 		return (ft_error(ERROR_23, "exit", 1), exit(g_errno));
 }
 
-int	is_num(char *str)
-{
-	int	runner;
+// static int	is_num(char *str)
+// {
+// 	int	runner;
 
-	runner = 0;
-	while (str[runner])
-	{
-		if (runner == 0 && (str[runner] == '-' || str[runner] == '+'))
-			runner++;
-		if (ft_isdigit(str[runner]) != 1)
-			return (1);
-		runner++;
-	}
-	return (0);
-}
+// 	runner = 0;
+// 	while (str[runner])
+// 	{
+// 		if (runner == 0 && (str[runner] == '-' || str[runner] == '+'))
+// 			runner++;
+// 		if (ft_isdigit(str[runner]) != 1)
+// 			return (1);
+// 		runner++;
+// 	}
+// 	return (0);
+// }
 
-void	ft_exit(t_parse *parse, t_list **my_env, char **arg)
+void	ft_exit(t_parse *parse, t_list **my_env, char **arg, t_exec *data)
 {
 	int	runner;
 	runner = 0;
 	if (arg != NULL)
 		free_all(arg);
-	count_args(parse, my_env);
+	count_args(parse);
 	while (parse[runner].str)
 	{
-		next_exit(runner, parse, my_env);
+		next_exit(runner, parse, my_env, data);
 		runner++;
 	}
 	ft_lstclear(my_env, free);
-	free_all_parse(parse);
+	free_all_parse(data->parse);
 	rl_clear_history();
 	exit(1);
 }
 
-void	next_exit(int runner, t_parse *parse, t_list **my_env)
+static void	next_exit(int runner, t_parse *parse, t_list **my_env, t_exec *data)
 {
 	long long	arg;
 
@@ -89,7 +79,8 @@ void	next_exit(int runner, t_parse *parse, t_list **my_env)
 		if (arg != 0 && !do_overflow(parse[runner].str))
 		{
 			g_errno = arg;
-			free_all_parse(parse);
+			// print_parse(parse);
+			free_all_parse(data->parse);
 			ft_lstclear(my_env, free);
 			rl_clear_history();
 			exit(arg);
@@ -98,7 +89,7 @@ void	next_exit(int runner, t_parse *parse, t_list **my_env)
 		{
 			ft_error(ERROR_18, "exit", 2);
 			ft_lstclear(my_env, free);
-			free_all_parse(parse);
+			free_all_parse(data->parse);
 			rl_clear_history();
 			exit(2);
 		}
