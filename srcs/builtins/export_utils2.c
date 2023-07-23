@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:03:50 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/22 04:59:51 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/23 04:13:35 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,16 @@ void	check_export_type(t_list **my_env, t_parse *parse, int runner, t_list *tmp)
 {
 	char	*export;
 
-	if (is_allready_export(my_env, parse[runner].str))
+	if (is_allready_export(my_env, parse[runner].str) && parse[runner].str[0] != '=')
 		export_again(my_env, parse[runner].str);
 	else if (is_addition(parse[runner].str) == 1)
 		add_to_existing_one(tmp, parse[runner].str);
 	else if (ft_equal_size(parse[runner].str) == 0 && \
-		is_alpha_export(parse[runner].str) != 0)
-		ft_lstadd_back(my_env, ft_lstnew(ft_strdup(parse[runner].str), -1));
+		is_alpha_export(parse[runner].str) != 0 && (parse[runner].str[0]) != '=')
+			ft_lstadd_back(my_env, ft_lstnew(ft_strdup(parse[runner].str), -1));
 	else if (is_alpha_export(parse[runner].str) == 0)
+		ft_error(ERROR_22, parse[runner].str, 1);
+	else if (parse[runner].str[0] == '=')
 		ft_error(ERROR_22, parse[runner].str, 1);
 	else
 	{

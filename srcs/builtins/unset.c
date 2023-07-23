@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:51:36 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/21 01:18:16 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/23 04:16:26 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	is_alpha(char *str)
 	runner = 0;
 	while (str[runner] && str[runner] != '=')
 	{
-		if (ft_isalpha(str[runner]) == 0 && str[runner] != '_')
+		if (ft_isalnum(str[runner]) == 0 && str[runner] != '_')
 			return (0);
 		runner++;
 	}
