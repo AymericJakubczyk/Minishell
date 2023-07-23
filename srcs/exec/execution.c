@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 12:38:49 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/22 17:00:17 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/24 00:15:05 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,24 +72,10 @@ void	ex_child(t_parse *parse, t_list **env, int runner, t_exec *data)
 	path = get_path(parse[runner].str, env, parse);
 	if (!path)
 		return ;
-	// arg = malloc(sizeof(char *) * (how_much_args(parse, runner) + 1));
-	// if (!arg)
-	// 	ft_printf("Malloc error in ex_child\n");
-	// arg[index++] = ft_strdup(parse[runner++].str);
-	// if (!arg[index - 1])
-	// 	ft_printf("Malloc error in ex_child\n");
-	// while (parse[runner].str && parse[runner].type == CMD_ARG)
-	// {
-	// 	arg[index] = ft_strdup(parse[runner++].str);
-	// 	if (!arg[index++])
-	// 		ft_printf("Malloc error in ex_child\n");
-	// }
-	// arg[index] = NULL;
 	arg = get_arg(parse);
-	// print_all(arg);
 	if (execve(path, arg, data->env) == -1)
 	{
-		ft_error(ERROR_12, parse[runner].str, 127);
+		ft_error(strerror(errno), parse[runner].str, errno);
 		exit(g_errno);
 	}
 }
