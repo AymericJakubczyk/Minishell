@@ -100,7 +100,7 @@ static void	exec_cmd(t_parse *parse, int num_cmd, t_list **my_env, t_exec *data)
 		free_all(arg);
 		rl_clear_history();
 		free_all_parse(parse);
-		exit(1);
+		exit(0);
 	}
 	path = get_path(arg[0], my_env, parse);
 	// double_close(&data->fd_in, &data->fd_out);
@@ -137,5 +137,6 @@ static void	wait_all(int nbr_cmd)
 	if (WIFEXITED(status))
 	{
 		g_errno = WEXITSTATUS(status);
+		//ft_dprintf("g_errno : %d\n", g_errno);
 	}
 }

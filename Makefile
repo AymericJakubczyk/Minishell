@@ -14,7 +14,7 @@
 
 NAME = minishell
 
-CFLAGS = -Wall -Wextra -Werror -g3
+CFLAGS = -Wall -Wextra -g3
 
 LIB = libft/libft.a
 

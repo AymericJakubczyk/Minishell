@@ -35,7 +35,6 @@ int	main(int ac, char **av, char **env)
 	minishell(&my_env, env, &data);
 	ft_lstclear(&my_env, free);
 	rl_clear_history();
-	exit (1);
 }
 
 void	minishell(t_list **my_env, char **env, t_exec *data)
