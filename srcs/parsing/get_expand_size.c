@@ -110,12 +110,11 @@ static void	ft_increment(t_entry *entry, int *i, int *size)
 
 	if (entry[*i].context == NO_QUOTE && (entry[*i].c == '\'' || entry[*i].c == '\"'))
 	{
-		quote = entry[*i].c;
-		if ((*i - 1 < 0 || entry[*i - 1].context == NO_QUOTE) && \
-			entry[*i + 1].c && entry[*i + 1].c == quote)
+		quote = entry[*i].type;
+		if (entry[*i + 1].c && entry[*i + 1].type == quote && is_void(entry, i))
 		{
 			*size += 1;
-			*i += 2;
+			//*i += 2;
 		}
 		else
 			*i += 1;
