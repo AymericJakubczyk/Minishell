@@ -1,0 +1,185 @@
+
+$PWD
+$EMPTY
+$EMPTY echo hi
+./test_files/invalid_permission
+./missing.out
+missing.out
+"aaa"
+test_files
+./test_files
+/test_files
+minishell.h
+$
+$?
+README.md
+$a|$b
+$a |$b
+$a| $b
+$a | $b
+$a | $b 
+$a|""|''|$b
+>$a|$b
+>$a |$b
+>$a| $b
+>$a | $b
+>$a | $b 
+>$a|""|''|$b
+$a|>$b
+$a |>$b
+$a| >$b
+$a | >$b
+$a | >$b 
+$a|""|''|>$b
+>>$a|$b
+>>$a |$b
+>>$a| $b
+>>$a | $b
+>>$a | $b 
+>>$a|""|''|$b
+$a|>>$b
+$a |>>$b
+$a| >>$b
+$a | >>$b
+$a | >>$b 
+$a|""|''|>>$b
+>>$a|>$b
+>>$a |>$b
+>>$a| >$b
+>>$a | >$b
+>>$a | >$b 
+>>$a|""|''|>$b
+>$a|>>$b
+>$a |>>$b
+>$a| >>$b
+>$a | >>$b
+>$a | >>$b 
+>$a|""|''|>>$b
+>>$a|>>$b
+>>$a |>>$b
+>>$a| >>$b
+>>$a | >>$b
+>>$a | >>$b 
+>>$a|""|''|>>$b$a|$b
+$a |$b |$c
+$a| $b |$c
+$a | $b |$c
+$a | $b |$c 
+$a|""|''|$b |$c
+>$a|$b |$c
+>$a |$b |$c
+>$a| $b |$c
+>$a | $b |$c
+>$a | $b |$c 
+>$a|""|''|$b |$c
+$a|>$b |$c
+$a |>$b |$c
+$a| >$b |$c
+$a | >$b |$c
+$a | >$b |$c 
+$a|""|''|>$b |$c
+>>$a|$b |$c
+>>$a |$b |$c
+>>$a| $b |$c
+>>$a | $b |$c
+>>$a | $b |$c 
+>>$a|""|''|$b |$c
+$a|>>$b |$c
+$a |>>$b |$c
+$a| >>$b |$c
+$a | >>$b |$c
+$a | >>$b |$c 
+$a|""|''|>>$b |$c
+>>$a|>$b |$c
+>>$a |>$b |$c
+>>$a| >$b |$c
+>>$a | >$b |$c
+>>$a | >$b |$c 
+>>$a|""|''|>$b |$c
+>$a|>>$b |$c
+>$a |>>$b |$c
+>$a| >>$b |$c
+>$a | >>$b |$c
+>$a | >>$b |$c 
+>$a|""|''|>>$b |$c
+>>$a|>>$b |$c
+>>$a |>>$b |$c
+>>$a| >>$b |$c
+>>$a | >>$b |$c
+>>$a | >>$b |$c 
+>>$a|""|''|>>$b |$c
+$a |$b |>$c
+$a| $b |>$c
+$a | $b |>$c
+$a | $b |>$c 
+$a|""|''|$b |>$c
+>$a|$b |>$c
+>$a |$b |>$c
+>$a| $b |>$c
+>$a | $b |>$c
+>$a | $b |>$c 
+>$a|""|''|$b |>$c
+$a|>$b |>$c
+$a |>$b |>$c
+$a| >$b |>$c
+$a | >$b |>$c
+$a | >$b |>$c 
+$a|""|''|>$b |>$c
+>>$a|$b |>$c
+>>$a |$b |>$c
+>>$a| $b |>$c
+>>$a | $b |>$c
+>>$a | $b |>$c 
+>>$a|""|''|$b |>$c
+$a |$b |$c| echo LOL
+$a| $b |$c| echo LOL
+$a | $b |$c| echo LOL
+$a | $b |$c| echo LOL 
+$a|""|''|$b |$c| echo LOL
+>$a|$b |$c| echo LOL
+>$a |$b |$c| echo LOL
+>$a| $b |$c| echo LOL
+>$a | $b |$c| echo LOL
+>$a | $b |$c| echo LOL 
+>$a|""|''|$b |$c| echo LOL
+$a|>$b |$c| echo LOL
+$a |>$b |$c| echo LOL
+$a| >$b |$c| echo LOL
+$a | >$b |$c| echo LOL
+$a | >$b |$c| echo LOL 
+$a|""|''|>$b |$c| echo LOL
+>>$a|$b |$c| echo LOL
+>>$a |$b |$c| echo LOL
+>>$a| $b |$c| echo LOL
+>>$a | $b |$c| echo LOL
+>>$a | $b |$c| echo LOL 
+>>$a|""|''|$b |$c| echo LOL
+$a|>>$b |$c| echo LOL
+$a |>>$b |$c| echo LOL
+$a| >>$b |$c| echo LOL
+$a | >>$b |$c| echo LOL
+$a | >>$b |$c| echo LOL 
+$a|""|''|>>$b |$c| echo LOL
+>>$a|>$b |$c| echo LOL
+>>$a |>$b |$c| echo LOL
+>>$a| >$b |$c| echo LOL
+>>$a | >$b |$c| echo LOL
+>>$a | >$b |$c| echo LOL 
+>>$a|""|''|>$b |$c| echo LOL
+>$a|>>$b |$c| echo LOL
+>$a |>>$b |$c| echo LOL
+>$a| >>$b |$c| echo LOL
+>$a | >>$b |$c| echo LOL
+>$a | >>$b |$c| echo LOL 
+>$a|""|''|>>$b |$c| echo LOL
+>>$a|>>$b |$c| echo LOL
+>>$a |>>$b |$c| echo LOL
+>>$a| >>$b |$c| echo LOL
+>>$a | >>$b |$c| echo LOL
+>>$a | >>$b |$c| echo LOL 
+>>$a|""|''|>>$b |$c| echo LOL
+$a|$b|echo oui
+$a|''|echo uji
+minishell
+/minishell
+./minishell
