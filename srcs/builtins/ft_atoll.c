@@ -1,46 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_atoll.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/09 16:54:15 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/23 03:05:43 by cprojean         ###   ########.fr       */
+/*   Created: 2023/02/24 11:46:25 by cprojean          #+#    #+#             */
+/*   Updated: 2023/07/23 03:18:28 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
 static int	ft_isspace(char c);
 
-int	ft_atoi(const char *str)
+long long	ft_atoll(const char *str)
 {
 	size_t	i;
-	int		signe;
-	long	to_return;
+	int		sign;
+	long long	to_return;
 
 	i = 0;
-	signe = 1;
+	sign = 1;
 	to_return = 0;
 	while (ft_isspace(str[i]) == 1)
 		i++;
 	if (str[i] == '-' || str[i] == '+')
 	{
 		if (str[i] == '-')
-			signe = -1;
+			sign = -1;
 		i++;
 	}
-	while (ft_isdigit(str[i]))
-	{
-		if (to_return != (to_return * 10 + (str[i] - '0')) / 10 && signe == -1)
-			return (0);
-		if (to_return != (to_return * 10 + (str[i] - '0')) / 10 && signe == 1)
-			return (-1);
-		to_return = to_return * 10 + str[i] - '0';
-		i++;
-	}
-	return (to_return * signe);
+	to_return = is_overflow(str, sign);
+	return (to_return);
 }
 
 static int	ft_isspace(char c)
@@ -50,4 +42,24 @@ static int	ft_isspace(char c)
 	if (c == '\r' || c == '\f' || c == ' ')
 		return (1);
 	return (0);
+}
+
+long long	is_overflow(const char *str, int sign)
+{
+	int	i;
+	long long	to_return;
+
+	to_return = 0;
+	if (sign == -1)
+		i = 1;
+	else
+		i = 0;
+	while (ft_isdigit(str[i]))
+	{
+		if (to_return * sign != (to_return * sign * 10 + (str[i] - '0') * sign) / 10)
+			return (1);
+		to_return = to_return * 10 + (str[i] - '0');
+		i++;
+	}
+	return (to_return * sign);
 }

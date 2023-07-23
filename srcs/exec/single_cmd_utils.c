@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 19:24:05 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/22 17:58:08 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/22 20:01:29 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	single_cmd_execution(t_parse *parse, t_list **my_env, t_exec *data)
 		if (parse[runner].type == COMMAND)
 		{
 			if (which_builtin(parse, runner) == 1)
-				handle_single_builtin(parse, my_env, runner, data);
+				handle_single_builtin(parse, my_env, runner);
 			else if (which_builtin(parse, runner) == 2)
 				handle_forked_single_builtin(parse, my_env, runner, data);
 			else

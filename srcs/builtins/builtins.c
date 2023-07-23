@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:48 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/22 02:38:05 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/22 22:09:58 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,6 @@ void	ft_cd(t_list **my_env, t_parse *parse)
 	count = 0;
 	flag = 0;
 	runner = 0;
-	g_errno = 0;
 	while (parse[runner++].str)
 	{
 		if (parse[runner].type == CMD_ARG)
@@ -116,9 +115,12 @@ void	ft_cd(t_list **my_env, t_parse *parse)
 		}
 	}
 	if (count > 1)
-		return (ft_error(ERROR_23, parse[runner].str, 1));
+		return (ft_error(ERROR_23, "cd", 1));
+	if (check_dir(parse[flag].str) == -1)
+		return (ft_error(ERROR_99, NULL, 1));
 	oldpwd = ft_strjoin4("OLDPWD=", ft_pwd(0));
+	if (oldpwd == NULL)
+		oldpwd = ft_getenv(my_env, "OLDPWD", 0);
 	do_ft_export(my_env, oldpwd);
-	free(oldpwd);
-	next_cd(my_env, parse[flag].str);
+	next_cd(my_env, parse[flag].str, oldpwd);
 }

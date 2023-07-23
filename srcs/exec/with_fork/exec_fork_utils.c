@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 17:34:47 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/22 04:41:46 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/23 01:01:06 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	do_builtin(t_parse *parse, t_list **my_env, char **arg, int num_cmd)
 				return (ft_printf("%s\n", pwd), free(pwd), 1);
 			}
 			if (ft_strcmp(parse[runner].str, "export") == 0)
-				return (puts("EXPORT"), ft_export(my_env, parse), 1);
+				return (ft_export(my_env, parse), 1);
 			if (ft_strcmp(parse[runner].str, "exit") == 0)
 				return (ft_exit(parse, my_env, arg), 1);
 			if (ft_strcmp(parse[runner].str, "unset") == 0)

@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:07:31 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/22 04:44:51 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/23 03:19:01 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int		no_whitespaces(char	*array);
 int		is_num(char *str);
+int		do_overflow(char *str);
 static void	count_args(t_parse *parse, t_list **my_env);
 
 static void	count_args(t_parse *parse, t_list **my_env)
@@ -23,18 +24,19 @@ static void	count_args(t_parse *parse, t_list **my_env)
 
 	count = 0;
 	runner = 0;
+	(void) my_env;
 	while (parse[runner].type != PIPEE && parse[runner].str)
 	{
 		if (parse[runner].type == CMD_ARG)
 		{
-			if (is_num(parse[runner].str) != 0)
-			{
-				free_all_parse(parse);
-				ft_lstclear(my_env, free);
-				rl_clear_history();
-				ft_error(ERROR_21, "exit", 2);
-				exit(2);
-			}
+			// if (is_num(parse[runner].str) != 0)
+			// {
+			// 	free_all_parse(parse);
+			// 	ft_lstclear(my_env, free);
+			// 	rl_clear_history();
+			// 	ft_error(ERROR_18, "exit", 2);
+			// 	exit(2);
+			// }
 			count++;
 		}
 		runner++;
@@ -79,15 +81,14 @@ void	ft_exit(t_parse *parse, t_list **my_env, char **arg)
 
 void	next_exit(int runner, t_parse *parse, t_list **my_env)
 {
-	int	arg;
+	long long	arg;
 
 	if (parse[runner].type == CMD_ARG)
 	{
-		arg = ft_atoi(parse[runner].str);
-		if (arg != 0)
+		arg = ft_atoll(parse[runner].str);
+		if (arg != 0 && !do_overflow(parse[runner].str))
 		{
 			g_errno = arg;
-			// print_parse(parse);
 			free_all_parse(parse);
 			ft_lstclear(my_env, free);
 			rl_clear_history();
@@ -95,11 +96,36 @@ void	next_exit(int runner, t_parse *parse, t_list **my_env)
 		}
 		else
 		{
-			ft_error(ERROR_21, "exit", 2);
+			ft_error(ERROR_18, "exit", 2);
 			ft_lstclear(my_env, free);
 			free_all_parse(parse);
 			rl_clear_history();
 			exit(2);
 		}
 	}
+}
+
+int	do_overflow(char *str)
+{
+	int	i;
+	int	sign;
+	long long	to_return;
+
+	sign = 1;
+	to_return = 0;
+	i = 0;
+	if (str[i] == '-' || str[i] == '+')
+	{
+		if (str[i] == '-')
+			sign = -1;
+		i++;
+	}
+	while (ft_isdigit(str[i]))
+	{
+		if (to_return * sign != (to_return * sign * 10 + (str[i] - '0') * sign) / 10)
+			return (1);
+		to_return = to_return * 10 + str[i] - '0';
+		i++;
+	}
+	return (0);
 }

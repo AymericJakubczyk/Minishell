@@ -6,7 +6,7 @@
 #    By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/01 14:11:17 by ajakubcz          #+#    #+#              #
-#    Updated: 2023/07/22 18:18:39 by cprojean         ###   ########.fr        #
+#    Updated: 2023/07/23 02:03:20 by cprojean         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,6 +70,7 @@ SRCS =			$(DIR_SRCS)main.c \
 				$(DIR_BUILTINS)ft_exit.c \
 				$(DIR_BUILTINS)ft_getenv.c \
 				$(DIR_BUILTINS)builtins_utils.c \
+				$(DIR_BUILTINS)ft_atoll.c \
 				$(DIR_COLLECTOR)ft_garb_addback.c \
 				$(DIR_COLLECTOR)ft_garb_clear.c \
 				$(DIR_COLLECTOR)ft_garb_last.c \

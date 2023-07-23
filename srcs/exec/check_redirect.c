@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 18:10:46 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/22 18:15:49 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/23 01:05:35 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,12 @@ int	check_redirect(t_parse parse, t_list **my_env, int mode)
 		return (0);
 	if (mode == IN && access(expanded, F_OK | R_OK) == -1)
 	{
-		printf("Minihell aled: %s: %s\n", expanded, strerror(errno));
+		ft_dprintf("(s)Hell : %s: %s\n", expanded, strerror(errno));
 		return (free(expanded), 0);
 	}
 	if (mode == OUT && open(expanded, O_WRONLY | O_CREAT, 0644) == -1)
 	{
-		printf("Minihell : %s: %s\n", expanded, strerror(errno));
+		ft_dprintf("(s)Hell : %s: %s\n", expanded, strerror(errno));
 		return (free(expanded), 0);
 	}
 	return (free(expanded), 1);

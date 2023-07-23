@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_dprintf.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 11:05:38 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/23 00:19:41 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/23 00:52:53 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "ft_dprintf.h"
 
-int	ft_printf(const char *str, ...)
+int	ft_dprintf(const char *str, ...)
 {
 	va_list	va;
 	size_t	i;
@@ -28,38 +28,38 @@ int	ft_printf(const char *str, ...)
 		if (str[i] == '%')
 		{
 			if (str[i + 1])
-				stock = after(i + 1, str, va, &count);
+				stock = dafter(i + 1, str, va, &count);
 			if (stock == 1)
 				i++;
 		}
 		else
-			ft_putchar(str[i], &count);
+			ft_dputchar(str[i], &count);
 		i++;
 	}
 	va_end(va);
 	return (count);
 }
 
-size_t	after(size_t i, const char *str, va_list va, ssize_t *count)
+size_t	dafter(size_t i, const char *str, va_list va, ssize_t *count)
 {
 	if (str[i] == 'c')
-		return (ft_putchar(va_arg(va, int), count), 1);
+		return (ft_dputchar(va_arg(va, int), count), 1);
 	if (str[i] == 's')
-		return (ft_putstr(va_arg(va, char *), count), 1);
+		return (ft_dputstr(va_arg(va, char *), count), 1);
 	if (str[i] == 'd' || str[i] == 'i')
-		return (ft_putnbr(va_arg(va, int), count), 1);
+		return (ft_dputnbr(va_arg(va, int), count), 1);
 	if (str[i] == 'u')
-		return (ft_putunbr(va_arg(va, unsigned int), count), 1);
+		return (ft_dputunbr(va_arg(va, unsigned int), count), 1);
 	if (str[i] == 'x')
-		return (ft_put_hexa(va_arg(va, size_t), "0123456789abcdef", count), 1);
+		return (ft_dput_hexa(va_arg(va, size_t), "0123456789abcdef", count), 1);
 	if (str[i] == 'X')
-		return (ft_put_hexa(va_arg(va, size_t), "0123456789ABCDEF", count), 1);
+		return (ft_dput_hexa(va_arg(va, size_t), "0123456789ABCDEF", count), 1);
 	if (str[i] == 'p')
 	{
-		ft_putstr("0x", count);
-		return (ft_putptr_hexa(va_arg(va, size_t), count), 1);
+		ft_dputstr("0x", count);
+		return (ft_dputptr_hexa(va_arg(va, size_t), count), 1);
 	}
 	if (str[i] == '%')
-		return (ft_putchar(str[i], count), 1);
+		return (ft_dputchar(str[i], count), 1);
 	return (0);
 }

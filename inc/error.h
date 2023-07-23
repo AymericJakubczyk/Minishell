@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:16:31 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/18 15:47:03 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/23 01:20:30 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@
 # define ERROR_18 "numeric argument required\n"
 # define ERROR_19 "parse error near '\\n'\n"
 # define ERROR_20 "parse error near '|'\n"
-# define ERROR_21 "numeric argument required\n"
 # define ERROR_22 ": not a valid identifier\n"
 # define ERROR_23 ": too many arguments\n"
 # define ERROR_42 "help allocation broke\n"

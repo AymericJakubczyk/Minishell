@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:02:11 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/14 04:16:33 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/23 00:10:30 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <sys/wait.h>
 # include <fcntl.h>
 # include "../libft/libft.h"
+# include "../libft/ft_dprintf.h"
 # include "../libft/ft_printf.h"
 # include "struct.h"
 # include "error.h"

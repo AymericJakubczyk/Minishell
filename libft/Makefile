@@ -6,7 +6,7 @@
 #    By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 14:37:15 by ajakubcz          #+#    #+#              #
-#    Updated: 2023/06/14 09:54:12 by cprojean         ###   ########.fr        #
+#    Updated: 2023/07/23 00:54:13 by cprojean         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,29 +30,32 @@ GNL =		get_next_line.c get_next_line_utils.c
 
 FT_PRINTF = ft_printf.c ft_printf_utils.c ft_printf_utils2.c
 
+FT_DPRINTF = ft_dprintf.c ft_dprintf_utils.c ft_dprintf_utils2.c
+
 OBJS = 			$(SRCS:.c=.o)
 OBJSBONUS =		$(BONUS:.c=.o)
 OBJSGNL = 		$(GNL:.c=.o)
 OBJSFT_PRINTF = $(FT_PRINTF:.c=.o)
+OBJSFT_DPRINTF = $(FT_DPRINTF:.c=.o)
 
 CC = gcc
 CFLAGS = -Werror -Wextra -Wall -g3
 RM = rm -rf
-HEADERS = libft.h get_next_line.h ft_printf.h
+HEADERS = libft.h get_next_line.h ft_printf.h ft_dprintf.h
 
 #$(NAME) : $(OBJS)
 #	ar rcs $(NAME) $(OBJS)
 
 all : $(NAME)
 
-$(NAME) : $(OBJS) $(OBJSBONUS) $(OBJSGNL) $(OBJSFT_PRINTF)
-	ar rcs $(NAME) $(OBJS) $(OBJSBONUS) $(OBJGNL) $(OBJSFT_PRINTF)
+$(NAME) : $(OBJS) $(OBJSBONUS) $(OBJSGNL) $(OBJSFT_PRINTF) $(OBJSFT_DPRINTF)
+	ar rcs $(NAME) $(OBJS) $(OBJSBONUS) $(OBJGNL) $(OBJSFT_PRINTF) $(OBJSFT_DPRINTF)
 
 %.o : %.c $(HEADERS) Makefile
 	$(CC) $(CFLAGS) -c $< -o $@ -I ./
 
 clean :
-	$(RM) $(OBJS) $(OBJSBONUS) $(OBJSGNL) $(OBJSFT_PRINTF)
+	$(RM) $(OBJS) $(OBJSBONUS) $(OBJSGNL) $(OBJSFT_PRINTF) $(OBJSFT_DPRINTF)
 
 fclean : clean
 	$(RM) $(NAME)

@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 15:40:43 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/22 03:43:01 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/23 03:14:03 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,13 @@ void	ft_env(t_list **env, t_parse *parse);
 void	ft_cd(t_list **my_env, t_parse *parse);
 void	ft_exit(t_parse *parse, t_list **my_env, char **arg);
 void	next_exit(int runner, t_parse *parse, t_list **my_env);
+long long	ft_atoll(const char *str);
+long long	is_overflow(const char *str, int sign);
 
 //Bultins utils
 void	do_ft_export(t_list **my_env, char *str);
-void	next_cd(t_list **my_env, char *str);
+void	next_cd(t_list **my_env, char *str, char *oldpwd);
+int		check_dir(char *str);
 int		equal(char *str);
 char	*add_quotes(char *str);
 
