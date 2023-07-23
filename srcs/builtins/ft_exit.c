@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:07:31 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/23 03:36:03 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/24 01:09:26 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static void	next_exit(int runner, t_parse *parse, t_list **my_env, t_exec *data)
 	if (parse[runner].type == CMD_ARG)
 	{
 		arg = ft_atoll(parse[runner].str);
-		if (arg != 0 && !do_overflow(parse[runner].str))
+		if (!do_overflow(parse[runner].str))
 		{
 			g_errno = arg;
 			// print_parse(parse);

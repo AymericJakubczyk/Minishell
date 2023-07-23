@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:48 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/22 22:09:58 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/24 01:11:56 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	is_echos_flag(char *str)
 		while (str[runner] && str[runner] == 'n')
 			runner++;
 	}
-	if (runner == ft_strlen(str))
+	if (runner == ft_strlen(str) && str[0])
 		return (1);
 	return (0);
 }

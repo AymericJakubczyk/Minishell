@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 11:46:25 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/23 04:20:56 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/24 01:09:30 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ static int	ft_isspace(char c);
 
 long long	ft_atoll(const char *str)
 {
-	size_t	i;
-	int		sign;
+	size_t		i;
+	int			sign;
 	long long	to_return;
 
 	i = 0;
