@@ -65,7 +65,7 @@ char	*expand_redirect(t_parse parse, t_list **my_env);
 void	single_cmd(t_parse *parse, t_list **my_env, t_exec *data);
 void	handle_forked_single_builtin(t_parse *parse, \
 		t_list **my_env, int runner, t_exec *data);
-void	handle_single_builtin(t_parse *parse, t_list **my_env, int runner);
+void	handle_single_builtin(t_parse *parse, t_list **my_env, int runner, t_exec *data);
 void	exec_single_cmd(t_parse *parse, t_list **env, int runner, t_exec *data);
 
 //single_cmd_utils.c
@@ -82,7 +82,7 @@ int		which_builtin(t_parse *parse, int runner);
 int		get_ind_last_char(t_entry *entry);
 
 //exec_fork_utils.c
-int	do_builtin(t_parse *parse, t_list **my_env, char **arg, int num_cmd);
+int	do_builtin(t_parse *parse, t_list **my_env, char **arg, t_exec *data);
 int	get_start_cmd(t_parse *parse, int num_cmd);
 
 

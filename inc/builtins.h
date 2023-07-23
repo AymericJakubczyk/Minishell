@@ -18,8 +18,7 @@ char	*ft_pwd(int mode);
 void	ft_echo(t_parse *parse);
 void	ft_env(t_list **env, t_parse *parse);
 void	ft_cd(t_list **my_env, t_parse *parse);
-void	ft_exit(t_parse *parse, t_list **my_env, char **arg);
-void	next_exit(int runner, t_parse *parse, t_list **my_env);
+void	ft_exit(t_parse *parse, t_list **my_env, char **arg, t_exec *data);
 
 //Bultins utils
 void	do_ft_export(t_list **my_env, char *str);

@@ -12,7 +12,6 @@
 
 #include "minishell.h"
 
-void	handle_single_builtin(t_parse *parse, t_list **my_env, int runner);
 void	next_handle_forked_single_builtin(t_parse *parse, \
 		t_list **my_env, int runner);
 void	exec_single_cmd(t_parse *parse, t_list **env, int runner, t_exec *data);
@@ -24,14 +23,14 @@ void	single_cmd(t_parse *parse, t_list **my_env, t_exec *data)
 	single_cmd_execution(parse, my_env, data);
 }
 
-void	handle_single_builtin(t_parse *parse, t_list **my_env, int runner)
+void	handle_single_builtin(t_parse *parse, t_list **my_env, int runner, t_exec *data)
 {
 	if (ft_strcmp(parse[runner].str, "cd") == 0)
 		ft_cd(my_env, parse);
 	else if (ft_strcmp(parse[runner].str, "unset") == 0)
 		ft_unset(my_env, parse);
 	else if (ft_strcmp(parse[runner].str, "exit") == 0)
-		ft_exit(parse, my_env, NULL);
+		ft_exit(parse, my_env, NULL, data);
 	else if (ft_strcmp(parse[runner].str, "export") == 0)
 		ft_export(my_env, parse);
 	return ;

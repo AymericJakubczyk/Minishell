@@ -15,12 +15,12 @@
 static int	get_nbr_arg(t_parse *parse);
 static void	fill_arg(t_parse *parse, char **arg);
 
-int	do_builtin(t_parse *parse, t_list **my_env, char **arg, int num_cmd)
+int	do_builtin(t_parse *parse, t_list **my_env, char **arg, t_exec *data)
 {
 	int		runner;
 	char	*pwd;
 
-	runner = get_start_cmd(parse, num_cmd);
+	runner = 0;
 	while (parse[runner].str && parse[runner].type != PIPEE)
 	{
 		if (parse[runner].type == COMMAND)
@@ -35,9 +35,9 @@ int	do_builtin(t_parse *parse, t_list **my_env, char **arg, int num_cmd)
 				return (ft_printf("%s\n", pwd), free(pwd), 1);
 			}
 			if (ft_strcmp(parse[runner].str, "export") == 0)
-				return (puts("EXPORT"), ft_export(my_env, parse), 1);
+				return (ft_export(my_env, parse), 1);
 			if (ft_strcmp(parse[runner].str, "exit") == 0)
-				return (ft_exit(parse, my_env, arg), 1);
+				return (ft_exit(parse, my_env, arg, data), 1);
 			if (ft_strcmp(parse[runner].str, "unset") == 0)
 				return (ft_unset(my_env, parse), 1);
 			if (ft_strcmp(parse[runner].str, "cd") == 0)

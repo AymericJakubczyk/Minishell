@@ -94,7 +94,7 @@ static void	exec_cmd(t_parse *parse, int num_cmd, t_list **my_env, t_exec *data)
 	else
 		do_classique_pipe(num_cmd, data, OUT);
 	arg = get_arg(&parse[start_cmd]);
-	if (do_builtin(parse, my_env, arg, num_cmd))
+	if (do_builtin(&parse[start_cmd], my_env, arg, data))
 	{
 		ft_lstclear(my_env, free);
 		free_all(arg);

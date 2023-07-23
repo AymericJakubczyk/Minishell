@@ -13,10 +13,11 @@
 #include "minishell.h"
 
 int		no_whitespaces(char	*array);
-int		is_num(char *str);
-static void	count_args(t_parse *parse, t_list **my_env);
+static int	is_num(char *str);
+static void	count_args(t_parse *parse, t_list **my_env, t_exec *data);
+static void	next_exit(int runner, t_parse *parse, t_list **my_env, t_exec *data);
 
-static void	count_args(t_parse *parse, t_list **my_env)
+static void	count_args(t_parse *parse, t_list **my_env, t_exec *data)
 {
 	int	runner;
 	int	count;
@@ -29,7 +30,7 @@ static void	count_args(t_parse *parse, t_list **my_env)
 		{
 			if (is_num(parse[runner].str) != 0)
 			{
-				free_all_parse(parse);
+				free_all_parse(data->parse);
 				ft_lstclear(my_env, free);
 				rl_clear_history();
 				ft_error(ERROR_21, "exit", 2);
@@ -43,7 +44,7 @@ static void	count_args(t_parse *parse, t_list **my_env)
 		return (ft_error(ERROR_23, "exit", 1), exit(g_errno));
 }
 
-int	is_num(char *str)
+static int	is_num(char *str)
 {
 	int	runner;
 
@@ -59,25 +60,25 @@ int	is_num(char *str)
 	return (0);
 }
 
-void	ft_exit(t_parse *parse, t_list **my_env, char **arg)
+void	ft_exit(t_parse *parse, t_list **my_env, char **arg, t_exec *data)
 {
 	int	runner;
 	runner = 0;
 	if (arg != NULL)
 		free_all(arg);
-	count_args(parse, my_env);
+	count_args(parse, my_env, data);
 	while (parse[runner].str)
 	{
-		next_exit(runner, parse, my_env);
+		next_exit(runner, parse, my_env, data);
 		runner++;
 	}
 	ft_lstclear(my_env, free);
-	free_all_parse(parse);
+	free_all_parse(data->parse);
 	rl_clear_history();
 	exit(1);
 }
 
-void	next_exit(int runner, t_parse *parse, t_list **my_env)
+static void	next_exit(int runner, t_parse *parse, t_list **my_env, t_exec *data)
 {
 	int	arg;
 
@@ -88,7 +89,7 @@ void	next_exit(int runner, t_parse *parse, t_list **my_env)
 		{
 			g_errno = arg;
 			// print_parse(parse);
-			free_all_parse(parse);
+			free_all_parse(data->parse);
 			ft_lstclear(my_env, free);
 			rl_clear_history();
 			exit(arg);
@@ -97,7 +98,7 @@ void	next_exit(int runner, t_parse *parse, t_list **my_env)
 		{
 			ft_error(ERROR_21, "exit", 2);
 			ft_lstclear(my_env, free);
-			free_all_parse(parse);
+			free_all_parse(data->parse);
 			rl_clear_history();
 			exit(2);
 		}
