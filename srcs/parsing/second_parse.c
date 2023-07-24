@@ -163,7 +163,7 @@ static int	context_in_parse(t_entry *entry, t_parse *parse, int i)
 			j++;
 			ind_entry++;
 		}
-		while (entry[ind_entry].type == WHITESPACE)
+		while (entry[ind_entry].type == WHITESPACE && entry[ind_entry].context == NO_QUOTE)
 			ind_entry++;
 		ind_parse++;
 	}

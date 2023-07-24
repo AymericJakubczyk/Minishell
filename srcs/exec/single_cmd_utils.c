@@ -31,6 +31,11 @@ void	single_cmd_execution(t_parse *parse, t_list **my_env, t_exec *data)
 	int	runner;
 
 	runner = 0;
+	if (!check_all_redirect_without_fork(parse, my_env))
+	{
+		g_errno = 1;
+		return ;
+	}
 	while (parse[runner].str)
 	{
 		if (parse[runner].type == COMMAND)
