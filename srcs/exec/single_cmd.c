@@ -23,8 +23,8 @@ void	single_cmd(t_parse *parse, t_list **my_env, t_exec *data)
 
 void	handle_single_builtin(t_parse *parse, t_list **my_env, int runner, t_exec *data)
 {
-	if (!check_all_redirect_without_fork(parse, my_env))
-		return ;
+	// if (!check_all_redirect_without_fork(parse, my_env))
+	// 	return ;
 	if (ft_strcmp(parse[runner].str, "cd") == 0)
 		ft_cd(my_env, parse);
 	else if (ft_strcmp(parse[runner].str, "unset") == 0)
@@ -47,8 +47,8 @@ void	handle_forked_single_builtin(t_parse *parse, \
 		exit (1);
 	if (pid == 0)
 	{
-		if (!check_all_redirect(parse, my_env, data))
-			exit (1);
+		// if (!check_all_redirect(parse, my_env, data))
+		// 	exit (1);
 		if (redirect_in_cmd(parse, IN))
 			do_redirect_in(parse, my_env, data, 1);
 		if (redirect_in_cmd(parse, OUT))
@@ -102,8 +102,8 @@ void	exec_single_cmd(t_parse *parse, t_list **env, int runner, t_exec *data)
 		exit(1);
 	if (pid == 0)
 	{
-		if (!check_all_redirect(parse, env, data))
-			exit (1);
+		// if (!check_all_redirect(parse, env, data))
+		// 	exit (1);
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		if (redirect_in_cmd(parse, IN))
