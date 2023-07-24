@@ -83,7 +83,7 @@ static void	fill_with_tild_value(t_entry *entry, t_entry *new_entry, int *ind, \
 
 	value_env = ft_getenv(my_env, "HOME", 0);
 	fill_value_env(new_entry, entry[ind[0]].context, value_env, &ind[1]);
-	free(value_env);
+	//free(value_env);
 	ind[0]++;
 }
 

@@ -92,7 +92,11 @@ char	**get_arg(t_parse *parse)
 	int		size;
 
 	size = get_nbr_arg(parse);
+	if (size == 0)
+		return (NULL);
 	arg = malloc(sizeof(char *) * (size + 1));
+	if (!arg)
+		return (NULL);
 	fill_arg(parse, arg);
 	return (arg);
 }
