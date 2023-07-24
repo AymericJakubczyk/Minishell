@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 15:40:43 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/24 01:25:41 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/24 02:58:18 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	next_cd(t_list **my_env, char *str, char *oldpwd);
 int		check_dir(char *str);
 int		equal(char *str);
 char	*add_quotes(char *str);
+int		find_arg(t_parse *parse);
 
 //Export.c & his utils
 void	ft_export(t_list **my_env, t_parse *parse);

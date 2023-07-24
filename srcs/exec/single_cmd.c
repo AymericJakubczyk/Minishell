@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 18:46:17 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/23 23:26:44 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/24 03:13:21 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	handle_forked_single_builtin(t_parse *parse, \
 		free_all_parse(parse);
 		rl_clear_history();
 		double_close(&data->fd_in, &data->fd_out);
-		exit (0);
+		exit (g_errno);
 	}
 	waitpid(-1, &status, 0);
 	if (WIFEXITED(status))
@@ -79,6 +79,8 @@ void	next_handle_forked_single_builtin(t_parse *parse, \
 		ft_env(my_env, parse);
 	else if (ft_strcmp(parse[runner].str, "pwd") == 0)
 	{
+		if (find_arg(parse) == -1)
+			return ;
 		path = ft_pwd(1);
 		if (!path)
 			return ;
@@ -121,4 +123,29 @@ void	exec_single_cmd(t_parse *parse, t_list **env, int runner, t_exec *data)
 	waitpid(-1, &status, 0);
 	if (WIFEXITED(status))
 		g_errno = WEXITSTATUS(status);
+}
+
+int	find_arg(t_parse *parse)
+{
+	int	runner;
+	int	index;
+
+	index = 0;
+	runner = 0;
+	while (parse[runner].str)
+	{
+		if (parse[runner].type == CMD_ARG)
+			if (parse[runner].str[index] == '-')
+			{
+				while(parse[runner].str[index])
+					index++;
+				if (index == 2 && parse[runner].str[0] == '-' && parse[runner].str[1] == '-')
+					return (0);
+				if (index >= 2)
+					return (ft_error(ERROR_25, parse[runner].str, 2), -1);
+				index = 0;
+			}
+		runner++;
+	}
+	return (0);
 }
