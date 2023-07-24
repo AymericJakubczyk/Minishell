@@ -6,13 +6,13 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 12:38:49 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/24 00:15:05 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/24 01:31:54 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	how_much_args(t_parse *parse, int runner);
+// static int	how_much_args(t_parse *parse, int runner);
 
 void	print_all_data(char **all_limiter, char **str_heredoc)
 {
@@ -80,15 +80,15 @@ void	ex_child(t_parse *parse, t_list **env, int runner, t_exec *data)
 	}
 }
 
-static int	how_much_args(t_parse *parse, int runner)
-{
-	int	index;
+// static int	how_much_args(t_parse *parse, int runner)
+// {
+// 	int	index;
 
-	index = 0;
-	while (parse[runner].str && parse[runner].type)
-	{
-		index++;
-		runner++;
-	}
-	return (index);
-}
+// 	index = 0;
+// 	while (parse[runner].str && parse[runner].type)
+// 	{
+// 		index++;
+// 		runner++;
+// 	}
+// 	return (index);
+// }

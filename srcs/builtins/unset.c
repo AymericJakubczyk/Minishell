@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:51:36 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/23 23:26:35 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/24 02:41:13 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ void	unset_cmd(t_list **my_env, t_parse *parse, int index, int *count)
 
 	if (is_alpha(parse[index].str) == 0)
 		return (ft_error(ERROR_22, parse[index].str, 1));
+	else if (is_alpha(parse[index].str) == 2)
+		return (ft_error(ERROR_25, parse[index].str, 2));
 	runner = *my_env;
 	tmp = *my_env;
 	while (runner != NULL)
@@ -76,7 +78,9 @@ int	is_alpha(char *str)
 	int	runner;
 
 	runner = 0;
-	while (str[runner] && str[runner] != '=')
+	if (str[0] == '-')
+		return (2);
+	while (str[runner])
 	{
 		if (ft_isalnum(str[runner]) == 0 && str[runner] != '_')
 			return (0);

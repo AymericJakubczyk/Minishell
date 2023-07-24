@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:16:31 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/24 00:00:34 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/24 02:23:22 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 # define ERROR_23 ": too many arguments"
 # define ERROR_42 "help allocation broke"
 # define ERROR_24 ": is a directory"
+# define ERROR_25 "invalid option"
 # define ERROR_99 "tu crois aller ou comme ca"
 
 void	ft_error(const char *error, char *problem, int nbrerror);

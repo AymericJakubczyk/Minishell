@@ -6,15 +6,13 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 11:46:25 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/24 01:09:30 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/24 01:30:03 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	ft_isspace(char c);
-
-long long	ft_atoll(const char *str)
+long long	ft_atoll(const char *str, t_list **my_env, t_exec *data)
 {
 	size_t		i;
 	int			sign;
@@ -23,28 +21,25 @@ long long	ft_atoll(const char *str)
 	i = 0;
 	sign = 1;
 	to_return = 0;
-	while (ft_isspace(str[i]) == 1)
-		i++;
 	if (str[i] == '-' || str[i] == '+')
 	{
 		if (str[i] == '+')
 			sign = 2;
 		if (str[i] == '-')
 			sign = -1;
-		i++;
+		if (str[++i] == '+' || str[i] == '-')
+		{
+			ft_error(ERROR_18, "exit", 2);
+			ft_lstclear(my_env, free);
+			free_all_parse(data->parse);
+			rl_clear_history();
+			exit(2);
+		}
 	}
 	to_return = is_overflow(str, sign);
 	return (to_return);
 }
 
-static int	ft_isspace(char c)
-{
-	if (c == '\t' || c == '\v' || c == '\n')
-		return (1);
-	if (c == '\r' || c == '\f' || c == ' ')
-		return (1);
-	return (0);
-}
 
 long long	is_overflow(const char *str, int sign)
 {

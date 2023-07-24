@@ -6,7 +6,7 @@
 #    By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/01 14:11:17 by ajakubcz          #+#    #+#              #
-#    Updated: 2023/07/23 23:28:34 by cprojean         ###   ########.fr        #
+#    Updated: 2023/07/24 01:33:08 by cprojean         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 
 NAME = minishell
 
-CFLAGS = -Wall -Wextra -g3
+CFLAGS = -Wall -Wextra -Werror -g3
 
 LIB = libft/libft.a
 

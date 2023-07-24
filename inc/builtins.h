@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 15:40:43 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/23 03:30:52 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/24 01:25:41 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*ft_pwd(int mode);
 void	ft_echo(t_parse *parse);
 void	ft_env(t_list **env, t_parse *parse);
 void	ft_cd(t_list **my_env, t_parse *parse);
-long long	ft_atoll(const char *str);
+long long	ft_atoll(const char *str, t_list **my_env, t_exec *data);
 long long	is_overflow(const char *str, int sign);
 void	ft_exit(t_parse *parse, t_list **my_env, char **arg, t_exec *data);
 

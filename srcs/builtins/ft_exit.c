@@ -6,19 +6,19 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:07:31 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/24 01:09:26 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/24 02:12:18 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int		no_whitespaces(char	*array);
-// static int	is_num(char *str);
+static int	is_num(char *str);
 int		do_overflow(char *str);
-static void	count_args(t_parse *parse);
+static int	count_args(t_parse *parse);
 static void	next_exit(int runner, t_parse *parse, t_list **my_env, t_exec *data);
 
-static void	count_args(t_parse *parse)
+static int	count_args(t_parse *parse)
 {
 	int	runner;
 	int	count;
@@ -31,62 +31,65 @@ static void	count_args(t_parse *parse)
 			count++;
 		runner++;
 	}
-	if (count > 1)
-		return (ft_error(ERROR_23, "exit", 1), exit(g_errno));
+	return (count);
 }
 
-// static int	is_num(char *str)
-// {
-// 	int	runner;
+static int	is_num(char *str)
+{
+	int	runner;
 
-// 	runner = 0;
-// 	while (str[runner])
-// 	{
-// 		if (runner == 0 && (str[runner] == '-' || str[runner] == '+'))
-// 			runner++;
-// 		if (ft_isdigit(str[runner]) != 1)
-// 			return (1);
-// 		runner++;
-// 	}
-// 	return (0);
-// }
+	runner = 0;
+	while (str[runner])
+	{
+		if (runner == 0 && (str[runner] == '-' || str[runner] == '+'))
+			runner++;
+		if (ft_isdigit(str[runner]) != 1)
+			return (1);
+		runner++;
+	}
+	return (0);
+}
 
 void	ft_exit(t_parse *parse, t_list **my_env, char **arg, t_exec *data)
 {
 	int	runner;
-	runner = 0;
+	int	count;
+
+	count = count_args(parse);
+	runner = 1;
 	if (arg != NULL)
 		free_all(arg);
-	count_args(parse);
 	while (parse[runner].str)
 	{
 		next_exit(runner, parse, my_env, data);
 		runner++;
 	}
+	if (count > 1)
+		ft_error(ERROR_23, "exit", 1);
 	ft_lstclear(my_env, free);
 	free_all_parse(data->parse);
 	rl_clear_history();
-	//exit(1);
 	exit(g_errno);
 }
 
 static void	next_exit(int runner, t_parse *parse, t_list **my_env, t_exec *data)
 {
 	long long	arg;
+	int			count;
 
+	count = count_args(parse);
 	if (parse[runner].type == CMD_ARG)
 	{
-		arg = ft_atoll(parse[runner].str);
-		if (!do_overflow(parse[runner].str))
+		arg = ft_atoll(parse[runner].str, my_env, data);
+		if (!do_overflow(parse[runner].str) && !is_num(parse[runner].str) && count <= 1)
 		{
 			g_errno = arg;
-			// print_parse(parse);
 			free_all_parse(data->parse);
 			ft_lstclear(my_env, free);
 			rl_clear_history();
 			exit(arg);
 		}
-		else
+		else if ((is_num(parse[runner].str) == 1 && runner == 1) || do_overflow(parse[runner].str))
 		{
 			ft_error(ERROR_18, "exit", 2);
 			ft_lstclear(my_env, free);
@@ -99,8 +102,8 @@ static void	next_exit(int runner, t_parse *parse, t_list **my_env, t_exec *data)
 
 int	do_overflow(char *str)
 {
-	int	i;
-	int	sign;
+	int			i;
+	int			sign;
 	long long	to_return;
 
 	sign = 1;

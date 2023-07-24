@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 14:08:26 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/24 00:40:55 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/24 01:31:35 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static int	slash_in(char *str);
 static char	**get_all_path(t_list **envp);
 static int	check_env_path(char *str, char *str_path);
 void		init_file(t_exec *data);
+static int	is_directory(char *cmd, t_parse *parse, t_list **env);
 
 char	*get_path(char *cmd, t_list **env, t_parse *parse)
 {
@@ -116,7 +117,7 @@ void	init_file(t_exec *data)
 	data->current_fd_out = data->fd_out;
 }
 
-int	is_directory(char *cmd, t_exec *parse, t_list **env)
+static int	is_directory(char *cmd, t_parse *parse, t_list **env)
 {
 	int	fd;
 
