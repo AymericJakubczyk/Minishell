@@ -18,8 +18,9 @@ static void	fill_with_tild_value(t_entry *entry, t_entry *new_entry, int *ind, \
 	t_list **my_env);
 static void	keep_redirection(t_entry *entry, t_entry *new_entry, int *i, \
 	int *j);
-static void	else_fill_new_entry(t_entry *entry, t_entry *new_entry, int *ind);
+static void	else_fill_new_entry(t_entry *entry, t_entry *new_entry, int *ind, t_list **my_env);
 void	print_or_not(t_entry *entry, t_entry *new_entry, int *ind);
+int		void_var(t_entry *entry, int *ind, t_list **my_env);
 
 int	fill_expand(t_entry *entry, t_entry *new_entry, t_list **my_env)
 {
@@ -43,7 +44,7 @@ int	fill_expand(t_entry *entry, t_entry *new_entry, t_list **my_env)
 			entry[ind[0]].type == CHEV_OUT) && entry[ind[0]].context == 0)
 			keep_redirection(entry, new_entry, &ind[0], &ind[1]);
 		else
-			else_fill_new_entry(entry, new_entry, ind);
+			else_fill_new_entry(entry, new_entry, ind, my_env);
 	}
 	// ft_printf("ind 1 value : %d\n", ind[1]);
 	new_entry[ind[1]].c = 0;
@@ -108,7 +109,7 @@ static void	keep_redirection(t_entry *entry, t_entry *new_entry, int *i, int *j)
 	}
 }
 
-static void	else_fill_new_entry(t_entry *entry, t_entry *new_entry, int *ind)
+static void	else_fill_new_entry(t_entry *entry, t_entry *new_entry, int *ind, t_list **my_env)
 {
 	int	quote;
 
@@ -116,7 +117,7 @@ static void	else_fill_new_entry(t_entry *entry, t_entry *new_entry, int *ind)
 		(entry[ind[0]].type == S_QUOTE || entry[ind[0]].type == D_QUOTE))
 	{
 		quote = entry[ind[0]].type;
-		if (entry[ind[0] + 1].c && entry[ind[0] + 1].type == quote && is_void(entry, &ind[0]))
+		if (is_void(entry, &ind[0], my_env))
 		{
 			new_entry[ind[1]].c = ' ';
 			new_entry[ind[1]].type = VOID;
@@ -131,34 +132,76 @@ static void	else_fill_new_entry(t_entry *entry, t_entry *new_entry, int *ind)
 		copy_entry_value(entry, new_entry, &ind[0], &ind[1]);
 }
 
-int	is_void(t_entry *entry, int *ind)
+int	is_void(t_entry *entry, int *ind, t_list **my_env)
 {
 	int stock_ind;
 
-	stock_ind = *ind + 2;
+	stock_ind = *ind;
 	if (*ind - 1 < 0 || (entry[*ind - 1].type == WHITESPACE && entry[*ind - 1].context == NO_QUOTE))
 	{
-		if (!entry[*ind + 2].c || (entry[*ind + 2].type == WHITESPACE && entry[*ind + 2].context == NO_QUOTE))
-			return (*ind += 2, 1);
-		else
+		while (entry[stock_ind].c && ((entry[stock_ind].c == '$' && entry[stock_ind].context != SI_QUOTE) || ((entry[stock_ind].type == S_QUOTE || entry[stock_ind].type == D_QUOTE) && entry[stock_ind].context == NO_QUOTE)))
 		{
-			while (entry[stock_ind].c && (entry[stock_ind].type == S_QUOTE || entry[stock_ind].type == D_QUOTE) && entry[stock_ind].context == NO_QUOTE)
-			{
-				stock_ind++;
-				if (entry[stock_ind].c == '$')
-					return (0);
-			}
-			if (!entry[stock_ind].c || (entry[stock_ind].type == WHITESPACE && entry[stock_ind].context == NO_QUOTE))
-				return (*ind = stock_ind, 1);
+			stock_ind++;
+			if (entry[stock_ind].c == '$' && entry[stock_ind].context == SI_QUOTE)
+				return (0);
+			if (entry[stock_ind].c == '$' && !void_var(entry, &stock_ind, my_env))
+				return (0);
 		}
+		if (!entry[stock_ind].c || (entry[stock_ind].type == WHITESPACE && entry[stock_ind].context == NO_QUOTE))
+			return (*ind = stock_ind, 1);
 	}
+		return (0);
+}
+
+int	void_var(t_entry *entry, int *ind, t_list **my_env)
+{
+	int stock_ind;
+	char *value_env;
+
+	stock_ind = *ind;
+	//ft_dprintf("name env : %s\n", get_name_env(entry, &stock_ind));
+	value_env = ft_getenv(my_env, get_name_env(entry, &stock_ind), 1);
+	if (!value_env)
+		return (*ind = stock_ind, 1);
+	free(value_env);
 	return (0);
 }
+
+// int	is_void(t_entry *entry, int *ind, t_list **my_env)
+// {
+// 	int stock_ind;
+
+// 	stock_ind = *ind;
+// 	ft_dprintf("Test void\n");
+// 	if (*ind - 1 < 0 || (entry[*ind - 1].type == WHITESPACE && entry[*ind - 1].context == NO_QUOTE))
+// 	{
+// 		if (!entry[*ind + 2].c || (entry[*ind + 2].type == WHITESPACE && entry[*ind + 2].context == NO_QUOTE))
+// 			return (*ind += 2, 1);
+// 		else
+// 		{
+// 			while (entry[stock_ind].c && (entry[stock_ind].type == S_QUOTE || entry[stock_ind].type == D_QUOTE) && entry[stock_ind].context == NO_QUOTE)
+// 			{
+// 				stock_ind++;
+// 				if (entry[stock_ind].c == '$' && !void_var(entry, &stock_ind, my_env))
+// 					return (0);
+// 			}
+// 			if (!entry[stock_ind].c || (entry[stock_ind].type == WHITESPACE && entry[stock_ind].context == NO_QUOTE))
+// 				return (*ind = stock_ind, 1);
+// 		}
+// 	}
+// 	return (0);
+// }
 
 void	print_or_not(t_entry *entry, t_entry *new_entry, int *ind)
 {
 	if ((entry[ind[0] + 1].c != '\'' && entry[ind[0] + 1].c != '\"') || entry[ind[0]].context == DO_QUOTE)
-		else_fill_new_entry(entry, new_entry, ind);
+		else_fill_new_entry(entry, new_entry, ind, NULL);
 	else
 		ind[0]++;
 }
+
+// int	void_env(t_entry *entry, int *ind)
+// {
+// 	if (!good_char_env(entry, *ind))
+// 		return (0);
+// }

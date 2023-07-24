@@ -92,7 +92,7 @@ int		get_expand_size(t_entry *entry, t_list **my_env);
 
 //fill_expand.c
 int		fill_expand(t_entry *entry, t_entry *new_entry, t_list **my_env);
-int		is_void(t_entry *entry, int *ind);
+int		is_void(t_entry *entry, int *ind, t_list **my_env);
 
 //expand_utils.c
 char	*get_name_env(t_entry *entry, int *i);
