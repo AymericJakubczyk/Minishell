@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 14:08:26 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/24 01:31:35 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/24 17:43:06 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,6 @@ char	*get_path(char *cmd, t_list **env, t_parse *parse)
 	{
 		if (is_directory(cmd, parse, env))
 			return (NULL);
-		// if (access(cmd, F_OK | X_OK) != 0)
-		// {
-		// 	ft_error(ERROR_13, cmd, 127);
-		// 	free_all_parse(parse);
-		// 	rl_clear_history();
-		// 	ft_lstclear(env, free);
-		// 	return (exit(g_errno), NULL);
-		// }
 		else
 			return (cmd);
 	}
@@ -129,8 +121,9 @@ static int	is_directory(char *cmd, t_parse *parse, t_list **env)
 		ft_lstclear(env, free);
 		exit(g_errno);
 	}
-	if (access(cmd, X_OK) != 0)
+	if (access(cmd, X_OK) != 0 && ft_strlen(cmd) != 0)
 	{
+		ft_dprintf("%s\n", cmd);
 		ft_error(ERROR_15, cmd, 126);
 		free_all_parse(parse);
 		rl_clear_history();

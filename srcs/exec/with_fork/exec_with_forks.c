@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 09:14:56 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/22 17:34:38 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/24 17:49:35 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	exec_cmd(t_parse *parse, int num_cmd, \
 		t_list **my_env, t_exec *data);
-int	get_start_cmd(t_parse *parse, int num_cmd);
+int			get_start_cmd(t_parse *parse, int num_cmd);
 static void	wait_all(int nbr_cmd, t_exec *data);
 
 void	exec_with_forks(t_parse *parse, t_list **my_env, t_exec *data)
@@ -73,7 +73,6 @@ void	handler_fork(int sig)
 void	handler_fork_slash(int sig)
 {
 	(void) sig;
-	//dprintf(2, "TEST \\\n");
 	ft_printf("Quit (core dumped)\n");
 	//exit(0);
 }
@@ -141,8 +140,5 @@ static void	wait_all(int nbr_cmd, t_exec *data)
 		i++;
 	}
 	if (WIFEXITED(status))
-	{
 		g_errno = WEXITSTATUS(status);
-		//ft_dprintf("g_errno : %d\n", g_errno);
-	}
 }

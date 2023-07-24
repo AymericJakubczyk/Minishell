@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 23:55:37 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/19 09:59:59 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/24 17:28:17 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ int	colapse_all(t_entry *entry, t_parse *parse)
 	parse[nbr].str = NULL;
 	parse[nbr].type = -1;
 	set_type(parse, entry);
+	return (1);
+}
 	//print_parse(parse);
 	// if (check_parse(parse) == -1)
 	// 	return (g_errno = 2, 0);
-	return (1);
-}
 
 static char	*get_str(t_entry *entry, int *i, int j)
 {
@@ -69,7 +69,6 @@ static char	*get_str(t_entry *entry, int *i, int j)
 		*i += 1;
 		runner++;
 	}
-	// ft_printf("colapse_all\n\n");
 	if (!str)
 		ft_error(ERROR_42, NULL, 12);
 	return (str);

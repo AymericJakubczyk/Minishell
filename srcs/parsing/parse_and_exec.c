@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 18:24:28 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/23 23:22:09 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/24 17:28:46 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	parse_and_exec(char *str, t_list **my_env, t_exec *data)
 	parse = NULL;
 	if (!check_syntax_quote(str))
 		return ;
-	// ft_printf("entry malloc size : %d\n", ft_strlen(str) + 1);
 	entry = malloc(sizeof(t_entry) * (ft_strlen(str) + 1));
 	if (!entry)
 	{
@@ -48,10 +47,7 @@ void	parse_and_exec(char *str, t_list **my_env, t_exec *data)
 	if (!convert_entry_to_parse(new_entry, &parse))
 		return ;
 	free(new_entry);
-	// print_parse(parse);
 	execution(parse, my_env, data);
-	// print_all(data->all_limiter);
-	// print_all(data->str_heredoc);
 	if (data->all_limiter)
 		free(data->all_limiter);
 	free_all(data->str_heredoc);
@@ -73,7 +69,6 @@ int	convert_entry_to_parse(t_entry *entry, t_parse **parse)
 		free_all_parse(*parse);
 		return (0);
 	}
-	// ft_printf("IM HERE HERE HERE\n");
 	return (1);
 }
 

@@ -6,17 +6,18 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:07:31 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/24 02:12:18 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/24 17:36:36 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		no_whitespaces(char	*array);
+int			no_whitespaces(char	*array);
 static int	is_num(char *str);
-int		do_overflow(char *str);
+int			do_overflow(char *str);
 static int	count_args(t_parse *parse);
-static void	next_exit(int runner, t_parse *parse, t_list **my_env, t_exec *data);
+static void	next_exit(int runner, t_parse *parse, \
+			t_list **my_env, t_exec *data);
 
 static int	count_args(t_parse *parse)
 {
@@ -50,7 +51,8 @@ static int	is_num(char *str)
 	return (0);
 }
 
-void	ft_exit(t_parse *parse, t_list **my_env, char **arg, t_exec *data)
+void	ft_exit(t_parse *parse, t_list **my_env, \
+		char **arg, t_exec *data)
 {
 	int	runner;
 	int	count;
@@ -72,7 +74,8 @@ void	ft_exit(t_parse *parse, t_list **my_env, char **arg, t_exec *data)
 	exit(g_errno);
 }
 
-static void	next_exit(int runner, t_parse *parse, t_list **my_env, t_exec *data)
+static void	next_exit(int runner, t_parse *parse, \
+			t_list **my_env, t_exec *data)
 {
 	long long	arg;
 	int			count;
@@ -81,7 +84,8 @@ static void	next_exit(int runner, t_parse *parse, t_list **my_env, t_exec *data)
 	if (parse[runner].type == CMD_ARG)
 	{
 		arg = ft_atoll(parse[runner].str, my_env, data);
-		if (!do_overflow(parse[runner].str) && !is_num(parse[runner].str) && count <= 1)
+		if (!do_overflow(parse[runner].str) && \
+			!is_num(parse[runner].str) && count <= 1)
 		{
 			g_errno = arg;
 			free_all_parse(data->parse);
@@ -89,7 +93,8 @@ static void	next_exit(int runner, t_parse *parse, t_list **my_env, t_exec *data)
 			rl_clear_history();
 			exit(arg);
 		}
-		else if ((is_num(parse[runner].str) == 1 && runner == 1) || do_overflow(parse[runner].str))
+		else if ((is_num(parse[runner].str) == 1 && runner == 1) || \
+				do_overflow(parse[runner].str))
 		{
 			ft_error(ERROR_18, "exit", 2);
 			ft_lstclear(my_env, free);
@@ -117,7 +122,8 @@ int	do_overflow(char *str)
 	}
 	while (ft_isdigit(str[i]))
 	{
-		if (to_return * sign != (to_return * sign * 10 + (str[i] - '0') * sign) / 10)
+		if (to_return * sign != \
+			(to_return * sign * 10 + (str[i] - '0') * sign) / 10)
 			return (1);
 		to_return = to_return * 10 + str[i] - '0';
 		i++;

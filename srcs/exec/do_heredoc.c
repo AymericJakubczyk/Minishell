@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 12:20:03 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/19 10:03:13 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/24 17:41:35 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	do_heredoc(t_parse *parse, t_exec *my_struct, t_list **my_env)
 		(my_struct->nbr_limiter + 1));
 	fill_all_limiter(parse, my_struct);
 	get_heredoc(my_struct, my_env);
-	//ft_printf("string hd : %s\n", ft_get_str_hd(parse, my_struct, 2));
 }
 
 static int	get_nbr_limiter(t_parse *parse)
@@ -64,7 +63,7 @@ static void	fill_all_limiter(t_parse *parse, t_exec *my_struct)
 	my_struct->all_limiter[j] = NULL;
 }
 
-void handler_heredoc(int sig)
+void	handler_heredoc(int sig)
 {
 	(void) sig;
 	g_errno = 130;
@@ -78,7 +77,7 @@ static void	get_heredoc(t_exec *my_struct, t_list **my_env)
 	char	*str;
 	char	*limiter;
 	int		stdin_copy;
-	
+
 	stdin_copy = dup(0);
 	i = 0;
 	//ft_printf("test\n");

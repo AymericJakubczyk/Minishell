@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:51:36 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/24 02:41:13 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/24 17:39:59 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	unset_cmd(t_list **my_env, t_parse *parse, int index, int *count)
 	t_list	*runner;
 	t_list	*tmp;
 
-	if (is_alpha(parse[index].str) == 0)
+	if (is_alpha(parse[index].str) == 0 || ft_strlen(parse[index].str) == 0)
 		return (ft_error(ERROR_22, parse[index].str, 1));
 	else if (is_alpha(parse[index].str) == 2)
 		return (ft_error(ERROR_25, parse[index].str, 2));
@@ -59,7 +59,7 @@ void	unset_cmd(t_list **my_env, t_parse *parse, int index, int *count)
 			first_var_unset(my_env);
 		tmp = runner;
 		runner = runner->next;
-		*count +=1;
+		*count += 1;
 	}
 }
 

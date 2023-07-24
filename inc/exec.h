@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 14:06:16 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/22 18:17:10 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/24 17:25:11 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ char	*expand_redirect(t_parse parse, t_list **my_env);
 void	single_cmd(t_parse *parse, t_list **my_env, t_exec *data);
 void	handle_forked_single_builtin(t_parse *parse, \
 		t_list **my_env, int runner, t_exec *data);
-void	handle_single_builtin(t_parse *parse, t_list **my_env, int runner, t_exec *data);
+void	handle_single_builtin(t_parse *parse \
+		, t_list **my_env, int runner, t_exec *data);
 void	exec_single_cmd(t_parse *parse, t_list **env, int runner, t_exec *data);
 
 //single_cmd_utils.c
@@ -83,12 +84,10 @@ int		which_builtin(t_parse *parse, int runner);
 int		get_ind_last_char(t_entry *entry);
 
 //exec_fork_utils.c
-int	do_builtin(t_parse *parse, t_list **my_env, char **arg, t_exec *data);
-int	get_start_cmd(t_parse *parse, int num_cmd);
+int		do_builtin(t_parse *parse, t_list **my_env, char **arg, t_exec *data);
+int		get_start_cmd(t_parse *parse, int num_cmd);
 
-
-
-void		handler_fork(int sig);
-void		handler_fork_slash(int sig);
+void	handler_fork(int sig);
+void	handler_fork_slash(int sig);
 
 #endif

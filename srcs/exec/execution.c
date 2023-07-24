@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 12:38:49 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/24 01:31:54 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/24 14:30:07 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,16 @@ void	ex_child(t_parse *parse, t_list **env, int runner, t_exec *data)
 	arg = get_arg(parse);
 	if (execve(path, arg, data->env) == -1)
 	{
-		ft_error(strerror(errno), parse[runner].str, errno);
-		exit(g_errno);
+		if (ft_strlen(parse[runner].str) != 0)
+		{
+			ft_error(strerror(errno), parse[runner].str, errno);
+			exit(g_errno);
+		}
+		else
+		{
+			ft_error(ERROR_12, "\'\'", 127);
+			exit(g_errno);
+		}
 	}
 }
 

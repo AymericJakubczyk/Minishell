@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 15:18:09 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/22 18:25:11 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/24 17:40:11 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,14 @@ void	ft_export(t_list **my_env, t_parse *parse)
 	tmp = *my_env;
 	g_errno = 0;
 	runner = 1;
-	if (!parse[runner].str || parse[runner].type != CMD_ARG)
+	if (!parse[runner].str || parse[runner].type != CMD_ARG || \
+		is_two_dash(parse[runner].str))
 		return (ft_print_export(my_env));
 	while (parse[runner].str)
 	{
-		if (parse[runner].type == CMD_ARG)
+		if (parse[runner].type == CMD_ARG && parse[runner].str[0] == '-')
+			ft_error(ERROR_25, parse[runner].str, 2);
+		else if (parse[runner].type == CMD_ARG)
 			check_export_type(my_env, parse, runner, tmp);
 		runner++;
 	}
@@ -115,4 +118,13 @@ char	**dup_env_sort(char **array, t_list **my_env)
 		i++;
 	}
 	return (array);
+}
+
+int	is_two_dash(char *str)
+{
+	if (ft_strlen(str) == 2)
+		if (str[0] == '-')
+			if (str[1] == '-')
+				return (1);
+	return (0);
 }

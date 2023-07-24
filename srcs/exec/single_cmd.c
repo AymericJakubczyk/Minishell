@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 18:46:17 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/24 03:13:21 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/24 17:48:40 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,16 @@
 
 void	next_handle_forked_single_builtin(t_parse *parse, \
 		t_list **my_env, int runner);
-void	exec_single_cmd(t_parse *parse, t_list **env, int runner, t_exec *data);
+void	exec_single_cmd(t_parse *parse, t_list **env, \
+		int runner, t_exec *data);
 
 void	single_cmd(t_parse *parse, t_list **my_env, t_exec *data)
 {
 	single_cmd_execution(parse, my_env, data);
 }
 
-void	handle_single_builtin(t_parse *parse, t_list **my_env, int runner, t_exec *data)
+void	handle_single_builtin(t_parse *parse, \
+		t_list **my_env, int runner, t_exec *data)
 {
 	if (!check_all_redirect_without_fork(parse, my_env))
 		return ;
@@ -135,16 +137,19 @@ int	find_arg(t_parse *parse)
 	while (parse[runner].str)
 	{
 		if (parse[runner].type == CMD_ARG)
+		{
 			if (parse[runner].str[index] == '-')
 			{
-				while(parse[runner].str[index])
+				while (parse[runner].str[index])
 					index++;
-				if (index == 2 && parse[runner].str[0] == '-' && parse[runner].str[1] == '-')
+				if (index == 2 && parse[runner].str[0] == '-' \
+					&& parse[runner].str[1] == '-')
 					return (0);
 				if (index >= 2)
 					return (ft_error(ERROR_25, parse[runner].str, 2), -1);
 				index = 0;
 			}
+		}
 		runner++;
 	}
 	return (0);

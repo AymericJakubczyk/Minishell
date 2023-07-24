@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:11:04 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/23 00:20:22 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/24 17:26:15 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,14 @@ void	minishell(t_list **my_env, char **env, t_exec *data)
 			add_history(cmd);
 		parse_and_exec(cmd, my_env, data);
 	}
-	if (!cmd) //if CTRL-D
+	if (!cmd)
 	{
 		ft_printf("exit\n");
 		rl_clear_history();
 	}
 	free(cmd);
 }
+//if CTRL-D
 
 void	handler(int sig)
 {
@@ -100,15 +101,15 @@ void	free_all(char **str)
 		free(str);
 }
 
-void	print_all(char **str)
-{
-	int i;
+// void	print_all(char **str)
+// {
+// 	int i;
 
-	i = 0;
-	ft_printf("NYCTALOPE\n");
-	while (str && str[i])
-	{
-		ft_printf("%s\n", str[i]);
-		i++;
-	}
-}
+// 	i = 0;
+// 	ft_printf("NYCTALOPE\n");
+// 	while (str && str[i])
+// 	{
+// 		ft_printf("%s\n", str[i]);
+// 		i++;
+// 	}
+// }

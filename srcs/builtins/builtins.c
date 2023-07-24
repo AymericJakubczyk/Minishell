@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:22:48 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/24 01:11:56 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/24 17:39:42 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	ft_env(t_list **env, t_parse *parse)
 
 	index = 0;
 	runner = *env;
-	while(parse[index].str && parse[index].type != PIPEE)
+	while (parse[index].str && parse[index].type != PIPEE)
 	{
 		if (parse[index].type == CMD_ARG)
 		{

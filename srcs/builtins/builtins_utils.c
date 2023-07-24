@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 21:47:06 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/22 22:10:14 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/24 17:37:53 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,6 @@ char	*add_quotes(char *str)
 	output[++runner] = '\0';
 	return (output);
 }
-
-// char	*dup_char(char dup)
-// {
-// 	char	*output;
-
-// 	output = malloc(sizeof(char) * 1);
-// 	output[0] = dup;
-// 	output[1] = '\0';
-// 	return (output);
-// }
 
 int	equal(char *str)
 {
@@ -105,10 +95,7 @@ int	check_dir(char *str)
 
 void	do_ft_export(t_list **my_env, char *str)
 {
-	//t_list	*tmp;
-
 	g_errno = 0;
-	//	tmp = *my_env;
 	if (is_allready_export(my_env, str))
 		export_again(my_env, str);
 	else

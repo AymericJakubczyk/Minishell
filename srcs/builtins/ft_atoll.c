@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 11:46:25 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/24 01:30:03 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/24 17:37:20 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,9 @@ long long	ft_atoll(const char *str, t_list **my_env, t_exec *data)
 	return (to_return);
 }
 
-
 long long	is_overflow(const char *str, int sign)
 {
-	int	i;
+	int			i;
 	long long	to_return;
 
 	to_return = 0;
@@ -58,7 +57,8 @@ long long	is_overflow(const char *str, int sign)
 		i = 0;
 	while (ft_isdigit(str[i]))
 	{
-		if (to_return * sign != (to_return * sign * 10 + (str[i] - '0') * sign) / 10)
+		if (to_return * sign != \
+			(to_return * sign * 10 + (str[i] - '0') * sign) / 10)
 			return (1);
 		to_return = to_return * 10 + (str[i] - '0');
 		i++;

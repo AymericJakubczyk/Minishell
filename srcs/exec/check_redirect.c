@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 18:10:46 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/23 01:05:35 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/24 17:45:54 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,8 @@ int	size_expanded_redir(char *str, t_list **my_env)
 
 int	is_env_var(char *str, char quote)
 {
-	if (quote != '\'' && str[1] && (ft_isalnum(str[1]) || str[1] == '_' || str[1] == '?'))
+	if (quote != '\'' && str[1] && \
+		(ft_isalnum(str[1]) || str[1] == '_' || str[1] == '?'))
 		return (1);
 	return (0);
 }
