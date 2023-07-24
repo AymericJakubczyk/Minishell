@@ -96,6 +96,8 @@ static void	exec_cmd(t_parse *parse, int num_cmd, t_list **my_env, t_exec *data)
 	else
 		do_classique_pipe(num_cmd, data, OUT);
 	arg = get_arg(&parse[start_cmd]);
+	if (!arg)
+		return ;
 	if (do_builtin(&parse[start_cmd], my_env, arg, data))
 	{
 		ft_lstclear(my_env, free);
@@ -105,6 +107,8 @@ static void	exec_cmd(t_parse *parse, int num_cmd, t_list **my_env, t_exec *data)
 		exit(0);
 	}
 	path = get_path(arg[0], my_env, parse);
+	if (!path)
+		return ;
 	// double_close(&data->fd_in, &data->fd_out);
 	execve(path, arg, data->env);
 }

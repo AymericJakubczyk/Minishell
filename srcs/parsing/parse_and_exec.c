@@ -36,6 +36,12 @@ void	parse_and_exec(char *str, t_list **my_env, t_exec *data)
 	init_entry(entry, str);
 	if (!convert_entry_to_parse(entry, &parse))
 		return ;
+	if (check_parse(parse) == -1)
+	{
+		g_errno = 2;
+		free_all_parse(parse);
+		return ;
+	}
 	free_all_parse(parse);
 	expand(entry, &new_entry, my_env);
 	free(entry);

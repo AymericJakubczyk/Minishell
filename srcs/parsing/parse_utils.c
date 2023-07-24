@@ -68,10 +68,10 @@ void	set_type_utils(int type, int *i, t_parse *parse)
 void	set_type_utils2(int type, int *cmd, int *i, t_parse *parse)
 {
 	parse[*i].type = type;
-	if (*cmd == 0)
-		*cmd = 1;
-	else
+	if (type == PIPEE)
 		*cmd = 0;
+	else
+		*cmd = 1;
 	*i += 1;
 }
 
