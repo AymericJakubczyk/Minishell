@@ -16,7 +16,7 @@ static void	inc_size_after_chev(t_entry *entry, int *i, int *size);
 static void	inc_size_of_tild_value(t_list **my_env, int *i, int *size);
 static int	inc_size_of_var_value(t_list **my_env, t_entry *entry, int *i, \
 	int *size);
-static void	ft_increment(t_entry *entry, int *i, int *size);
+static void	ft_increment(t_entry *entry, int *i, int *size, t_list **my_env);
 
 int	get_expand_size(t_entry *entry, t_list **my_env)
 {
@@ -40,7 +40,7 @@ int	get_expand_size(t_entry *entry, t_list **my_env)
 				return (-1);
 		}
 		else
-			ft_increment(entry, &i, &size);
+			ft_increment(entry, &i, &size, my_env);
 	}
 	return (size);
 }
@@ -104,7 +104,7 @@ static int	inc_size_of_var_value(t_list **my_env, t_entry *entry, int *i, \
 	return (0);
 }
 
-static void	ft_increment(t_entry *entry, int *i, int *size)
+static void	ft_increment(t_entry *entry, int *i, int *size, t_list **my_env)
 {
 	char	quote;
 
@@ -112,7 +112,7 @@ static void	ft_increment(t_entry *entry, int *i, int *size)
 		(entry[*i].c == '\'' || entry[*i].c == '\"'))
 	{
 		quote = entry[*i].type;
-		if (entry[*i + 1].c && entry[*i + 1].type == quote && is_void(entry, i))
+		if (entry[*i + 1].c && entry[*i + 1].type == quote && is_void(entry, i, my_env))
 		{
 			*size += 1;
 		}
