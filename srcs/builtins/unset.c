@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:51:36 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/24 17:39:59 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/25 06:25:39 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,14 @@ void	unset_cmd(t_list **my_env, t_parse *parse, int index, int *count)
 	while (runner != NULL)
 	{
 		if (ft_strncmp(runner->content, parse[index].str, \
-		ft_strlen(parse[index].str)) == 0 && *count != 0)
+		ft_equal_size(runner->content)) == 0 && *count != 0)
 		{
 			free(runner->content);
 			free(runner);
 			tmp->next = runner->next;
 		}
 		else if (ft_strncmp(runner->content, parse[index].str, \
-		ft_strlen(parse[index].str)) == 0 && *count == 0)
+		ft_equal_size(runner->content)) == 0 && *count == 0)
 			first_var_unset(my_env);
 		tmp = runner;
 		runner = runner->next;

@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 18:46:17 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/24 17:48:40 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/25 06:11:37 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	handle_forked_single_builtin(t_parse *parse, \
 	pid = fork();
 	if (pid == -1)
 		exit (1);
-	if (pid == 0)
+	else if (pid == 0)
 	{
 		// if (!check_all_redirect(parse, my_env, data))
 		// 	exit (1);
@@ -62,9 +62,16 @@ void	handle_forked_single_builtin(t_parse *parse, \
 		ft_lstclear(my_env, free);
 		free_all_parse(parse);
 		rl_clear_history();
+		if (data->str_heredoc != NULL)
+			free_all(data->str_heredoc);
+		if (data->all_limiter)
+			free(data->all_limiter);
 		double_close(&data->fd_in, &data->fd_out);
 		exit (g_errno);
 	}
+	double_close(&data->fd_in, &data->fd_out);
+	// if (data->str_heredoc != NULL)
+	// 	free_all(data->str_heredoc);
 	waitpid(-1, &status, 0);
 	if (WIFEXITED(status))
 		g_errno = WEXITSTATUS(status);

@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:07:31 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/24 17:36:36 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/25 03:33:36 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,9 @@ void	ft_exit(t_parse *parse, t_list **my_env, \
 	}
 	if (count > 1)
 		ft_error(ERROR_23, "exit", 1);
+	free_all(data->str_heredoc);
+	free(data->all_limiter);
+	ft_dprintf("here");
 	ft_lstclear(my_env, free);
 	free_all_parse(data->parse);
 	rl_clear_history();
@@ -75,7 +78,7 @@ void	ft_exit(t_parse *parse, t_list **my_env, \
 }
 
 static void	next_exit(int runner, t_parse *parse, \
-			t_list **my_env, t_exec *data)
+		t_list **my_env, t_exec *data)
 {
 	long long	arg;
 	int			count;
@@ -99,6 +102,7 @@ static void	next_exit(int runner, t_parse *parse, \
 			ft_error(ERROR_18, "exit", 2);
 			ft_lstclear(my_env, free);
 			free_all_parse(data->parse);
+			free_all(data->str_heredoc);
 			rl_clear_history();
 			exit(2);
 		}

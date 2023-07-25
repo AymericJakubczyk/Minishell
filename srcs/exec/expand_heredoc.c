@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_heredoc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
+/*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 18:01:28 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/28 18:01:31 by ajakubcz         ###   ########.fr       */
+/*   Updated: 2023/07/25 04:53:27 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static char	*get_str_after_var(char *str, int *i);
 char	*expand_heredoc(char *str, t_list **my_env)
 {
 	char	*str_expanded;
+	char	*getenv;
 	int		i;
 
 	if (!var_in(str))
@@ -33,8 +34,11 @@ char	*expand_heredoc(char *str, t_list **my_env)
 		i += 2;
 	}
 	else
-		str_expanded = ft_strjoin2(str_expanded, ft_getenv(my_env, \
-		get_name_env_hd(str, &i), 1));
+	{
+		getenv = ft_getenv(my_env, get_name_env_hd(str, &i), 1);
+		if (getenv != NULL)
+			str_expanded = ft_strjoin2(str_expanded, getenv);
+	}
 	str_expanded = ft_strjoin2(str_expanded, get_str_after_var(str, &i));
 	return (free(str), str_expanded);
 }
