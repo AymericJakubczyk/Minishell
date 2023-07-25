@@ -134,16 +134,18 @@ int	is_void(t_entry *entry, int *ind, t_list **my_env)
 {
 	int	stock_ind;
 
-	stock_ind = *ind;
-	if (*ind - 1 < 0 || (entry[*ind - 1].type == WHITESPACE && entry[*ind - 1].context == NO_QUOTE))
+	stock_ind = ind[0];
+	if (ind[0] - 1 < 0 || (entry[ind[0] - 1].type == WHITESPACE && entry[ind[0] - 1].context == NO_QUOTE))
 	{
 		while (entry[stock_ind].c && ((entry[stock_ind].c == '$' && entry[stock_ind].context != SI_QUOTE) || ((entry[stock_ind].type == S_QUOTE || entry[stock_ind].type == D_QUOTE) && entry[stock_ind].context == NO_QUOTE)))
 		{
-			stock_ind++;
 			if (entry[stock_ind].c == '$' && entry[stock_ind].context == SI_QUOTE)
+				return (0);
+			if (entry[stock_ind].c == '$' && !good_char_env(entry, stock_ind))
 				return (0);
 			if (entry[stock_ind].c == '$' && !void_var(entry, &stock_ind, my_env))
 				return (0);
+			stock_ind++;
 		}
 		if (!entry[stock_ind].c || (entry[stock_ind].type == WHITESPACE && entry[stock_ind].context == NO_QUOTE))
 			return (*ind = stock_ind, 1);
@@ -157,38 +159,12 @@ int	void_var(t_entry *entry, int *ind, t_list **my_env)
 	char *value_env;
 
 	stock_ind = *ind;
-	//ft_dprintf("name env : %s\n", get_name_env(entry, &stock_ind));
 	value_env = ft_getenv(my_env, get_name_env(entry, &stock_ind), 1);
 	if (!value_env)
 		return (*ind = stock_ind, 1);
 	free(value_env);
 	return (0);
 }
-
-// int	is_void(t_entry *entry, int *ind, t_list **my_env)
-// {
-// 	int stock_ind;
-
-// 	stock_ind = *ind;
-// 	ft_dprintf("Test void\n");
-// 	if (*ind - 1 < 0 || (entry[*ind - 1].type == WHITESPACE && entry[*ind - 1].context == NO_QUOTE))
-// 	{
-// 		if (!entry[*ind + 2].c || (entry[*ind + 2].type == WHITESPACE && entry[*ind + 2].context == NO_QUOTE))
-// 			return (*ind += 2, 1);
-// 		else
-// 		{
-// 			while (entry[stock_ind].c && (entry[stock_ind].type == S_QUOTE || entry[stock_ind].type == D_QUOTE) && entry[stock_ind].context == NO_QUOTE)
-// 			{
-// 				stock_ind++;
-// 				if (entry[stock_ind].c == '$' && !void_var(entry, &stock_ind, my_env))
-// 					return (0);
-// 			}
-// 			if (!entry[stock_ind].c || (entry[stock_ind].type == WHITESPACE && entry[stock_ind].context == NO_QUOTE))
-// 				return (*ind = stock_ind, 1);
-// 		}
-// 	}
-// 	return (0);
-// }
 
 void	print_or_not(t_entry *entry, t_entry *new_entry, int *ind)
 {
@@ -197,9 +173,3 @@ void	print_or_not(t_entry *entry, t_entry *new_entry, int *ind)
 	else
 		ind[0]++;
 }
-
-// int	void_env(t_entry *entry, int *ind)
-// {
-// 	if (!good_char_env(entry, *ind))
-// 		return (0);
-// }
