@@ -15,6 +15,7 @@
 static void	exec_cmd(t_parse *parse, int num_cmd, \
 		t_list **my_env, t_exec *data);
 int			get_start_cmd(t_parse *parse, int num_cmd);
+char		*get_str_cmd(t_parse *parse);
 static void	wait_all(int nbr_cmd, t_exec *data);
 
 void	exec_with_forks(t_parse *parse, t_list **my_env, t_exec *data)
@@ -110,6 +111,30 @@ static void	exec_cmd(t_parse *parse, int num_cmd, t_list **my_env, t_exec *data)
 		return ;
 	// double_close(&data->fd_in, &data->fd_out);
 	execve(path, arg, data->env);
+	if (ft_strlen(get_str_cmd(&parse[start_cmd])) != 0)
+	{
+		ft_error(strerror(errno), get_str_cmd(&parse[start_cmd]), errno);
+		exit(g_errno);
+	}
+	else
+	{
+		ft_error(ERROR_12, "\'\'", 127);
+		exit(g_errno);
+	}
+}
+
+char *get_str_cmd(t_parse *parse)
+{
+	int i;
+
+	i = 0;
+	while (parse[i].str && parse[i].type != PIPEE)
+	{
+		if (parse[i].type == COMMAND)
+			return (parse[i].str);
+		i++;
+	}
+	return (NULL);
 }
 
 int	get_start_cmd(t_parse *parse, int num_cmd)

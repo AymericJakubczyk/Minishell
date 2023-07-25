@@ -21,6 +21,7 @@ static void	keep_redirection(t_entry *entry, t_entry *new_entry, int *i, \
 static void	else_fill_new_entry(t_entry *entry, t_entry *new_entry, int *ind, t_list **my_env);
 void	print_or_not(t_entry *entry, t_entry *new_entry, int *ind);
 int		void_var(t_entry *entry, int *ind, t_list **my_env);
+int		good_border_of_void(t_entry entry);
 
 int	fill_expand(t_entry *entry, t_entry *new_entry, t_list **my_env)
 {
@@ -135,7 +136,7 @@ int	is_void(t_entry *entry, int *ind, t_list **my_env)
 	int	stock_ind;
 
 	stock_ind = ind[0];
-	if (ind[0] - 1 < 0 || (entry[ind[0] - 1].type == WHITESPACE && entry[ind[0] - 1].context == NO_QUOTE))
+	if (ind[0] - 1 < 0 || good_border_of_void(entry[ind[0] - 1]))
 	{
 		while (entry[stock_ind].c && ((entry[stock_ind].c == '$' && entry[stock_ind].context != SI_QUOTE) || ((entry[stock_ind].type == S_QUOTE || entry[stock_ind].type == D_QUOTE) && entry[stock_ind].context == NO_QUOTE)))
 		{
@@ -147,10 +148,17 @@ int	is_void(t_entry *entry, int *ind, t_list **my_env)
 				return (0);
 			stock_ind++;
 		}
-		if (!entry[stock_ind].c || (entry[stock_ind].type == WHITESPACE && entry[stock_ind].context == NO_QUOTE))
+		if (!entry[stock_ind].c || good_border_of_void(entry[stock_ind]))
 			return (*ind = stock_ind, 1);
 	}
 		return (0);
+}
+
+int good_border_of_void(t_entry entry)
+{
+	if (entry.type != CHAR && entry.type != S_QUOTE && entry.type != D_QUOTE && entry.context == NO_QUOTE)
+		return (1);
+	return (0);
 }
 
 int	void_var(t_entry *entry, int *ind, t_list **my_env)
