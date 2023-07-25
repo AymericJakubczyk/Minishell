@@ -42,8 +42,6 @@ DIR_COLLECTOR = $(DIR_SRCS)collector/
 
 DIR_EXEC = $(DIR_SRCS)exec/
 
-DIR_EXEC_WITH_FORK = $(DIR_EXEC)with_fork/
-
 DIR_INCLUDES = ./inc/
 
 SRCS =			$(DIR_SRCS)main.c \
@@ -75,18 +73,19 @@ SRCS =			$(DIR_SRCS)main.c \
 				$(DIR_COLLECTOR)ft_garb_clear.c \
 				$(DIR_COLLECTOR)ft_garb_last.c \
 				$(DIR_COLLECTOR)ft_garb_new.c \
-				$(DIR_EXEC)start_exec.c \
-				$(DIR_EXEC)exec_utils.c \
 				$(DIR_EXEC)execution.c \
-				$(DIR_EXEC)do_heredoc.c \
-				$(DIR_EXEC)expand_heredoc.c \
-				$(DIR_EXEC)heredoc_utils.c \
-				$(DIR_EXEC)single_cmd.c \
-				$(DIR_EXEC)single_cmd_utils.c \
-				$(DIR_EXEC)check_redirect.c \
-				$(DIR_EXEC_WITH_FORK)exec_with_forks.c \
-				$(DIR_EXEC_WITH_FORK)do_redirect.c \
-				$(DIR_EXEC_WITH_FORK)exec_fork_utils.c \
+				$(DIR_EXEC)exec_utils.c \
+				$(DIR_EXEC)heredoc/do_heredoc.c \
+				$(DIR_EXEC)heredoc/expand_heredoc.c \
+				$(DIR_EXEC)heredoc/heredoc_utils.c \
+				$(DIR_EXEC)single_cmd/single_cmd.c \
+				$(DIR_EXEC)single_cmd/single_cmd_utils.c \
+				$(DIR_EXEC)single_cmd/start_exec.c \
+				$(DIR_EXEC)mult_cmd/exec_with_forks.c \
+				$(DIR_EXEC)mult_cmd/exec_fork_utils.c \
+				$(DIR_EXEC)redirections/do_redirect.c \
+				$(DIR_EXEC)redirections/check_redirect.c \
+				$(DIR_EXEC)signals/signals.c \
 
 OBJS =			$(patsubst %.c, $(DIR_OBJ)%.o, $(SRCS))
 
@@ -97,7 +96,7 @@ $(DIR_OBJ)%.o: %.c $(LIB) $(HEADERS)
 				$(CC) $(CFLAGS) -I inc -c $< -o $@
 
 $(NAME) :		$(LIB) $(OBJS)
-				$(CC) $(OBJS) -o $(NAME) -L./libft -lft -lreadline -fsanitize=address
+				$(CC) $(OBJS) -o $(NAME) -L./libft -lft -lreadline
 
 makelib:
 				$(MAKE) -C libft

@@ -26,7 +26,7 @@ int		how_many_cmds(t_parse *parse);
 void	ex_child(t_parse *parse, t_list **env, int runner, t_exec *data);
 
 //do_heredoc.c
-void	do_heredoc(t_parse *parse, t_exec *my_struct, t_list **my_env);
+int		do_heredoc(t_parse *parse, t_exec *data, t_list **my_env);
 
 //heredoc_utils.c
 int		quote_in(char *str);
@@ -86,6 +86,10 @@ int		get_ind_last_char(t_entry *entry);
 //exec_fork_utils.c
 int		do_builtin(t_parse *parse, t_list **my_env, char **arg, t_exec *data);
 int		get_start_cmd(t_parse *parse, int num_cmd);
+
+
+//signals.c
+void	signal_heredoc(int sig);
 
 void	handler_fork(int sig);
 void	handler_fork_slash(int sig);

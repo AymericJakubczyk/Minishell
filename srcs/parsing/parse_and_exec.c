@@ -49,11 +49,6 @@ void	parse_and_exec(char *str, t_list **my_env, t_exec *data)
 		return ;
 	free(new_entry);
 	execution(parse, my_env, data);
-	if (data->str_heredoc != NULL)
-		free_all(data->str_heredoc);
-	if (data->all_limiter)
-		free(data->all_limiter);
-	free_all_parse(parse);
 }
 
 int	convert_entry_to_parse(t_entry *entry, t_parse **parse)
