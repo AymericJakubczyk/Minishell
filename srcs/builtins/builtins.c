@@ -106,7 +106,7 @@ void	ft_cd(t_list **my_env, t_parse *parse)
 	count = 0;
 	flag = 0;
 	runner = 0;
-	while (parse[runner++].str)
+	while (parse[runner].str && parse[runner++].type != PIPEE)
 	{
 		if (parse[runner].type == CMD_ARG)
 		{
