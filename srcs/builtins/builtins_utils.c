@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 21:47:06 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/24 17:37:53 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/25 07:25:24 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	next_cd(t_list **my_env, char *str, char *oldpwd)
 	home = ft_getenv(my_env, "HOME", 0);
 	if (!home)
 		return ;
-	if (!str)
+	if (!str || ft_strncmp(str, "cd", 2) == 0)
 	{
 		if (chdir(home) != 0)
 			ft_error(ERROR_99, NULL, 1);
