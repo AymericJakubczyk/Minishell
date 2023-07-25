@@ -16,15 +16,18 @@ static int	get_nbr_limiter(t_parse *parse);
 static void	fill_all_limiter(t_parse *parse, t_exec *my_struct);
 static void	get_heredoc(t_exec *my_struct, t_list **my_env);
 
-void	do_heredoc(t_parse *parse, t_exec *my_struct, t_list **my_env)
+int	do_heredoc(t_parse *parse, t_exec *data, t_list **my_env)
 {
-	my_struct->nbr_limiter = get_nbr_limiter(parse);
-	my_struct->all_limiter = malloc(sizeof(char *) * \
-		(my_struct->nbr_limiter + 1));
-	my_struct->str_heredoc = malloc(sizeof(char *) * \
-		(my_struct->nbr_limiter + 1));
-	fill_all_limiter(parse, my_struct);
-	get_heredoc(my_struct, my_env);
+	data->nbr_limiter = get_nbr_limiter(parse);
+	data->all_limiter = malloc(sizeof(char *) * (data->nbr_limiter + 1));
+	if (!data->all_limiter)
+		return (-1);
+	data->str_heredoc = malloc(sizeof(char *) * (data->nbr_limiter + 1));
+	if (!data->str_heredoc)
+		return (free(data->all_limiter), -1);
+	fill_all_limiter(parse, data);
+	get_heredoc(data, my_env);
+	return (1);
 }
 
 static int	get_nbr_limiter(t_parse *parse)
@@ -63,13 +66,6 @@ static void	fill_all_limiter(t_parse *parse, t_exec *my_struct)
 	my_struct->all_limiter[j] = NULL;
 }
 
-void	handler_heredoc(int sig)
-{
-	(void) sig;
-	g_errno = 130;
-	close(0);
-}
-
 static void	get_heredoc(t_exec *my_struct, t_list **my_env)
 {
 	int		i;
@@ -87,7 +83,7 @@ static void	get_heredoc(t_exec *my_struct, t_list **my_env)
 	while (i < my_struct->nbr_limiter)
 	{
 		signal(SIGINT, SIG_IGN);
-		signal(SIGINT, handler_heredoc);
+		signal(SIGINT, signal_heredoc);
 		str = readline(">");
 		if (!str)
 		{

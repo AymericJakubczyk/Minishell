@@ -43,6 +43,11 @@ void	execution(t_parse *parse, t_list **my_env, t_exec *data)
 		exec_with_forks(parse, my_env, data);
 	else
 		single_cmd(parse, my_env, data);
+	if (data->str_heredoc)
+		free_all(data->str_heredoc);
+	if (data->all_limiter)
+		free(data->all_limiter);
+	free_all_parse(parse);
 }
 
 int	how_many_cmds(t_parse *parse)
