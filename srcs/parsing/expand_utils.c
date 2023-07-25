@@ -18,6 +18,11 @@ char	*get_name_env(t_entry *entry, int *i)
 
 	env_name = ft_strdup("");
 	*i += 1;
+	if (entry[*i].c && ft_isdigit(entry[*i].c))
+	{
+		*i += 1;
+		return(env_name);
+	}
 	while (ft_isalnum(entry[*i].c) || entry[*i].c == '_')
 	{
 		env_name = ft_strjoin2(env_name, char_to_str(entry[*i].c));
