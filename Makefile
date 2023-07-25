@@ -6,7 +6,7 @@
 #    By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/01 14:11:17 by ajakubcz          #+#    #+#              #
-#    Updated: 2023/07/24 01:33:08 by cprojean         ###   ########.fr        #
+#    Updated: 2023/07/25 02:18:23 by cprojean         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -97,7 +97,7 @@ $(DIR_OBJ)%.o: %.c $(LIB) $(HEADERS)
 				$(CC) $(CFLAGS) -I inc -c $< -o $@
 
 $(NAME) :		$(LIB) $(OBJS)
-				$(CC) $(OBJS) -o $(NAME) -L./libft -lft -lreadline
+				$(CC) $(OBJS) -o $(NAME) -L./libft -lft -lreadline 
 
 makelib:
 				$(MAKE) -C libft

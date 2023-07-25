@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 09:14:56 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/24 17:49:35 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/24 23:16:09 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	exec_with_forks(t_parse *parse, t_list **my_env, t_exec *data)
 		else if (pid == 0)
 		{
 			signal(SIGQUIT, SIG_DFL);
+			free(data->all_pid);
 			exec_cmd(parse, num_cmd, my_env, data);
 			exit(0);
 		}
@@ -60,6 +61,7 @@ void	exec_with_forks(t_parse *parse, t_list **my_env, t_exec *data)
 	close(data->pipes[0]);
 	close(data->pipes[1]);
 	wait_all(nbr_cmd, data);
+	free(data->all_pid);
 }
 //don't forget to secure pipe;
 
