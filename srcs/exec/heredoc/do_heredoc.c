@@ -21,10 +21,10 @@ int	do_heredoc(t_parse *parse, t_exec *data, t_list **my_env)
 	data->nbr_limiter = get_nbr_limiter(parse);
 	data->all_limiter = malloc(sizeof(char *) * (data->nbr_limiter + 1));
 	if (!data->all_limiter)
-		return (ft_error(ERROR_42, NULL, 2), -1);
+		return (ft_error(ERROR_42, NULL, 1), -1);
 	data->str_heredoc = malloc(sizeof(char *) * (data->nbr_limiter + 1));
 	if (!data->str_heredoc)
-		return (free(data->all_limiter), -1);
+		return (ft_error(ERROR_42, NULL, 1), free(data->all_limiter), -1);
 	fill_all_limiter(parse, data);
 	get_heredoc(data, my_env);
 	return (1);

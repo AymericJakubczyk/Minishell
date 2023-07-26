@@ -106,6 +106,8 @@ void	exec_single_cmd(t_parse *parse, t_list **env, int runner, t_exec *data)
 	int	pid;
 	int	status;
 
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	pid = fork();
 	if (pid == -1)
 		exit(1);
@@ -123,13 +125,20 @@ void	exec_single_cmd(t_parse *parse, t_list **env, int runner, t_exec *data)
 		double_close(&data->fd_in, &data->fd_out);
 		exit(0);
 	}
-	else
-	{
-		signal(SIGINT, SIG_IGN);
-		signal(SIGINT, handler_fork);
-		signal(SIGQUIT, handler_fork_slash);
-	}
 	waitpid(-1, &status, 0);
+	if (WIFSIGNALED(status))
+	{
+		if (WTERMSIG(status) == SIGINT)
+		{
+			g_errno = 130;
+			ft_dprintf("\n");
+		}
+		if (WTERMSIG(status) == SIGQUIT)
+		{
+			g_errno = 131;
+			ft_dprintf("Quit (core dumped)\n");
+		}
+	}
 	if (WIFEXITED(status))
 		g_errno = WEXITSTATUS(status);
 }

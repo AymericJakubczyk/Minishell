@@ -53,11 +53,14 @@ void	do_fork(t_parse *parse,int num_cmd, t_list **my_env, t_exec *data)
 {
 	int	pid;
 
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	pid = fork();
 	if (pid == -1)
 		ft_dprintf("error pid\n");
 	else if (pid == 0)
 	{
+		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		free(data->all_pid);
 		exec_cmd(parse, num_cmd, my_env, data);
@@ -73,8 +76,6 @@ void	do_fork(t_parse *parse,int num_cmd, t_list **my_env, t_exec *data)
 	else
 	{
 		data->all_pid[num_cmd] = pid;
-		signal(SIGINT, handler_fork);
-		signal(SIGQUIT, handler_fork_slash);
 		if (data->prec_fd)
 			close(data->prec_fd);
 		data->prec_fd = data->pipes[0];
@@ -84,28 +85,6 @@ void	do_fork(t_parse *parse,int num_cmd, t_list **my_env, t_exec *data)
 	}
 }
 //don't forget to secure pipe;
-
-void	handler_fork(int sig)
-{
-	write(2, "PPPPP", 5);
-	if (sig == SIGINT)
-	{
-		g_errno = 130;
-		ft_dprintf("\n");
-	}
-	//exit(0);
-}
-
-void	handler_fork_slash(int sig)
-{
-	write(2, "AAAAA", 5);
-	if (sig == SIGQUIT)
-	{
-		g_errno = 131;
-		ft_dprintf("Quit (core dumped salaud)\n");
-	}
-	//exit(0);
-}
 
 static void	exec_cmd(t_parse *parse, int num_cmd, t_list **my_env, t_exec *data)
 {
@@ -192,6 +171,19 @@ static void	wait_all(int nbr_cmd, t_exec *data)
 	{
 		waitpid(data->all_pid[i], &status, 0);
 		i++;
+	}
+	if (WIFSIGNALED(status))
+	{
+		if (WTERMSIG(status) == SIGINT)
+		{
+			g_errno = 130;
+			ft_dprintf("\n");
+		}
+		if (WTERMSIG(status) == SIGQUIT)
+		{
+			g_errno = 131;
+			ft_dprintf("Quit (core dumped)\n");
+		}
 	}
 	if (WIFEXITED(status))
 		g_errno = WEXITSTATUS(status);

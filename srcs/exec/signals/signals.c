@@ -18,3 +18,30 @@ void	signal_heredoc(int sig)
 	g_errno = 130;
 	close(0);
 }
+
+void	handler_fork(int sig)
+{
+	write(2, "PPPPP", 5);
+	if (sig == SIGINT)
+	{
+		g_errno = 130;
+		ft_dprintf("\n");
+	}
+	if (sig == SIGQUIT)
+	{
+		g_errno = 131;
+		ft_dprintf("Quit (core dumped salaud)\n");
+	}
+	//exit(0);
+}
+
+void	handler_fork_slash(int sig)
+{
+	write(2, "AAAAA", 5);
+	if (sig == SIGQUIT)
+	{
+		g_errno = 131;
+		ft_dprintf("Quit (core dumped salaud)\n");
+	}
+	//exit(0);
+}
