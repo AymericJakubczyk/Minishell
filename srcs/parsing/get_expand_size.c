@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 12:30:16 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/24 17:27:10 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/26 04:42:56 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,8 @@ static void	ft_increment(t_entry *entry, int *i, int *size, t_list **my_env)
 		(entry[*i].c == '\'' || entry[*i].c == '\"'))
 	{
 		quote = entry[*i].type;
-		if (entry[*i + 1].c && entry[*i + 1].type == quote && is_void(entry, i, my_env))
+		if (entry[*i + 1].c && entry[*i + 1].type == quote && \
+			is_void(entry, i, my_env))
 		{
 			*size += 1;
 		}
@@ -125,4 +126,3 @@ static void	ft_increment(t_entry *entry, int *i, int *size, t_list **my_env)
 		*size += 1;
 	}
 }
-			// 118 : *i += 2;

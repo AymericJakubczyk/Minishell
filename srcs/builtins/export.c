@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 15:18:09 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/24 17:40:11 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/26 05:47:22 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	ft_print_export(t_list **my_env)
 	i = 0;
 	array = malloc(sizeof(char *) * (ft_lstsize(export) + 1));
 	if (!array)
-		return ;
+		return (ft_error(ERROR_42, NULL, 2));
 	while (export)
 	{
 		array[i] = ft_strdup(export->content);
@@ -118,13 +118,4 @@ char	**dup_env_sort(char **array, t_list **my_env)
 		i++;
 	}
 	return (array);
-}
-
-int	is_two_dash(char *str)
-{
-	if (ft_strlen(str) == 2)
-		if (str[0] == '-')
-			if (str[1] == '-')
-				return (1);
-	return (0);
 }

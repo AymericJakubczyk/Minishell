@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 12:20:03 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/25 04:55:55 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/26 06:00:41 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	do_heredoc(t_parse *parse, t_exec *data, t_list **my_env)
 	data->nbr_limiter = get_nbr_limiter(parse);
 	data->all_limiter = malloc(sizeof(char *) * (data->nbr_limiter + 1));
 	if (!data->all_limiter)
-		return (-1);
+		return (ft_error(ERROR_42, NULL, 2), -1);
 	data->str_heredoc = malloc(sizeof(char *) * (data->nbr_limiter + 1));
 	if (!data->str_heredoc)
 		return (free(data->all_limiter), -1);

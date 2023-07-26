@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 23:55:37 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/24 17:28:17 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/26 04:44:06 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,6 @@ int	colapse_all(t_entry *entry, t_parse *parse)
 	set_type(parse, entry);
 	return (1);
 }
-	//print_parse(parse);
-	// if (check_parse(parse) == -1)
-	// 	return (g_errno = 2, 0);
 
 static char	*get_str(t_entry *entry, int *i, int j)
 {
@@ -72,35 +69,6 @@ static char	*get_str(t_entry *entry, int *i, int j)
 	if (!str)
 		ft_error(ERROR_42, NULL, 12);
 	return (str);
-}
-
-int	go_to_end_block(t_entry *entry)
-{
-	int	i;
-
-	i = 0;
-	if (entry[i].type == CHEV_IN && entry[i].context == NO_QUOTE)
-	{
-		i++;
-		if (entry[i].type == CHEV_IN && entry[i].context == NO_QUOTE)
-			return (2);
-		return (i);
-	}
-	if (entry[i].type == CHEV_OUT && entry[i].context == NO_QUOTE)
-	{
-		i++;
-		if (entry[i].type == CHEV_OUT && entry[i].context == NO_QUOTE)
-			return (2);
-		return (i);
-	}
-	while (entry[i].c != '\0' && !(entry[i].type == WHITESPACE && \
-			entry[i].context == NO_QUOTE) && !(entry[i].context == \
-			NO_QUOTE && (entry[i].type == CHEV_IN || entry[i].type == \
-			CHEV_OUT || entry[i].type == PIPE)))
-		i += 1;
-	if (i == 0)
-		return (1);
-	return (i);
 }
 
 static void	set_type(t_parse *parse, t_entry *entry)
@@ -163,7 +131,8 @@ static int	context_in_parse(t_entry *entry, t_parse *parse, int i)
 			j++;
 			ind_entry++;
 		}
-		while (entry[ind_entry].type == WHITESPACE && entry[ind_entry].context == NO_QUOTE)
+		while (entry[ind_entry].type == WHITESPACE && \
+			entry[ind_entry].context == NO_QUOTE)
 			ind_entry++;
 		ind_parse++;
 	}
@@ -171,5 +140,3 @@ static int	context_in_parse(t_entry *entry, t_parse *parse, int i)
 		return (SI_QUOTE);
 	return (entry[ind_entry].context);
 }
-//si = expand alors return SI_Quote pour eviter de 
-//l'interpreter et faie comme si c'etait un argument

@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 09:14:56 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/25 06:11:24 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/26 06:04:16 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	exec_with_forks(t_parse *parse, t_list **my_env, t_exec *data)
 
 	nbr_cmd = how_many_cmds(parse) + 1;
 	data->all_pid = malloc(sizeof(int) * nbr_cmd);
+	if (!data->all_pid)
+		return (ft_error(ERROR_42, NULL, 2));
 	data->nbr_cmd = nbr_cmd;
 	data->prec_fd = 0;
 	num_cmd = 0;

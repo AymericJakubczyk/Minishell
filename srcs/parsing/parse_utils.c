@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 17:02:11 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/22 04:28:34 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/26 04:29:22 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,17 +47,6 @@ int	size_of_parse(t_entry *entry)
 	}
 	return (nbr);
 }
-
-// void	set_type_utils(int type1, int type2, int *i, t_parse *parse)
-// {
-// 	parse[*i].type = type1;
-// 	*i += 1;
-// 	if (parse[*i].str)
-// 	{
-// 		parse[*i].type = type2;
-// 		*i += 1;
-// 	}
-// }
 
 void	set_type_utils(int type, int *i, t_parse *parse)
 {

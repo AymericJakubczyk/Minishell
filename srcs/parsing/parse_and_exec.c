@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 18:24:28 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/25 06:13:12 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/26 05:57:42 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,18 @@ void	parse_and_exec(char *str, t_list **my_env, t_exec *data)
 		ft_error(ERROR_42, NULL, 12);
 		return ;
 	}
+	init_parse(entry, parse, str);
+	expand(entry, &new_entry, my_env);
+	free(entry);
+	if (!convert_entry_to_parse(new_entry, &parse))
+		return ;
+	free(new_entry);
+	if (execution(parse, my_env, data) == -1)
+		free_all_parse(parse);
+}
+
+void	init_parse(t_entry *entry, t_parse *parse, char *str)
+{
 	init_entry(entry, str);
 	if (!convert_entry_to_parse(entry, &parse))
 		return ;
@@ -43,12 +55,6 @@ void	parse_and_exec(char *str, t_list **my_env, t_exec *data)
 		return ;
 	}
 	free_all_parse(parse);
-	expand(entry, &new_entry, my_env);
-	free(entry);
-	if (!convert_entry_to_parse(new_entry, &parse))
-		return ;
-	free(new_entry);
-	execution(parse, my_env, data);
 }
 
 int	convert_entry_to_parse(t_entry *entry, t_parse **parse)
@@ -69,7 +75,6 @@ int	convert_entry_to_parse(t_entry *entry, t_parse **parse)
 	return (1);
 }
 
-//TO REMOVE
 void	conver_parse_to_list(t_parse *parse, t_list **list)
 {
 	int	i;

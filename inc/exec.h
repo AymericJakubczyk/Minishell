@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 14:06:16 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/24 17:25:11 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/26 05:58:24 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ enum e_mode {
 };
 
 // execution.c
-void	execution(t_parse *parse, t_list **my_env, t_exec *data);
+int		execution(t_parse *parse, t_list **my_env, t_exec *data);
 int		how_many_cmds(t_parse *parse);
 void	ex_child(t_parse *parse, t_list **env, int runner, t_exec *data);
 
@@ -69,6 +69,7 @@ void	handle_forked_single_builtin(t_parse *parse, \
 void	handle_single_builtin(t_parse *parse \
 		, t_list **my_env, int runner, t_exec *data);
 void	exec_single_cmd(t_parse *parse, t_list **env, int runner, t_exec *data);
+int		find_arg(t_parse *parse);
 
 //single_cmd_utils.c
 int		dup_in(t_parse *parse, int runner, t_exec *data, t_list **my_env);
@@ -86,7 +87,6 @@ int		get_ind_last_char(t_entry *entry);
 //exec_fork_utils.c
 int		do_builtin(t_parse *parse, t_list **my_env, char **arg, t_exec *data);
 int		get_start_cmd(t_parse *parse, int num_cmd);
-
 
 //signals.c
 void	signal_heredoc(int sig);

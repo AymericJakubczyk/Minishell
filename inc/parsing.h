@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 15:52:05 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/22 17:39:22 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/26 04:47:45 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,20 +55,25 @@ char	*ft_strjoin3(char *s1, char *s2);
 char	*ft_strjoin4(char *s1, char *s2);
 int		ft_strcmp(char *s1, char*s2);
 
-//get_prompt.c
-char	*ft_get_prompt(t_list **my_env);
-
 //parse_and_exec.c
 void	parse_and_exec(char *str, t_list **my_env, t_exec *data);
-
-//check_syntax.c
-int		check_syntax_quote(char *str);
+void	init_parse(t_entry *entry, t_parse *parse, char *str);
+int		convert_entry_to_parse(t_entry *entry, t_parse **parse);
+void	conver_parse_to_list(t_parse *parse, t_list **list);
 
 //first_parse.c
 void	init_entry(t_entry *entry, char *str);
 
+//get_prompt.c
+char	*ft_get_prompt(t_list **my_env);
+
+//check_syntax.c
+int		check_syntax_quote(char *str);
+
 //second_parse.c
 int		colapse_all(t_entry *entry, t_parse *parse);
+
+//go_to_end_block.c
 int		go_to_end_block(t_entry *entry);
 
 //parse_errors.c
@@ -86,21 +91,27 @@ void	free_all_parse(t_parse *parse);
 
 //expand.c
 void	expand(t_entry *entry, t_entry **new_entry, t_list **my_env);
+int		is_void(t_entry *entry, int *ind, t_list **my_env);
+int		good_border_of_void(t_entry entry);
+int		void_var(t_entry *entry, int *ind, t_list **my_env);
+void	print_or_not(t_entry *entry, t_entry *new_entry, int *ind);
 
 //get_expand_size.c
 int		get_expand_size(t_entry *entry, t_list **my_env);
-
-//fill_expand.c
-int		fill_expand(t_entry *entry, t_entry *new_entry, t_list **my_env);
-int		is_void(t_entry *entry, int *ind, t_list **my_env);
 
 //expand_utils.c
 char	*get_name_env(t_entry *entry, int *i);
 void	copy_entry_value(t_entry *entry, t_entry *new_entry, int *i, int *j);
 int		good_char_env(t_entry *entry, int i);
 int		check_tild(t_entry *entry, int i);
-void	fill_value_env(t_entry *new_entry, int context, char *value_env, \
-	int *j);
+void	fill_value_env(t_entry *new_entry, \
+		int context, char *value_env, int *j);
+
+//fill_expand.c
+int		fill_expand(t_entry *entry, t_entry *new_entry, t_list **my_env);
+int		is_void(t_entry *entry, int *ind, t_list **my_env);
+void	else_fill_new_entry(t_entry *entry, t_entry *new_entry, int *ind, \
+		t_list **my_env);
 
 //print.c
 void	print_parse(t_parse *parse);

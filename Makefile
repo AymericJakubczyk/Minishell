@@ -6,7 +6,7 @@
 #    By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/01 14:11:17 by ajakubcz          #+#    #+#              #
-#    Updated: 2023/07/25 07:11:13 by cprojean         ###   ########.fr        #
+#    Updated: 2023/07/26 05:52:36 by cprojean         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,12 +60,15 @@ SRCS =			$(DIR_SRCS)main.c \
 				$(DIR_PARSING)expand_utils.c \
 				$(DIR_PARSING)utils.c \
 				$(DIR_PARSING)print.c \
+				$(DIR_PARSING)go_to_end_block.c \
 				$(DIR_BUILTINS)builtins.c \
 				$(DIR_BUILTINS)export.c \
 				$(DIR_BUILTINS)export_utils.c \
 				$(DIR_BUILTINS)export_utils2.c \
 				$(DIR_BUILTINS)unset.c \
 				$(DIR_BUILTINS)ft_exit.c \
+				$(DIR_BUILTINS)ft_exit_utils.c \
+				$(DIR_BUILTINS)ft_cd.c \
 				$(DIR_BUILTINS)ft_getenv.c \
 				$(DIR_BUILTINS)builtins_utils.c \
 				$(DIR_BUILTINS)ft_atoll.c \
@@ -96,7 +99,7 @@ $(DIR_OBJ)%.o: %.c $(LIB) $(HEADERS)
 				$(CC) $(CFLAGS) -I inc -c $< -o $@
 
 $(NAME) :		$(LIB) $(OBJS)
-				$(CC) $(OBJS) -o $(NAME) -L./libft -lft -lreadline
+				$(CC) $(OBJS) -o $(NAME) -L./libft -lft -lreadline -fsanitize=address
 
 makelib:
 				$(MAKE) -C libft

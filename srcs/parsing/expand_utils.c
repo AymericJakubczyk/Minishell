@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
+/*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 12:55:11 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/06/27 12:55:44 by ajakubcz         ###   ########.fr       */
+/*   Updated: 2023/07/26 04:40:25 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*get_name_env(t_entry *entry, int *i)
 	if (entry[*i].c && ft_isdigit(entry[*i].c))
 	{
 		*i += 1;
-		return(env_name);
+		return (env_name);
 	}
 	while (ft_isalnum(entry[*i].c) || entry[*i].c == '_')
 	{
@@ -57,7 +57,8 @@ int	check_tild(t_entry *entry, int i)
 	return (1);
 }
 
-void	fill_value_env(t_entry *new_entry, int context, char *value_env, int *j)
+void	fill_value_env(t_entry *new_entry, \
+		int context, char *value_env, int *j)
 {
 	int	i;
 

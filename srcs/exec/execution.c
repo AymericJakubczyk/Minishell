@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 12:38:49 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/24 14:30:07 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/26 05:58:38 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,17 @@ void	print_all_data(char **all_limiter, char **str_heredoc)
 	}
 }
 
-void	execution(t_parse *parse, t_list **my_env, t_exec *data)
+int	execution(t_parse *parse, t_list **my_env, t_exec *data)
 {
 	int	pipes;
 
 	data->parse = parse;
 	if (heredoc_in(parse))
 	{
-		do_heredoc(parse, data, my_env);
+		if (do_heredoc(parse, data, my_env) != 1)
+			return (-1);
 		if (g_errno == 130)
-			return ;
+			return (-2);
 	}
 	pipes = how_many_cmds(parse);
 	if (pipes != 0)
@@ -48,6 +49,7 @@ void	execution(t_parse *parse, t_list **my_env, t_exec *data)
 	if (data->all_limiter)
 		free(data->all_limiter);
 	free_all_parse(parse);
+	return (0);
 }
 
 int	how_many_cmds(t_parse *parse)

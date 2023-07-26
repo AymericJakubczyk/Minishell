@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:03:50 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/24 17:39:18 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/26 01:58:19 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,13 @@ void	print_it(char **array, t_list **my_env)
 		free(printable);
 		i++;
 	}
+}
+
+int	is_two_dash(char *str)
+{
+	if (ft_strlen(str) == 2)
+		if (str[0] == '-')
+			if (str[1] == '-')
+				return (1);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 15:06:32 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/21 21:05:35 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/26 05:46:53 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	*ft_str_skip_add(char *str)
 	count = ft_strlen(str);
 	output = malloc(sizeof(char) * count + 1);
 	if (!output)
-		return (NULL);
+		return (ft_error(ERROR_42, NULL, 2), NULL);
 	while (runner < count)
 	{
 		if (str[runner] == '+')

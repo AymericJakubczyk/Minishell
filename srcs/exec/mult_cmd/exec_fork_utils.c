@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 17:34:47 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/24 03:00:54 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/26 06:02:11 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ char	**get_arg(t_parse *parse)
 		return (NULL);
 	arg = malloc(sizeof(char *) * (size + 1));
 	if (!arg)
-		return (NULL);
+		return (ft_error(ERROR_42, NULL, 2), NULL);
 	fill_arg(parse, arg);
 	return (arg);
 }

@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:51:36 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/25 06:25:39 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/26 04:47:02 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,16 @@ void	ft_unset(t_list **my_env, t_parse *parse)
 	while (parse[index].str && parse[index].type != PIPEE)
 	{
 		if (parse[index].type == CMD_ARG)
-			unset_cmd(my_env, parse, index, &count);
+		{
+			if (is_alpha(parse[index].str) == 0 || \
+				ft_strlen(parse[index].str) == 0 || \
+				ft_isdigit(parse[index].str[0]))
+				return (ft_error(ERROR_22, parse[index].str, 1));
+			else if (is_alpha(parse[index].str) == 2)
+				return (ft_error(ERROR_25, parse[index].str, 2));
+			else
+				unset_cmd(my_env, parse, index, &count);
+		}
 		index++;
 	}
 }
@@ -37,10 +46,6 @@ void	unset_cmd(t_list **my_env, t_parse *parse, int index, int *count)
 	t_list	*runner;
 	t_list	*tmp;
 
-	if (is_alpha(parse[index].str) == 0 || ft_strlen(parse[index].str) == 0 || ft_isdigit(parse[index].str[0]))
-		return (ft_error(ERROR_22, parse[index].str, 1));
-	else if (is_alpha(parse[index].str) == 2)
-		return (ft_error(ERROR_25, parse[index].str, 2));
 	runner = *my_env;
 	tmp = *my_env;
 	while (runner != NULL)

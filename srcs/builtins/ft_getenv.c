@@ -6,13 +6,11 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 15:07:28 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/21 00:31:35 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/26 02:56:53 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	ft_lstfree(t_list **my_env);
 
 char	*ft_getenv(t_list **my_env, char *get_me, int do_free)
 {
@@ -54,7 +52,7 @@ void	ft_dup_env(char **env, t_list **my_env)
 		new = ft_lstnew(ft_strdup(env[runner]), -1);
 		if (!new)
 		{
-			ft_lstfree(my_env);
+			ft_lstclear(my_env, free);
 			ft_error(ERROR_42, NULL, 12);
 			exit (42);
 		}
@@ -84,23 +82,6 @@ void	ft_create_env(t_list **my_env)
 	ft_lstadd_back(my_env, new);
 	new = ft_lstnew(shlvl, -1);
 	if (!new)
-		return (ft_lstfree(my_env), free(shlvl));
+		return (ft_lstclear(my_env, free), free(shlvl));
 	ft_lstadd_back(my_env, new);
-}
-
-void	ft_lstfree(t_list **my_env)
-{
-	t_list	*runner;
-	t_list	*tmp;
-
-	runner = *my_env;
-	while (runner->next != NULL)
-	{
-		tmp = runner;
-		free(runner->content);
-		runner = runner->next;
-		free(tmp);
-	}
-	free(runner->content);
-	free(runner);
 }
