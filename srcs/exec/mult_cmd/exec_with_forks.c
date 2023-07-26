@@ -17,12 +17,12 @@ static void	exec_cmd(t_parse *parse, int num_cmd, \
 int			get_start_cmd(t_parse *parse, int num_cmd);
 char		*get_str_cmd(t_parse *parse);
 static void	wait_all(int nbr_cmd, t_exec *data);
+void			do_fork(t_parse *parse,int num_cmd, t_list **my_env, t_exec *data);
 
 void	exec_with_forks(t_parse *parse, t_list **my_env, t_exec *data)
 {
 	int	nbr_cmd;
 	int	num_cmd;
-	int	pid;
 
 	nbr_cmd = how_many_cmds(parse) + 1;
 	data->all_pid = malloc(sizeof(int) * nbr_cmd);
@@ -34,36 +34,7 @@ void	exec_with_forks(t_parse *parse, t_list **my_env, t_exec *data)
 	while (num_cmd < nbr_cmd)
 	{
 		pipe(data->pipes);
-		//signal(SIGINT, SIG_IGN);
-		pid = fork();
-		if (pid == -1)
-			ft_printf("error pid\n");
-		else if (pid == 0)
-		{
-			signal(SIGQUIT, SIG_DFL);
-			free(data->all_pid);
-			exec_cmd(parse, num_cmd, my_env, data);
-			if (data->str_heredoc != NULL)
-				free_all(data->str_heredoc);
-			if (data->all_limiter)
-				free(data->all_limiter);
-			free_all_parse(parse);
-			ft_lstclear(my_env, free);
-			rl_clear_history();
-			exit(0);
-		}
-		else
-		{
-			data->all_pid[num_cmd] = pid;
-			signal(SIGINT, handler_fork);
-			signal(SIGQUIT, handler_fork_slash);
-			if (data->prec_fd)
-				close(data->prec_fd);
-			data->prec_fd = data->pipes[0];
-			if (num_cmd == data->nbr_cmd - 1)
-				close(data->pipes[0]);
-			close(data->pipes[1]);
-		}
+		do_fork(parse, num_cmd, my_env, data);
 		num_cmd++;
 	}
 	if (data->prec_fd)
@@ -75,22 +46,64 @@ void	exec_with_forks(t_parse *parse, t_list **my_env, t_exec *data)
 	// 	free_all(data->str_heredoc);
 	// if (data->all_limiter)
 	// 	free(data->all_limiter);
-	// print_all(data->all_limiter);
 	free(data->all_pid);
+}
+
+void	do_fork(t_parse *parse,int num_cmd, t_list **my_env, t_exec *data)
+{
+	int	pid;
+
+	pid = fork();
+	if (pid == -1)
+		ft_dprintf("error pid\n");
+	else if (pid == 0)
+	{
+		signal(SIGQUIT, SIG_DFL);
+		free(data->all_pid);
+		exec_cmd(parse, num_cmd, my_env, data);
+		if (data->str_heredoc != NULL)
+			free_all(data->str_heredoc);
+		if (data->all_limiter)
+			free(data->all_limiter);
+		free_all_parse(parse);
+		ft_lstclear(my_env, free);
+		rl_clear_history();
+		exit(0);
+	}
+	else
+	{
+		data->all_pid[num_cmd] = pid;
+		signal(SIGINT, handler_fork);
+		signal(SIGQUIT, handler_fork_slash);
+		if (data->prec_fd)
+			close(data->prec_fd);
+		data->prec_fd = data->pipes[0];
+		if (num_cmd == data->nbr_cmd - 1)
+			close(data->pipes[0]);
+		close(data->pipes[1]);
+	}
 }
 //don't forget to secure pipe;
 
 void	handler_fork(int sig)
 {
-	(void) sig;
-	ft_printf("\n");
+	write(2, "PPPPP", 5);
+	if (sig == SIGINT)
+	{
+		g_errno = 130;
+		ft_dprintf("\n");
+	}
 	//exit(0);
 }
 
 void	handler_fork_slash(int sig)
 {
-	(void) sig;
-	ft_printf("Quit (core dumped)\n");
+	write(2, "AAAAA", 5);
+	if (sig == SIGQUIT)
+	{
+		g_errno = 131;
+		ft_dprintf("Quit (core dumped salaud)\n");
+	}
 	//exit(0);
 }
 
