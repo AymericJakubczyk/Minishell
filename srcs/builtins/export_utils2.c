@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:03:50 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/26 01:58:19 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/26 23:04:40 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ void	print_it(char **array, t_list **my_env)
 	while (i < ft_lstsize(*my_env))
 	{
 		printable = add_quotes(array[i]);
+		if (!printable)
+			return ;
 		ft_putstr_fd("declare -x ", 1);
 		ft_putstr_fd(printable, 1);
 		ft_putchar_fd('\n', 1);

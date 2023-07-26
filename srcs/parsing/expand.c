@@ -6,26 +6,28 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 15:13:46 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/26 04:42:38 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/26 22:50:07 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	expand(t_entry *entry, t_entry **new_entry, t_list **my_env)
+int	expand(t_entry *entry, t_entry **new_entry, t_list **my_env)
 {
 	int	size;
 
 	size = get_expand_size(entry, my_env);
 	if (size == -1)
-		return ;
+		return (-1);
 	*new_entry = malloc(sizeof(t_entry) * (size + 1));
-	if (!new_entry)
+	if (*new_entry == NULL)
 	{
-		ft_error(ERROR_42, NULL, 12);
-		return ;
+		ft_dprintf("oscour");
+		ft_error(ERROR_42, NULL, 1);
+		return (-1);
 	}
 	fill_expand(entry, *new_entry, my_env);
+	return (0);
 }
 
 int	is_void(t_entry *entry, int *ind, t_list **my_env)

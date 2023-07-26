@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 18:24:28 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/26 05:57:42 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/26 22:55:17 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,13 @@ void	parse_and_exec(char *str, t_list **my_env, t_exec *data)
 	entry = malloc(sizeof(t_entry) * (ft_strlen(str) + 1));
 	if (!entry)
 	{
-		ft_error(ERROR_42, NULL, 12);
+		ft_error(ERROR_42, NULL, 1);
 		return ;
 	}
-	init_parse(entry, parse, str);
-	expand(entry, &new_entry, my_env);
+	if (init_parse(entry, parse, str) == -1)
+		return ;
+	if (expand(entry, &new_entry, my_env) == -1)
+		return (free(entry));
 	free(entry);
 	if (!convert_entry_to_parse(new_entry, &parse))
 		return ;
@@ -42,19 +44,20 @@ void	parse_and_exec(char *str, t_list **my_env, t_exec *data)
 		free_all_parse(parse);
 }
 
-void	init_parse(t_entry *entry, t_parse *parse, char *str)
+int	init_parse(t_entry *entry, t_parse *parse, char *str)
 {
 	init_entry(entry, str);
 	if (!convert_entry_to_parse(entry, &parse))
-		return ;
+		return (-1);
 	if (check_parse(parse) == -1)
 	{
 		g_errno = 2;
 		free(entry);
 		free_all_parse(parse);
-		return ;
+		return (-1);
 	}
 	free_all_parse(parse);
+	return (0);
 }
 
 int	convert_entry_to_parse(t_entry *entry, t_parse **parse)

@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 15:52:05 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/26 04:47:45 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/26 22:54:07 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int		ft_strcmp(char *s1, char*s2);
 
 //parse_and_exec.c
 void	parse_and_exec(char *str, t_list **my_env, t_exec *data);
-void	init_parse(t_entry *entry, t_parse *parse, char *str);
+int		init_parse(t_entry *entry, t_parse *parse, char *str);
 int		convert_entry_to_parse(t_entry *entry, t_parse **parse);
 void	conver_parse_to_list(t_parse *parse, t_list **list);
 
@@ -90,7 +90,7 @@ void	set_type_utils2(int type, int *cmd, int *i, t_parse *parse);
 void	free_all_parse(t_parse *parse);
 
 //expand.c
-void	expand(t_entry *entry, t_entry **new_entry, t_list **my_env);
+int		expand(t_entry *entry, t_entry **new_entry, t_list **my_env);
 int		is_void(t_entry *entry, int *ind, t_list **my_env);
 int		good_border_of_void(t_entry entry);
 int		void_var(t_entry *entry, int *ind, t_list **my_env);

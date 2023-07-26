@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 18:10:46 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/24 23:39:02 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/26 06:39:07 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ char	*expand_redirect(t_parse parse, t_list **my_env)
 	(size_expanded_redir(parse.str, my_env) + 1));
 	if (!entry)
 	{
-		return (NULL);
+		return (ft_error(ERROR_42, NULL, 1), NULL);
 	}
 	fill_expanded_redir(entry, parse.str, my_env);
 	if (!check_expanded_redir(entry))

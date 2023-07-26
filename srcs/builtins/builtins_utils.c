@@ -6,13 +6,13 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 21:47:06 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/26 01:59:41 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/26 23:04:55 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*dup_char(char dup);
+static char	*fill_quoter(char *str, int size, char *output);
 
 char	*add_quotes(char *str)
 {
@@ -20,11 +20,25 @@ char	*add_quotes(char *str)
 	char	*output;
 	int		runner;
 
+	output = NULL;
 	if (ft_strlen(str) == (size_t)ft_equal_size(str))
 		return (ft_strdup(str));
 	runner = 0;
 	size = ft_strlen(str);
+	fill_quoter(str, size, output);
+	if (output == NULL)
+		return (ft_error(ERROR_42, NULL, 1), NULL);
+	return (output);
+}
+
+static char	*fill_quoter(char *str, int size, char *output)
+{
+	int	runner;
+	
+	runner = 0;
 	output = malloc(sizeof(char) * (size + 3));
+	if (!output)
+		return (NULL);
 	while (str[runner] && str[runner] != '=')
 	{
 		output[runner] = str[runner];
