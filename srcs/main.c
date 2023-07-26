@@ -70,6 +70,7 @@ void	minishell(t_list **my_env, char **env, t_exec *data)
 void	handler(int sig)
 {
 	(void) sig;
+	g_errno = 130;
 	ft_printf("\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);
