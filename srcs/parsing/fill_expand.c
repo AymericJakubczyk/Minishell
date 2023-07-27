@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 12:34:24 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/26 04:44:51 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/26 23:49:29 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static int	fill_with_env_value(t_entry *entry, t_entry *new_entry, \
 		name_env = get_name_env(entry, &ind[0]);
 		if (!name_env)
 		{
-			ft_error(ERROR_42, NULL, 12);
+			ft_error(ERROR_42, NULL, 1);
 			return (-1);
 		}
 		fill_value_env(new_entry, context, ft_getenv(my_env, name_env, 1), \

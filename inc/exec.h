@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 14:06:16 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/26 05:58:24 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/27 01:03:57 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int		quote_in(char *str);
 char	*limiter_without_quote(char *str);
 char	*ft_get_str_hd(t_parse *parse, t_exec *my_struct, int num_cmd);
 int		heredoc_in(t_parse *parse);
+char	*next_expand_heredoc(t_list **my_env, char *str_expanded, \
+		char *str, int i);
 
 //expand_heredoc.c
 char	*expand_heredoc(char *str, t_list **my_env);

@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 23:55:37 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/26 04:44:06 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/27 04:32:42 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static char	*get_str(t_entry *entry, int *i, int j)
 	}
 	str = ft_strdup("");
 	if (!str)
-		return (NULL);
+		return (ft_error(ERROR_42, NULL, 1), NULL);
 	while (runner < j)
 	{
 		str = ft_strjoin2(str, char_to_str(entry[*i].c));

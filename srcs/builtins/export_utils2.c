@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:03:50 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/26 23:04:40 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/27 01:52:03 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,29 @@
 void	check_export_type(t_list **my_env, t_parse *parse, \
 		int runner, t_list *tmp)
 {
-	char	*export;
-
 	if (is_allready_export(my_env, parse[runner].str) && \
 	parse[runner].str[0] != '=')
 		export_again(my_env, parse[runner].str);
 	else if (is_addition(parse[runner].str) == 1)
 		add_to_existing_one(tmp, parse[runner].str);
-	else if (ft_equal_size(parse[runner].str) == 0 && \
+	else
+		next_check_export_type(my_env, parse, runner);
+}
+
+void	next_check_export_type(t_list **my_env, t_parse *parse, \
+		int runner)
+{
+	char	*export;
+
+	if (ft_equal_size(parse[runner].str) == 0 && \
 	is_alpha_export(parse[runner].str) != 0 && \
 	(parse[runner].str[0]) != '=')
-		ft_lstadd_back(my_env, \
-		ft_lstnew(ft_strdup(parse[runner].str), -1));
+	{
+		export = ft_strdup(parse[runner].str);	
+		if (!export)
+			return (ft_error(ERROR_42, NULL, 1));
+		ft_lstadd_back(my_env, ft_lstnew(export, -1));
+	}
 	else if (is_alpha_export(parse[runner].str) == 0)
 		ft_error(ERROR_22, parse[runner].str, 1);
 	else if (parse[runner].str[0] == '=')
@@ -34,6 +45,8 @@ void	check_export_type(t_list **my_env, t_parse *parse, \
 	else
 	{
 		export = ft_str_skip_add(parse[runner].str);
+		if (!export)
+			return (ft_error(ERROR_42, NULL, 1));
 		ft_lstadd_back(my_env, ft_lstnew(export, -1));
 	}
 }
