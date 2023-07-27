@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_redirect.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ajakubcz <ajakubcz@42Lyon.fr>              +#+  +:+       +#+        */
+/*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 06:19:43 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/27 06:20:28 by ajakubcz         ###   ########.fr       */
+/*   Updated: 2023/07/27 09:39:42 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*expand_redirect(t_parse parse, t_list **my_env)
 	}
 	fill_expanded_redir(entry, parse.str, my_env);
 	if (!check_expanded_redir(entry))
-		return (NULL);
+		return (free(entry), NULL);
 	expanded = colapse_entry(entry);
 	free(entry);
 	return (expanded);

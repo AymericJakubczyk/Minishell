@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:03:50 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/27 01:52:03 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/27 09:46:26 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	next_check_export_type(t_list **my_env, t_parse *parse, \
 		if (!export)
 			return (ft_error(ERROR_42, NULL, 1));
 		ft_lstadd_back(my_env, ft_lstnew(export, -1));
+		free(export);
 	}
 }
 

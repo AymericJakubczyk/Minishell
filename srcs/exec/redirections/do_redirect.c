@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 17:34:51 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/22 04:41:02 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/27 08:58:43 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,16 @@ t_exec *data, int num_cmd)
 
 	infile = get_last_file(parse, my_env, IN);
 	if (last_redir(parse, IN) == HEREDOC)
+	{
 		redirect_heredoc(data, num_cmd);
+		free(infile);
+	}
 	else
 	{
 		fd = open(infile, O_RDONLY);
 		data->fd_in = dup2(fd, STDIN_FILENO);
 		close(fd);
+		free(infile);
 	}
 }
 
