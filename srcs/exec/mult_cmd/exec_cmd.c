@@ -63,6 +63,10 @@ static void	verif_and_do_redir(t_parse *parse, int num_cmd, t_list **my_env, \
 		do_redirect_out(&parse[start_cmd], my_env, data);
 	else
 		do_classique_pipe(num_cmd, data, OUT);
+	if (data->prec_fd)
+		close(data->prec_fd);
+	close(data->pipes[0]);
+	close(data->pipes[1]);
 }
 
 static int	do_builtin(t_parse *parse, t_list **my_env, char **arg, \
