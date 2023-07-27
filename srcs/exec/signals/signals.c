@@ -32,7 +32,6 @@ void	handler_fork(int sig)
 		g_errno = 131;
 		ft_dprintf("Quit (core dumped salaud)\n");
 	}
-	//exit(0);
 }
 
 void	handler_fork_slash(int sig)
@@ -43,5 +42,4 @@ void	handler_fork_slash(int sig)
 		g_errno = 131;
 		ft_dprintf("Quit (core dumped salaud)\n");
 	}
-	//exit(0);
 }

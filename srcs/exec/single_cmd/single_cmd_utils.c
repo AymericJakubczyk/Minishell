@@ -26,27 +26,21 @@ void	double_close(int *file1, int *file2)
 	}
 }
 
-void	single_cmd_execution(t_parse *parse, t_list **my_env, t_exec *data)
+void	verif_status(int status)
 {
-	int	runner;
-
-	runner = 0;
-	if (!check_all_redirect_without_fork(parse, my_env))
+	if (WIFSIGNALED(status))
 	{
-		g_errno = 1;
-		return ;
-	}
-	while (parse[runner].str)
-	{
-		if (parse[runner].type == COMMAND)
+		if (WTERMSIG(status) == SIGINT)
 		{
-			if (which_builtin(parse, runner) == 1)
-				handle_single_builtin(parse, my_env, runner, data);
-			else if (which_builtin(parse, runner) == 2)
-				handle_forked_single_builtin(parse, my_env, runner, data);
-			else
-				exec_single_cmd(parse, my_env, runner, data);
+			g_errno = 130;
+			ft_dprintf("\n");
 		}
-		runner++;
+		if (WTERMSIG(status) == SIGQUIT)
+		{
+			g_errno = 131;
+			ft_dprintf("Quit (core dumped)\n");
+		}
 	}
+	if (WIFEXITED(status))
+		g_errno = WEXITSTATUS(status);
 }

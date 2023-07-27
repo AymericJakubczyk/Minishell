@@ -82,7 +82,6 @@ static char	*get_name_env_hd(char *str, int *i)
 		name_env = ft_strjoin2(name_env, char_to_str(str[*i]));
 		*i += 1;
 	}
-	ft_printf("name env : %s\n", name_env);
 	return (name_env);
 }
 
