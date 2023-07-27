@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 06:31:08 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/27 07:33:49 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/27 14:31:01 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ static char	**get_all_path(t_list **envp)
 		runner = runner->next;
 	}
 	if (!runner->content)
+		return (NULL);
+	if (!path)
 		return (NULL);
 	all_path = ft_split(&path[5], ':');
 	if (!all_path)

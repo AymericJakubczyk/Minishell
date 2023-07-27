@@ -6,13 +6,11 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 16:54:15 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/23 03:05:43 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/27 13:39:08 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-static int	ft_isspace(char c);
 
 int	ft_atoi(const char *str)
 {
@@ -43,7 +41,7 @@ int	ft_atoi(const char *str)
 	return (to_return * signe);
 }
 
-static int	ft_isspace(char c)
+int	ft_isspace(char c)
 {
 	if (c == '\t' || c == '\v' || c == '\n')
 		return (1);

@@ -6,13 +6,13 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 18:46:17 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/25 06:11:37 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/27 14:03:54 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	handle_single_builtin(t_parse *parse, t_list **my_env, int runner, \
+static int	handle_single_builtin(t_parse *parse, t_list **my_env, int runner, \
 								t_exec *data);
 static void	handle_forked_single_builtin(t_parse *parse, t_list **my_env, \
 											int runner, t_exec *data);
@@ -36,7 +36,10 @@ void	single_cmd(t_parse *parse, t_list **my_env, t_exec *data)
 		if (parse[runner].type == COMMAND)
 		{
 			if (which_builtin(parse, runner) == 1)
-				handle_single_builtin(parse, my_env, runner, data);
+			{
+				if (handle_single_builtin(parse, my_env, runner, data) == 1)
+					return ;
+			}
 			else if (which_builtin(parse, runner) == 2)
 				handle_forked_single_builtin(parse, my_env, runner, data);
 			else
@@ -46,7 +49,7 @@ void	single_cmd(t_parse *parse, t_list **my_env, t_exec *data)
 	}
 }
 
-static void	handle_single_builtin(t_parse *parse, t_list **my_env, int runner, \
+static int	handle_single_builtin(t_parse *parse, t_list **my_env, int runner, \
 									t_exec *data)
 {
 	if (ft_strcmp(parse[runner].str, "cd") == 0)
@@ -54,10 +57,13 @@ static void	handle_single_builtin(t_parse *parse, t_list **my_env, int runner, \
 	else if (ft_strcmp(parse[runner].str, "unset") == 0)
 		ft_unset(my_env, parse);
 	else if (ft_strcmp(parse[runner].str, "exit") == 0)
+	{
 		ft_exit(parse, my_env, NULL, data);
+		return (1);
+	}
 	else if (ft_strcmp(parse[runner].str, "export") == 0)
 		ft_export(my_env, parse);
-	return ;
+	return (0);
 }
 
 static void	handle_forked_single_builtin(t_parse *parse, t_list **my_env, \

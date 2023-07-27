@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 01:42:29 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/26 01:43:58 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/27 13:56:09 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,15 @@ int	count_args(t_parse *parse)
 int	is_num(char *str)
 {
 	int	runner;
+	int	flag;
 
 	runner = 0;
+	while (ft_isspace(str[runner]) == 1)
+		runner++;
+	flag = runner;
 	while (str[runner])
 	{
-		if (runner == 0 && (str[runner] == '-' || str[runner] == '+'))
+		if (runner == flag && (str[runner] == '-' || str[runner] == '+'))
 			runner++;
 		if (ft_isdigit(str[runner]) != 1)
 			return (1);

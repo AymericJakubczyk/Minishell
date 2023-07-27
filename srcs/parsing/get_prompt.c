@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 17:22:21 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/27 04:28:04 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/27 15:30:08 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,7 @@ char	*ft_get_prompt(t_list	**my_env)
 
 	user = ft_getenv(my_env, "USER", 0);
 	if (user == NULL)
-	{
 		user = ft_strdup("you");
-		return (ft_error(ERROR_42, NULL, 1), NULL);
-	}
 	path = ft_get_path();
 	if (!path)
 		return (free(user), ft_error(ERROR_42, NULL, 1), NULL);

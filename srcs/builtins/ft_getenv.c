@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 15:07:28 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/27 02:41:49 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/27 14:25:44 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	ft_create_env(t_list **my_env)
 	char	*shlvl;
 	t_list	*new;
 
-	pwd = ft_strjoin("PWD=", ft_pwd(0));
+	pwd = ft_strjoin4("PWD=", ft_pwd(0));
 	if (!pwd)
 	{
 		ft_error(ERROR_42, NULL, 1);
@@ -89,5 +89,5 @@ void	ft_create_env(t_list **my_env)
 	new = ft_lstnew(shlvl, -1);
 	if (!new)
 		return (ft_lstclear(my_env, free), free(shlvl));
-	ft_lstadd_back(my_env, new);
+	return (free(pwd), free(shlvl), ft_lstadd_back(my_env, new));
 }

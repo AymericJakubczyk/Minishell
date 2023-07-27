@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 12:38:49 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/27 03:59:27 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/27 14:45:21 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,10 @@ void	ex_child(t_parse *parse, t_list **env, int runner, t_exec *data)
 	arg = NULL;
 	path = get_path(parse[runner].str, env, data);
 	if (!path)
-		return ;
+	{
+		ft_error(ERROR_12, parse[runner].str, 127);
+		exit(g_errno);
+	}
 	arg = get_arg(parse);
 	if (!arg)
 		return (free(path));
@@ -86,14 +89,11 @@ void	ex_child(t_parse *parse, t_list **env, int runner, t_exec *data)
 	{
 		if (ft_strlen(parse[runner].str) != 0)
 		{
-			ft_error(strerror(errno), parse[runner].str, errno);
+			ft_error("command not found", parse[runner].str, 127);
 			exit(g_errno);
 		}
 		else
-		{
-			ft_error(ERROR_12, "\'\'", 127);
-			exit(g_errno);
-		}
+			return (ft_error(ERROR_12, "\'\'", 127), exit(g_errno));
 	}
 }
 

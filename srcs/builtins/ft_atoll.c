@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 11:46:25 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/24 17:37:20 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/27 15:26:36 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ long long	ft_atoll(const char *str, t_list **my_env, t_exec *data)
 	i = 0;
 	sign = 1;
 	to_return = 0;
+	while (ft_isspace(str[i]) == 1)
+		i++;
 	if (str[i] == '-' || str[i] == '+')
 	{
 		if (str[i] == '+')
@@ -30,13 +32,11 @@ long long	ft_atoll(const char *str, t_list **my_env, t_exec *data)
 		if (str[++i] == '+' || str[i] == '-')
 		{
 			ft_error(ERROR_18, "exit", 2);
-			ft_lstclear(my_env, free);
-			free_all_parse(data->parse);
-			rl_clear_history();
+			free_minishell(data, my_env);
 			exit(2);
 		}
 	}
-	to_return = is_overflow(str, sign);
+	to_return = is_overflow(&str[i], sign);
 	return (to_return);
 }
 
@@ -46,13 +46,9 @@ long long	is_overflow(const char *str, int sign)
 	long long	to_return;
 
 	to_return = 0;
-	if (sign == -1)
-		i = 1;
-	else if (sign == 2)
-	{
+	i = 0;
+	if (sign == 2)
 		sign = 1;
-		i = 1;
-	}
 	else
 		i = 0;
 	while (ft_isdigit(str[i]))

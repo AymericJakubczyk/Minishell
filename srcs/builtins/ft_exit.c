@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:07:31 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/26 02:43:20 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/27 15:26:37 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ void	ft_exit(t_parse *parse, t_list **my_env, \
 		runner++;
 	}
 	if (count > 1)
+	{
 		ft_error(ERROR_23, "exit", 1);
+		return ;
+	}
 	free_minishell(data, my_env);
 	exit(g_errno);
 }
