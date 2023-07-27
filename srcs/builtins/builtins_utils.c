@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 21:47:06 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/26 23:04:55 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/26 23:19:40 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*add_quotes(char *str)
 		return (ft_strdup(str));
 	runner = 0;
 	size = ft_strlen(str);
-	fill_quoter(str, size, output);
+	output = fill_quoter(str, size, output);
 	if (output == NULL)
 		return (ft_error(ERROR_42, NULL, 1), NULL);
 	return (output);

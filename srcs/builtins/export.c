@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 15:18:09 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/26 06:10:22 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/27 02:20:13 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	add_to_existing_one(t_list *tmp, char *str)
 void	export_again(t_list **my_env, char *str)
 {
 	t_list	*runner;
+	char	*content;
 
 	runner = *my_env;
 	while (runner != NULL)
@@ -65,7 +66,14 @@ void	export_again(t_list **my_env, char *str)
 		if (ft_strncmp(runner->content, str, ft_equal_size(str)) == 0)
 		{
 			free(runner->content);
-			runner->content = ft_strdup(str);
+			content = ft_strdup(str);
+			if (!content)
+			{
+				runner->type = -1;
+				return (ft_error(ERROR_42, NULL, 1));
+			}
+			runner->type = 1;
+			runner->content = content;
 			return ;
 		}
 		runner = runner->next;
@@ -75,6 +83,7 @@ void	export_again(t_list **my_env, char *str)
 void	ft_print_export(t_list **my_env)
 {
 	char	**array;
+	char	*content;
 	t_list	*export;
 	int		i;
 
@@ -85,7 +94,10 @@ void	ft_print_export(t_list **my_env)
 		return (ft_error(ERROR_42, NULL, 1));
 	while (export)
 	{
-		array[i] = ft_strdup(export->content);
+		content = ft_strdup(export->content);
+		if (!content)
+			return (ft_error(ERROR_42, NULL, 1), free_all_tab(array, i - 1));
+		array[i] = content;
 		export = export->next;
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 15:07:28 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/26 02:56:53 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/27 02:41:49 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	ft_dup_env(char **env, t_list **my_env)
 {
 	int		runner;
 	t_list	*new;
+	char	*env_str;
 
 	if (!env)
 	{
@@ -49,13 +50,14 @@ void	ft_dup_env(char **env, t_list **my_env)
 	runner = 0;
 	while (env[runner])
 	{
-		new = ft_lstnew(ft_strdup(env[runner]), -1);
+		env_str = ft_strdup (env[runner]);
+		if (!env_str)
+			return (ft_lstclear(my_env, free), ft_error(ERROR_42, NULL, 1), \
+			exit(g_errno));
+		new = ft_lstnew(env_str, 1);
 		if (!new)
-		{
-			ft_lstclear(my_env, free);
-			ft_error(ERROR_42, NULL, 12);
-			exit (42);
-		}
+			return (ft_lstclear(my_env, free), ft_error(ERROR_42, NULL, 1), \
+			exit(g_errno));
 		ft_lstadd_back(my_env, new);
 		runner++;
 	}
@@ -69,12 +71,16 @@ void	ft_create_env(t_list **my_env)
 
 	pwd = ft_strjoin("PWD=", ft_pwd(0));
 	if (!pwd)
-		return ;
+	{
+		ft_error(ERROR_42, NULL, 1);
+		exit(1);
+	}
 	shlvl = ft_strdup("SHLVL = 0");
 	if (!shlvl)
 	{
 		free(pwd);
-		return ;
+		ft_error(ERROR_42, NULL, 1);
+		exit(1);
 	}
 	new = ft_lstnew(pwd, -1);
 	if (!new)

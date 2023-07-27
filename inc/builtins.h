@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 15:40:43 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/26 02:55:19 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/27 01:52:09 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,10 @@ int			is_addition(char *str);
 //export_utils2.c
 void		check_export_type(t_list **my_env \
 			, t_parse *parse, int runner, t_list *tmp);
+void		next_check_export_type(t_list **my_env, t_parse *parse, \
+			int runner);
 int			ft_equal_ind(char *str);
 void		print_it(char **array, t_list **my_env);
-int			is_alpha_export(char *str);
 int			is_two_dash(char *str);
 
 //ft_atoll.c

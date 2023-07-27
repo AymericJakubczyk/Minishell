@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ajakubcz <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 11:52:45 by ajakubcz          #+#    #+#             */
-/*   Updated: 2022/11/30 20:54:43 by ajakubcz         ###   ########lyon.fr   */
+/*   Updated: 2023/07/27 02:07:06 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	get_nbr_parts(const char *s, char c);
 static int	set_fill_tab(char **tab, int i_part, const char *s, char c);
-static void	free_all_tab(char **tab, int i_part);
+void		free_all_tab(char **tab, int i_part);
 
 char	**ft_split(char const *s, char c)
 {
@@ -44,7 +44,7 @@ char	**ft_split(char const *s, char c)
 	return (tab);
 }
 
-static void	free_all_tab(char **tab, int i_part)
+void	free_all_tab(char **tab, int i_part)
 {
 	while (i_part >= 0)
 	{

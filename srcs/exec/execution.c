@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 12:38:49 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/26 05:58:38 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/27 03:59:27 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,11 @@ void	ex_child(t_parse *parse, t_list **env, int runner, t_exec *data)
 	if (!path)
 		return ;
 	arg = get_arg(parse);
+	if (!arg)
+	{
+		free(path);
+		return ;
+	}
 	if (execve(path, arg, data->env) == -1)
 	{
 		if (ft_strlen(parse[runner].str) != 0)

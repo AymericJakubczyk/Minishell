@@ -6,14 +6,15 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 17:34:47 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/26 06:02:11 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/27 04:03:21 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static int	get_nbr_arg(t_parse *parse);
-static void	fill_arg(t_parse *parse, char **arg);
+static int	fill_arg(t_parse *parse, char **arg);
+static int	fill_cmd_arg(t_parse *parse, char **arg);
 
 int	do_builtin(t_parse *parse, t_list **my_env, char **arg, t_exec *data)
 {
@@ -98,8 +99,9 @@ char	**get_arg(t_parse *parse)
 		return (NULL);
 	arg = malloc(sizeof(char *) * (size + 1));
 	if (!arg)
-		return (ft_error(ERROR_42, NULL, 2), NULL);
-	fill_arg(parse, arg);
+		return (ft_error(ERROR_42, NULL, 1), NULL);
+	if (fill_arg(parse, arg) == -1)
+		return (ft_error(ERROR_42, NULL, 1), NULL);
 	return (arg);
 }
 
@@ -119,7 +121,7 @@ static int	get_nbr_arg(t_parse *parse)
 	return (nbr);
 }
 
-static void	fill_arg(t_parse *parse, char **arg)
+static int	fill_arg(t_parse *parse, char **arg)
 {
 	int	i;
 	int	num_arg;
@@ -131,19 +133,41 @@ static void	fill_arg(t_parse *parse, char **arg)
 		if (parse[i].type == COMMAND)
 		{
 			arg[0] = ft_strdup(parse[i].str);
+			if (!arg[0])
+			{
+				free(arg);
+				return (-1);
+			}
 			num_arg++;
 		}
 		i++;
 	}
+	if (fill_cmd_arg(parse, arg) == -1)
+		return (-1);
+	return (0);
+}
+
+static int	fill_cmd_arg(t_parse *parse, char **arg)
+{
+	int	i;
+	int	num_arg;
+
+	num_arg = 1;
 	i = 0;
 	while (parse[i].str && parse[i].type != PIPEE)
 	{
 		if (parse[i].type == CMD_ARG)
 		{
 			arg[num_arg] = ft_strdup(parse[i].str);
+			if (!arg[num_arg])
+			{
+				free_all_tab(arg, num_arg);	
+				return (-1);
+			}
 			num_arg++;
 		}
 		i++;
 	}
 	arg[num_arg] = NULL;
+	return (0);
 }
