@@ -81,10 +81,7 @@ void	ex_child(t_parse *parse, t_list **env, int runner, t_exec *data)
 		return ;
 	arg = get_arg(parse);
 	if (!arg)
-	{
-		free(path);
-		return ;
-	}
+		return (free(path));
 	if (execve(path, arg, data->env) == -1)
 	{
 		if (ft_strlen(parse[runner].str) != 0)

@@ -106,7 +106,7 @@ $(DIR_OBJ)%.o: %.c $(LIB) $(HEADERS)
 				$(CC) $(CFLAGS) -I inc -c $< -o $@
 
 $(NAME) :		$(LIB) $(OBJS)
-				$(CC) $(OBJS) -o $(NAME) -L./libft -lft -lreadline
+				$(CC) $(OBJS) -o $(NAME) -L./libft -lft -lreadline -fsanitize=address
 
 makelib:
 				$(MAKE) -C libft

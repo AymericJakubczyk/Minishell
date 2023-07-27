@@ -86,5 +86,6 @@ static void	redirect_heredoc(t_exec *data, int num_cmd)
 	write(pipes[1], str, ft_strlen(str));
 	close(pipes[1]);
 	if (dup2(pipes[0], STDIN_FILENO) == -1)
-		ft_printf("Dup2 problem\n");
+		ft_dprintf("Dup2 problem\n");
+	close(pipes[0]);
 }

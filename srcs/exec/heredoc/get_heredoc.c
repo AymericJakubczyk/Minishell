@@ -38,6 +38,8 @@ void	get_heredoc(t_exec *data, t_list **my_env)
 		else
 			add_line_hd(data, &struct_hd, my_env);
 	}
+	dup2(struct_hd.stdin_copy, 0);
+	close(struct_hd.stdin_copy);
 	data->str_heredoc[struct_hd.i] = NULL;
 }
 
@@ -51,7 +53,11 @@ static int	check_signal_hd(t_exec *data, t_heredoc *struct_hd)
 		dup2(struct_hd->stdin_copy, 0);
 		close(struct_hd->stdin_copy);
 		free(struct_hd->limiter);
-		//free tout
+		if (data->str_heredoc)
+			free_all(data->str_heredoc);
+		if (data->all_limiter)
+			free(data->all_limiter);
+		free_all_parse(data->parse);
 		return (1);
 	}
 	else

@@ -67,6 +67,7 @@ int	check_all_redirect_without_fork(t_parse *parse, t_list **my_env)
 static int	check_redirect(t_parse parse, t_list **my_env, int mode)
 {
 	char	*expanded;
+	int		fd;
 
 	expanded = expand_redirect(parse, my_env);
 	if (!expanded)
@@ -76,10 +77,12 @@ static int	check_redirect(t_parse parse, t_list **my_env, int mode)
 		ft_dprintf("(s)Hell : %s: %s\n", expanded, strerror(errno));
 		return (free(expanded), 0);
 	}
-	if (mode == OUT && open(expanded, O_WRONLY | O_CREAT, 0644) == -1)
+	fd = open(expanded, O_WRONLY | O_CREAT, 0644);
+	if (mode == OUT && fd == -1)
 	{
 		ft_dprintf("(s)Hell : %s: %s\n", expanded, strerror(errno));
 		return (free(expanded), 0);
 	}
+	close(fd);
 	return (free(expanded), 1);
 }
