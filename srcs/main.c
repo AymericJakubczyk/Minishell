@@ -46,7 +46,6 @@ void	minishell(t_list **my_env, char **env, t_exec *data)
 	while (42)
 	{
 		init_data(data, env);
-		free(cmd);
 		prompt = ft_get_prompt(my_env);
 		signal(SIGINT, handler);
 		signal(SIGQUIT, SIG_IGN);
@@ -101,16 +100,3 @@ void	free_all(char **str)
 	if (str)
 		free(str);
 }
-
-// void	print_all(char **str)
-// {
-// 	int i;
-
-// 	i = 0;
-// 	ft_printf("NYCTALOPE\n");
-// 	while (str && str[i])
-// 	{
-// 		ft_printf("%s\n", str[i]);
-// 		i++;
-// 	}
-// }

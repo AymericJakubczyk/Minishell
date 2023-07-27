@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 06:54:36 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/27 14:49:24 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/27 15:34:19 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	exec_cmd(t_parse *parse, int num_cmd, t_list **my_env, t_exec *data)
 		return ;
 	execve(path, arg, data->env);
 	if (ft_strlen(get_str_cmd(&parse[start_cmd])) != 0)
-			return (ft_error("command not found", \
+		return (ft_error("command not found", \
 			get_str_cmd(&parse[start_cmd]), 127), exit(g_errno));
 	else
 		ft_error(ERROR_12, "\'\'", 127);

@@ -21,7 +21,6 @@ void	signal_heredoc(int sig)
 
 void	handler_fork(int sig)
 {
-	write(2, "PPPPP", 5);
 	if (sig == SIGINT)
 	{
 		g_errno = 130;
@@ -36,7 +35,6 @@ void	handler_fork(int sig)
 
 void	handler_fork_slash(int sig)
 {
-	write(2, "AAAAA", 5);
 	if (sig == SIGQUIT)
 	{
 		g_errno = 131;

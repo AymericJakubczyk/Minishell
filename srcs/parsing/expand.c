@@ -22,7 +22,6 @@ int	expand(t_entry *entry, t_entry **new_entry, t_list **my_env)
 	*new_entry = malloc(sizeof(t_entry) * (size + 1));
 	if (*new_entry == NULL)
 	{
-		ft_dprintf("oscour");
 		ft_error(ERROR_42, NULL, 1);
 		return (-1);
 	}

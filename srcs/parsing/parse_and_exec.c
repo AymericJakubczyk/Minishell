@@ -25,15 +25,16 @@ void	parse_and_exec(char *str, t_list **my_env, t_exec *data)
 	new_entry = NULL;
 	parse = NULL;
 	if (!check_syntax_quote(str))
-		return ;
+		return (free(str));
 	entry = malloc(sizeof(t_entry) * (ft_strlen(str) + 1));
 	if (!entry)
 	{
 		ft_error(ERROR_42, NULL, 1);
-		return ;
+		return (free(str));
 	}
 	if (init_parse(entry, parse, str) == -1)
-		return ;
+		return (free(str));
+	free(str);
 	if (expand(entry, &new_entry, my_env) == -1)
 		return (free(entry));
 	free(entry);

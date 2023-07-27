@@ -74,13 +74,13 @@ static int	check_redirect(t_parse parse, t_list **my_env, int mode)
 		return (0);
 	if (mode == IN && access(expanded, F_OK | R_OK) == -1)
 	{
-		ft_dprintf("(s)Hell : %s: %s\n", expanded, strerror(errno));
+		ft_print_error("(s)Hell :", expanded, strerror(errno));
 		return (free(expanded), 0);
 	}
 	fd = open(expanded, O_WRONLY | O_CREAT, 0644);
 	if (mode == OUT && fd == -1)
 	{
-		ft_dprintf("(s)Hell : %s: %s\n", expanded, strerror(errno));
+		ft_print_error("(s)Hell :", expanded, strerror(errno));
 		return (free(expanded), 0);
 	}
 	close(fd);

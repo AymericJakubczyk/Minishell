@@ -41,4 +41,5 @@
 # define ERROR_99 "tu crois aller ou comme ca"
 
 void	ft_error(const char *error, char *problem, int nbrerror);
+void	ft_print_error(char *str, const char *error, char *problem);
 #endif

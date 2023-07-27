@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 17:34:47 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/27 07:35:01 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/27 15:34:03 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ static int	fill_cmd_arg(t_parse *parse, char **arg)
 			arg[num_arg] = ft_strdup(parse[i].str);
 			if (!arg[num_arg])
 			{
-				free_all_tab(arg, num_arg);	
+				free_all_tab(arg, num_arg);
 				return (-1);
 			}
 			num_arg++;
@@ -115,4 +115,3 @@ int	get_start_cmd(t_parse *parse, int num_cmd)
 	}
 	return (start);
 }
-
