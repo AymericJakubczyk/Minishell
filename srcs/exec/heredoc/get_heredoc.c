@@ -62,7 +62,7 @@ static int	check_signal_hd(t_exec *data, t_heredoc *struct_hd)
 	}
 	else
 		ft_dprintf("minihell: warning: here-document delimited by end-of-file \
-					(wanted '%s')\n", struct_hd->limiter);
+(wanted '%s')\n", struct_hd->limiter);
 	free(struct_hd->limiter);
 	if (struct_hd->i < data->nbr_limiter)
 	{

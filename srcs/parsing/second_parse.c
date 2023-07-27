@@ -126,6 +126,8 @@ static int	context_in_parse(t_entry *entry, t_parse *parse, int i)
 	while (ind_parse < i)
 	{
 		j = 0;
+		if (ft_strlen(parse[ind_parse].str) == 0)
+			ind_entry++;
 		while (j < ft_strlen(parse[ind_parse].str))
 		{
 			j++;
