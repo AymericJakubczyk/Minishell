@@ -76,7 +76,7 @@ void	ex_child(t_parse *parse, t_list **env, int runner, t_exec *data)
 
 	index = 0;
 	arg = NULL;
-	path = get_path(parse[runner].str, env, parse);
+	path = get_path(parse[runner].str, env, data);
 	if (!path)
 		return ;
 	arg = get_arg(parse);

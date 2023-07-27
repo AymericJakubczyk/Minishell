@@ -44,4 +44,13 @@ typedef struct s_exec
 	t_parse	*parse;
 }	t_exec;
 
+typedef struct s_heredoc
+{
+	int		i;
+	int		quote_in_lim;
+	char	*str;
+	char	*limiter;
+	int		stdin_copy;
+}	t_heredoc;
+
 #endif

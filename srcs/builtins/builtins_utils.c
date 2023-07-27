@@ -34,7 +34,7 @@ char	*add_quotes(char *str)
 static char	*fill_quoter(char *str, int size, char *output)
 {
 	int	runner;
-	
+
 	runner = 0;
 	output = malloc(sizeof(char) * (size + 3));
 	if (!output)

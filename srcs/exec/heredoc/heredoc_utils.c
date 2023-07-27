@@ -40,7 +40,7 @@ int	quote_in(char *str)
 	return (0);
 }
 
-char	*limiter_without_quote(char *str)
+char	*lim_without_quote(char *str)
 {
 	char	quote;
 	int		i;
