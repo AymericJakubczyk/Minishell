@@ -13,7 +13,7 @@
 #include "minishell.h"
 
 static char	**get_all_path(t_list **envp);
-static int	check_env_path(char *str, char *str_path);
+// static int	check_env_path(char *str, char *str_path);
 static char	*verif_path(char *cmd, char **allpath, int *i);
 
 char	*get_path(char *cmd, t_list **env, t_exec *data)
@@ -86,35 +86,29 @@ static char	**get_all_path(t_list **envp)
 
 	path = NULL;
 	runner = *envp;
-	while (runner->next && !path)
-	{
-		if (check_env_path(runner->content, "PATH=") == 1)
-			path = runner->content;
-		runner = runner->next;
-	}
-	if (!runner->content)
+	path = ft_getenv(envp, "PATH", 0);
+	if (path == NULL)
 		return (NULL);
-	if (!path)
-		return (NULL);
-	all_path = ft_split(&path[5], ':');
+	all_path = ft_split(path, ':');
+	free(path);
 	if (!all_path)
 		return (NULL);
 	return (all_path);
 }
 
-static int	check_env_path(char *str, char *str_path)
-{
-	int	i;
+// static int	check_env_path(char *str, char *str_path)
+// {
+// 	int	i;
 
-	i = 0;
-	while (i < 5)
-	{
-		if (str[i] != str_path[i])
-			return (-1);
-		i++;
-	}
-	return (1);
-}
+// 	i = 0;
+// 	while (i < 5)
+// 	{
+// 		if (str[i] != str_path[i])
+// 			return (-1);
+// 		i++;
+// 	}
+// 	return (1);
+// }
 
 static char	*verif_path(char *cmd, char **allpath, int *i)
 {
