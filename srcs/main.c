@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:11:04 by ajakubcz          #+#    #+#             */
-/*   Updated: 2023/07/27 15:56:48 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/29 15:35:34 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ int	main(int ac, char **av, char **env)
 	(void) av;
 	g_errno = 0;
 	my_env = NULL;
-	// if (!env || !env[0])
-	// 	ft_create_env(&my_env);
-	// else
-	ft_dup_env(env, &my_env);
+	if (!env || !env[0])
+		ft_create_env(&my_env);
+	else
+		ft_dup_env(env, &my_env);
 	minishell(&my_env, env, &data);
 	ft_lstclear(&my_env, free);
 	rl_clear_history();

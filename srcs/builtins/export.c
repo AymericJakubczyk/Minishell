@@ -6,7 +6,7 @@
 /*   By: cprojean <cprojean@42lyon.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 15:18:09 by cprojean          #+#    #+#             */
-/*   Updated: 2023/07/27 09:42:59 by cprojean         ###   ########.fr       */
+/*   Updated: 2023/07/29 15:33:09 by cprojean         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ void	export_again(t_list **my_env, char *str)
 	char	*content;
 
 	runner = *my_env;
+	if (ft_strlen(str) == 1)
+		return ;
 	while (runner != NULL)
 	{
 		if (ft_strncmp(runner->content, str, ft_equal_size(str)) == 0)
